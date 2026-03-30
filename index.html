@@ -1130,7 +1130,7 @@ function scoreRep(r){
   const qal=Math.round(r.next_step_pct*.25+r.amount_populated*.15+r.close_date_set*.15+r.bant_pct*.2+r.stage_flow_pct*.15+r.daily_verified*.1);
   const expB=Math.min(8,r.expansion_deals.filter(d=>d.cw).length*4);
   const overall=clamp(Math.round(cw*.4+vel*.25+act*.2+qal*.15)+expB);
-  return{cw,vel,act,qal,expB,overall,cov,stl,adv,mtg,cal,txt};
+  return{cw,vel,act,qal,expB,overall,cov,stl,adv,mtg};
 }
 
 // ═══════════════════════════════════════════════════════
