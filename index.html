@@ -1297,7 +1297,7 @@ function renderDetail(id){
         ?'<span class="sp" style="background:#FFEDE4;color:#C04A10;border-color:#F0A080">'+d.stale+'d</span>'
         :'';
       const hsLink=(d.id&&HUBSPOT_PORTAL_ID)
-        ?'<a href="https://app.hubspot.com/contacts/'+HUBSPOT_PORTAL_ID+'/deal/'+d.id+'" target="_blank" style="color:var(--qh-blue);font-size:9px;text-decoration:none;opacity:.7;margin-left:5px;" title="Open in HubSpot">&#x2197;</a>'
+        ?'<a href="https://app.hubspot.com/deals/'+HUBSPOT_PORTAL_ID+'/deal/'+d.id+'" target="_blank" style="color:var(--qh-blue);font-size:9px;text-decoration:none;opacity:.7;margin-left:5px;" title="Open in HubSpot">&#x2197;</a>'
         :'';
       const nextStep=d.next?'<div class="dns">'+d.next+'</div>':'';
       pipHtml+='<div class="dr"><div class="dnw"><div class="dn">'+d.name+hsLink+'</div>'+nextStep+'</div><div class="da">'+fmt(d.amount)+'</div>'+sw+'</div>';
@@ -1621,9 +1621,27 @@ async function doHubSpotRefresh() {
     if (!res.ok) throw new Error('Worker returned ' + res.status);
     const payload = await res.json();
     if (!payload || !payload.reps || !payload.reps.length) throw new Error('No data returned');
+
+    // The live response doesn't include history (cache write is async).
+    // Wait 3s then fetch from cache to get the freshly written history.
     repData  = payload.reps;
     activeId = repData[0].id;
-    restoreScorecard(payload);
+    restoreScorecard(payload); // render immediately with live data
+
+    setTimeout(async () => {
+      try {
+        const cached = await fetch(WORKER_URL + '?t=' + Date.now());
+        if (cached.ok) {
+          const cp = await cached.json();
+          if (cp && cp.history && cp.history.length) {
+            window._scorecardData = cp;
+            renderDetail(activeId); // re-render detail with history
+            console.log('[QH] History loaded after sync:', cp.history.length, 'weeks');
+          }
+        }
+      } catch(e) { console.warn('[QH] History fetch after sync failed:', e.message); }
+    }, 4000); // 4s gives Worker time to finish writing cache
+
     if(badge) badge.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Synced from HubSpot · ' + payload.exportDate;
   } catch(e) {
     if(badge) badge.innerHTML = '⚠ Sync failed — ' + e.message;
