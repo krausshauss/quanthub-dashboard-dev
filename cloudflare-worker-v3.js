@@ -90,7 +90,7 @@ async function buildScorecardData(env) {
   const weekAgo = new Date(today); weekAgo.setDate(weekAgo.getDate() - STALE_DAYS);
   const yearAgo = new Date(today); yearAgo.setFullYear(today.getFullYear() - 1);
 
-  // ── 1. FETCH ALL HIGHER ED DEALS ─────────────────────────────────────────
+  // ── 1. FETCH ALL DEALS owned by scored reps ──────────────────────────────
   const dealProps = [
     'dealname', 'amount', 'dealstage', 'pipeline', 'hubspot_owner_id',
     'closedate', 'createdate', 'hs_lastmodifieddate', 'notes_last_updated',
@@ -99,9 +99,12 @@ async function buildScorecardData(env) {
     'notes_last_contacted', 'engagements_last_meeting_booked',
   ];
 
-  // Filter to Higher Education pipeline
+  // Fetch all deals owned by any scored rep (no pipeline filter — avoids wrong ID)
   const allDeals = await hsAll(env, 'deals', dealProps, [
-    { filters: [{ propertyName: 'pipeline', operator: 'EQ', value: 'default' }] }
+    { filters: [
+      { propertyName: 'hubspot_owner_id', operator: 'IN',
+        values: Object.keys(REPS) }
+    ]}
   ]);
 
   // ── 2. FETCH ENGAGEMENTS (calls + meetings) for last 7 days ──────────────
@@ -172,13 +175,17 @@ async function buildScorecardData(env) {
 
     // Classify deals
     const active = deals.filter(d => {
-      const stage = (d.dealstage || '').toLowerCase();
-      return !d.hs_is_closed_won && d.hs_is_closed !== 'true' &&
+      const stage   = (d.dealstage || '').toLowerCase();
+      const isWon   = d.hs_is_closed_won === 'true' || d.hs_is_closed_won === true;
+      const isClosed= d.hs_is_closed     === 'true' || d.hs_is_closed     === true;
+      return !isWon && !isClosed &&
              !stage.includes('closed lost') && !stage.includes('closedlost');
     });
 
     const cwDeals2026 = deals.filter(d => {
-      if (!d.hs_is_closed_won || d.hs_is_closed_won === 'false') return false;
+      // HubSpot returns string 'true'/'false' for boolean fields
+      const isWon = d.hs_is_closed_won === 'true' || d.hs_is_closed_won === true;
+      if (!isWon) return false;
       const cd = d.closedate ? new Date(d.closedate) : null;
       return cd && cd >= y2026;
     });
