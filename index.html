@@ -19,7 +19,7 @@
 #pinModal.open{display:flex;align-items:center;justify-content:center;}
 </style>
 <title>QuantHub · Sales Rep Scorecard</title>
-<!-- QH-VERSION: v20-dev -->
+<!-- QH-VERSION: v19n -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Slab:wght@400;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -43,8 +43,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 
 /* TOP BAR */
 .topbar{background:linear-gradient(90deg,#0077B5,#0B4971);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:52px;box-shadow:0 2px 10px rgba(0,119,181,.25);}
-.dev-banner{background:#C07800;color:#fff;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-align:center;padding:5px;position:sticky;top:0;z-index:9999;}
-.dev-banner span{opacity:.8;font-weight:400;margin-left:8px;}
 .qh-logo{display:flex;align-items:center;gap:9px;text-decoration:none;}
 .qh-wm{font-family:var(--font);font-size:17px;font-weight:700;color:#fff;letter-spacing:-.01em;}
 .tb-r{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.7);text-align:right;line-height:1.7;}
@@ -291,7 +289,6 @@ input[type=file]{display:none;}
 </div>
 
 <!-- TOP BAR -->
-<div class="dev-banner">⚠ DEV ENVIRONMENT <span>· changes here do not affect production · quanthub-dashboard-dev</span></div>
 <div class="topbar">
   <a class="qh-logo" href="#">
     <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
@@ -556,9 +553,9 @@ input[type=file]{display:none;}
 //  All secrets (GitHub token, HubSpot token) live in Cloudflare
 // ═══════════════════════════════════════════════════════
 const ADMIN_PIN         = null;  // PIN validated server-side by Cloudflare Worker — not stored here
-const WORKER_URL        = 'https://quanthub-proxy-dev.michael-20e.workers.dev/';
+const WORKER_URL        = 'https://quanthub-proxy.michael-20e.workers.dev/';
 const HUBSPOT_PORTAL_ID = '7316176';  // ← Your HubSpot portal ID (from any HubSpot URL)
-const APP_VERSION = 'v20-dev';
+const APP_VERSION = 'v19n';
 
 let isAdminUnlocked = false;
 let pinMode  = 'load';
@@ -1130,7 +1127,7 @@ function scoreRep(r){
   const qal=Math.round(r.next_step_pct*.25+r.amount_populated*.15+r.close_date_set*.15+r.bant_pct*.2+r.stage_flow_pct*.15+r.daily_verified*.1);
   const expB=Math.min(8,r.expansion_deals.filter(d=>d.cw).length*4);
   const overall=clamp(Math.round(cw*.4+vel*.25+act*.2+qal*.15)+expB);
-  return{cw,vel,act,qal,expB,overall,cov,stl,adv,mtg};
+  return{cw,vel,act,qal,expB,overall,cov,stl,adv,mtg,cal,txt};
 }
 
 // ═══════════════════════════════════════════════════════
@@ -1297,7 +1294,7 @@ function renderDetail(id){
         ?'<span class="sp" style="background:#FFEDE4;color:#C04A10;border-color:#F0A080">'+d.stale+'d</span>'
         :'';
       const hsLink=(d.id&&HUBSPOT_PORTAL_ID)
-        ?'<a href="https://app.hubspot.com/deals/'+HUBSPOT_PORTAL_ID+'/deal/'+d.id+'" target="_blank" style="color:var(--qh-blue);font-size:9px;text-decoration:none;opacity:.7;margin-left:5px;" title="Open in HubSpot">&#x2197;</a>'
+        ?'<a href="https://app.hubspot.com/contacts/'+HUBSPOT_PORTAL_ID+'/deal/'+d.id+'" target="_blank" style="color:var(--qh-blue);font-size:9px;text-decoration:none;opacity:.7;margin-left:5px;" title="Open in HubSpot">&#x2197;</a>'
         :'';
       const nextStep=d.next?'<div class="dns">'+d.next+'</div>':'';
       pipHtml+='<div class="dr"><div class="dnw"><div class="dn">'+d.name+hsLink+'</div>'+nextStep+'</div><div class="da">'+fmt(d.amount)+'</div>'+sw+'</div>';
@@ -1621,27 +1618,9 @@ async function doHubSpotRefresh() {
     if (!res.ok) throw new Error('Worker returned ' + res.status);
     const payload = await res.json();
     if (!payload || !payload.reps || !payload.reps.length) throw new Error('No data returned');
-
-    // The live response doesn't include history (cache write is async).
-    // Wait 3s then fetch from cache to get the freshly written history.
     repData  = payload.reps;
     activeId = repData[0].id;
-    restoreScorecard(payload); // render immediately with live data
-
-    setTimeout(async () => {
-      try {
-        const cached = await fetch(WORKER_URL + '?t=' + Date.now());
-        if (cached.ok) {
-          const cp = await cached.json();
-          if (cp && cp.history && cp.history.length) {
-            window._scorecardData = cp;
-            renderDetail(activeId); // re-render detail with history
-            console.log('[QH] History loaded after sync:', cp.history.length, 'weeks');
-          }
-        }
-      } catch(e) { console.warn('[QH] History fetch after sync failed:', e.message); }
-    }, 4000); // 4s gives Worker time to finish writing cache
-
+    restoreScorecard(payload);
     if(badge) badge.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> Synced from HubSpot · ' + payload.exportDate;
   } catch(e) {
     if(badge) badge.innerHTML = '⚠ Sync failed — ' + e.message;
