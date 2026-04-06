@@ -534,7 +534,7 @@
           "stage": "Discovery/Demo (SQL)",
           "amount": 1680,
           "stale": 0,
-          "next": "Speaking with Jason on 4/6 regarding his platform access and feedback to move forward \n\nEmail Trial: Send Jason an email with a 1-week free trial account access.\n\nRequest Syllabus: Ask Jason to reply with his course syllabus so the content team can map it to specific QuantHub modules.\n\nCalendar Invite: Send Jason a calendar invitation for the follow-up meeting scheduled for Thursday, March 19th at 1:00 PM CST. (DONE)\n\nMap Modules (Internal): Once the syllabus is received, have the content team align it with recommended modules before the follow-up meeting.\n\nPrep Pricing (Internal): Calculate formal discounted pricing once Jason confirms the exact number of modules and students for future semesters.",
+          "next": "Get Jason resched after missing meeting on 4-6, obtain syllabi & LMS admin intro ",
           "id": "57830356277"
         },
         {
@@ -621,7 +621,7 @@
   "version": 10,
   "source": "hubspot-api",
   "exportDate": "April 6, 2026",
-  "savedAt": "2026-04-06T19:20:32.814Z",
+  "savedAt": "2026-04-06T19:25:19.004Z",
   "history": [
     {
       "week": "March 29, 2026",
