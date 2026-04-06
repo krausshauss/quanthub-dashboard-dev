@@ -19,7 +19,7 @@
 #pinModal.open{display:flex;align-items:center;justify-content:center;}
 </style>
 <title>QuantHub · Sales Rep Scorecard</title>
-<!-- QH-VERSION: v20e-dev -->
+<!-- QH-VERSION: v20g-dev -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Slab:wght@400;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -375,7 +375,7 @@ input[type=file]{display:none;}
     </svg>
     <span class="qh-wm">quanthub</span>
   </a>
-  <div class="tb-r"><div><strong>Sales Rep Scorecard</strong> · Higher Education <span id="appVersionBadge" style="opacity:.5;font-size:9px;letter-spacing:.05em;margin-left:5px;font-family:var(--mono);"></span></div><div id="tbInfo">Upload files to begin</div></div>
+  <div class="tb-r"><div><strong>Sales Rep Scorecard</strong> · Higher Education <span id="appVersionBadge" style="opacity:.5;font-size:9px;letter-spacing:.05em;margin-left:5px;font-family:var(--mono);"></span><span id="workerVersionBadge" style="opacity:.4;font-size:9px;margin-left:6px;font-family:var(--mono);"></span></div><div id="tbInfo">Upload files to begin</div></div>
 </div>
 
 <!-- ══ DEV ENVIRONMENT BANNER ══ -->
@@ -624,7 +624,7 @@ input[type=file]{display:none;}
       <svg width="16" height="16" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="4" r="3" fill="#0077B5"/><circle cx="36" cy="20" r="3" fill="#0077B5"/><circle cx="20" cy="36" r="3" fill="#0077B5"/><circle cx="4" cy="20" r="3" fill="#0077B5"/><circle cx="20" cy="20" r="4" fill="#0B4971"/><line x1="20" y1="7" x2="20" y2="16" stroke="#0077B5" stroke-width="2.5" stroke-linecap="round"/><line x1="33" y1="20" x2="24" y2="20" stroke="#0077B5" stroke-width="2.5" stroke-linecap="round"/><line x1="20" y1="24" x2="20" y2="33" stroke="#0077B5" stroke-width="2.5" stroke-linecap="round"/><line x1="7" y1="20" x2="16" y2="20" stroke="#0077B5" stroke-width="2.5" stroke-linecap="round"/></svg>
       <span style="font-family:var(--font);font-size:12px;font-weight:700;color:#0B4971">quanthub</span>
     </div>
-    <div style="font-size:10px;color:var(--muted)">© 2026 QuantHub · Prepared by Dark Yeti Inc. · Confidential · <span id="footerVersion" style="font-family:var(--mono);"></span></div>
+    <div style="font-size:10px;color:var(--muted)">© 2026 QuantHub · Prepared by Dark Yeti Inc. · Confidential · <span id="footerVersion" style="font-family:var(--mono);"></span> <span id="footerWorkerVersion" style="font-family:var(--mono);opacity:.6;"></span></div>
   </div>
 </div>
 </div>
@@ -637,7 +637,7 @@ input[type=file]{display:none;}
 const ADMIN_PIN         = null;  // PIN validated server-side by Cloudflare Worker — not stored here
 const WORKER_URL        = 'https://quanthub-proxy-dev.michael-20e.workers.dev/';
 const HUBSPOT_PORTAL_ID = '7316176';  // ← Your HubSpot portal ID (from any HubSpot URL)
-const APP_VERSION = 'v20e-dev';
+const APP_VERSION = 'v20g-dev';
 
 let isAdminUnlocked = false;
 let pinMode  = 'load';
@@ -1581,13 +1581,13 @@ function buildTeamTrendStrip() {
   }
 
   const metrics = [
-    { label:'CW Revenue (YTD)',   key:'cw',       fmt:fmtK, good:'up'   },
-    { label:'Active Pipeline',    key:'pipe',      fmt:fmtK, good:'up'   },
-    { label:'Active Deals',       key:'deals',     fmt:fmtN, good:'up'   },
-    { label:'Stale >7 Days',      key:'stale',     fmt:fmtN, good:'down' },
-    { label:'Deals Advanced',     key:'advanced',  fmt:fmtN, good:'up'   },
-    { label:'Calls (team)',        key:'calls',     fmt:fmtN, good:'up'   },
-    { label:'Meetings (team)',    key:'meetings',  fmt:fmtN, good:'up'   },
+    { label:'CW Revenue (YTD)',      key:'cw',       fmt:fmtK, good:'up',   histOk:true  },
+    { label:'Active Pipeline',       key:'pipe',      fmt:fmtK, good:'up',   histOk:true  },
+    { label:'Active Deals',          key:'deals',     fmt:fmtN, good:'up',   histOk:true  },
+    { label:'Stale >7 Days',         key:'stale',     fmt:fmtN, good:'down', histOk:true  },
+    { label:'Deals Advanced (wk)',   key:'advanced',  fmt:fmtN, good:'up',   histOk:false },
+    { label:'Calls (wk)',            key:'calls',     fmt:fmtN, good:'up',   histOk:false },
+    { label:'Meetings (wk)',         key:'meetings',  fmt:fmtN, good:'up',   histOk:false },
   ];
 
   let html = `<div class="trend-strip-wrap">
@@ -1623,14 +1623,17 @@ function buildTeamTrendStrip() {
       const prev = wi < weekTotals.length-1 ? weekTotals[wi+1][m.key] : null;
       const cls  = wi===0 ? 'trend-cur' : '';
       const arr  = wi===0 ? arrow(val, prev, m.good) : '';
-      html += `<td class="${cls}">${m.fmt(val)}${arr}</td>`;
+      const display = (wi > 0 && !m.histOk)
+        ? `<span style="color:var(--dim);font-size:10px">n/a</span>`
+        : m.fmt(val) + arr;
+      html += `<td class="${cls}">${display}</td>`;
     });
     html += `</tr>`;
   });
 
   html += `</tbody></table></div>
     <div style="font-size:9px;color:var(--muted);margin-top:8px;padding-top:6px;border-top:1px solid var(--border)">
-      ▲ Green = improvement vs prior week &nbsp;·&nbsp; ▼ Red = decline &nbsp;·&nbsp; Snapshots captured automatically on Sync when 7+ days have elapsed
+      ▲ Green = improvement · ▼ Red = decline vs prior week · Pipeline/deals/stale reconstructed from deal history · Activity metrics (calls, meetings, advanced) current week only
     </div>
   </div>`;
 
@@ -2058,6 +2061,7 @@ window.addEventListener('DOMContentLoaded', () => {
   if(vb) vb.textContent = APP_VERSION;
   var fv = document.getElementById('footerVersion');
   if(fv) fv.textContent = APP_VERSION;
+  // footerWorkerVersion set after data loads in restoreScorecard
 
   // Show DEV banner if on dev URL
   var devBanner = document.getElementById('devBanner');
@@ -2126,6 +2130,12 @@ function restoreScorecard(saved) {
     const timePart = d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true,timeZone:'America/New_York'});
     return datePart + ' · ' + timePart + ' ET';
   })() : 'unknown';
+
+  // Show worker version in topbar
+  const wvb = document.getElementById('workerVersionBadge');
+  if (wvb && saved.workerVersion) wvb.textContent = '· ' + saved.workerVersion;
+  const fwv = document.getElementById('footerWorkerVersion');
+  if (fwv && saved.workerVersion) fwv.textContent = '· worker ' + saved.workerVersion;
 
   document.getElementById('phSb').textContent = `${QUARTER} · Quota $${(QUOTA/1000).toFixed(0)}K/rep`;
   document.getElementById('srcBadge').innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> ${repData.reduce((s,r)=>s+r.active_deals,0)} deals · ${exportDate}`;
