@@ -19,7 +19,7 @@
 #pinModal.open{display:flex;align-items:center;justify-content:center;}
 </style>
 <title>QuantHub · Sales Rep Scorecard</title>
-<!-- QH-VERSION: v20g-dev -->
+<!-- QH-VERSION: v20h-dev -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Slab:wght@400;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -637,7 +637,7 @@ input[type=file]{display:none;}
 const ADMIN_PIN         = null;  // PIN validated server-side by Cloudflare Worker — not stored here
 const WORKER_URL        = 'https://quanthub-proxy-dev.michael-20e.workers.dev/';
 const HUBSPOT_PORTAL_ID = '7316176';  // ← Your HubSpot portal ID (from any HubSpot URL)
-const APP_VERSION = 'v20g-dev';
+const APP_VERSION = 'v20h-dev';
 
 let isAdminUnlocked = false;
 let pinMode  = 'load';
@@ -1581,13 +1581,13 @@ function buildTeamTrendStrip() {
   }
 
   const metrics = [
-    { label:'CW Revenue (YTD)',      key:'cw',       fmt:fmtK, good:'up',   histOk:true  },
-    { label:'Active Pipeline',       key:'pipe',      fmt:fmtK, good:'up',   histOk:true  },
-    { label:'Active Deals',          key:'deals',     fmt:fmtN, good:'up',   histOk:true  },
-    { label:'Stale >7 Days',         key:'stale',     fmt:fmtN, good:'down', histOk:true  },
-    { label:'Deals Advanced (wk)',   key:'advanced',  fmt:fmtN, good:'up',   histOk:false },
-    { label:'Calls (wk)',            key:'calls',     fmt:fmtN, good:'up',   histOk:false },
-    { label:'Meetings (wk)',         key:'meetings',  fmt:fmtN, good:'up',   histOk:false },
+    { label:'CW Revenue (YTD)',    key:'cw',       fmt:fmtK, good:'up'   },
+    { label:'Active Pipeline',     key:'pipe',      fmt:fmtK, good:'up'   },
+    { label:'Active Deals',        key:'deals',     fmt:fmtN, good:'up'   },
+    { label:'Stale >7 Days',       key:'stale',     fmt:fmtN, good:'down' },
+    { label:'Deals Advanced (wk)', key:'advanced',  fmt:fmtN, good:'up'   },
+    { label:'Calls (wk)',          key:'calls',     fmt:fmtN, good:'up'   },
+    { label:'Meetings (wk)',       key:'meetings',  fmt:fmtN, good:'up'   },
   ];
 
   let html = `<div class="trend-strip-wrap">
@@ -1623,17 +1623,14 @@ function buildTeamTrendStrip() {
       const prev = wi < weekTotals.length-1 ? weekTotals[wi+1][m.key] : null;
       const cls  = wi===0 ? 'trend-cur' : '';
       const arr  = wi===0 ? arrow(val, prev, m.good) : '';
-      const display = (wi > 0 && !m.histOk)
-        ? `<span style="color:var(--dim);font-size:10px">n/a</span>`
-        : m.fmt(val) + arr;
-      html += `<td class="${cls}">${display}</td>`;
+      html += `<td class="${cls}">${m.fmt(val)}${arr}</td>`;
     });
     html += `</tr>`;
   });
 
   html += `</tbody></table></div>
     <div style="font-size:9px;color:var(--muted);margin-top:8px;padding-top:6px;border-top:1px solid var(--border)">
-      ▲ Green = improvement · ▼ Red = decline vs prior week · Pipeline/deals/stale reconstructed from deal history · Activity metrics (calls, meetings, advanced) current week only
+      ▲ Green = improvement · ▼ Red = decline vs prior week · All metrics reconstructed from HubSpot deal + activity data
     </div>
   </div>`;
 
