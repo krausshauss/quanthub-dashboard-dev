@@ -19,7 +19,7 @@
 #pinModal.open{display:flex;align-items:center;justify-content:center;}
 </style>
 <title>QuantHub · Sales Rep Scorecard</title>
-<!-- QH-VERSION: v20-dev -->
+<!-- QH-VERSION: v20b-dev -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Slab:wght@400;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -43,8 +43,6 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 
 /* TOP BAR */
 .topbar{background:linear-gradient(90deg,#0077B5,#0B4971);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:52px;box-shadow:0 2px 10px rgba(0,119,181,.25);}
-.dev-banner{background:#C07800;color:#fff;font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-align:center;padding:5px;position:sticky;top:0;z-index:9999;}
-.dev-banner span{opacity:.8;font-weight:400;margin-left:8px;}
 .qh-logo{display:flex;align-items:center;gap:9px;text-decoration:none;}
 .qh-wm{font-family:var(--font);font-size:17px;font-weight:700;color:#fff;letter-spacing:-.01em;}
 .tb-r{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.7);text-align:right;line-height:1.7;}
@@ -110,6 +108,80 @@ input[type=file]{display:none;}
 .ph-sb{font-size:11px;color:var(--muted);margin-top:3px;}
 .btn-rl{display:inline-flex;align-items:center;gap:6px;background:var(--surface);color:var(--qh-blue);border:1px solid var(--bl-bd);border-radius:7px;padding:6px 13px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);}
 .src-badge{font-size:10px;color:var(--ok);background:var(--ok-bg);padding:3px 8px;border-radius:20px;border:1px solid var(--ok-bd);display:inline-flex;align-items:center;gap:4px;}
+
+/* ANNUAL TICKER */
+.annual-ticker{background:linear-gradient(135deg,#0B4971,#0077B5);border-radius:12px;padding:16px 20px;margin-bottom:14px;color:#fff;position:relative;overflow:hidden;}
+.annual-ticker::before{content:'';position:absolute;right:-20px;top:-20px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06);}
+.annual-ticker::after{content:'';position:absolute;right:30px;bottom:-30px;width:80px;height:80px;border-radius:50%;background:rgba(255,255,255,.04);}
+.at-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px;}
+.at-label{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.6);}
+.at-amount{font-family:var(--slab);font-size:28px;font-weight:700;color:#fff;line-height:1;}
+.at-pct{font-family:var(--mono);font-size:15px;font-weight:700;padding:3px 10px;border-radius:20px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);}
+.at-bar-wrap{height:8px;background:rgba(255,255,255,.15);border-radius:4px;overflow:hidden;margin-bottom:6px;}
+.at-bar{height:100%;border-radius:4px;background:linear-gradient(90deg,#69A62A,#8BC34A);transition:width .8s ease;}
+.at-sub{display:flex;justify-content:space-between;font-size:10px;color:rgba(255,255,255,.55);}
+
+/* QUARTERLY ROLLUP */
+.qtr-section-label{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.qtr-section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+.qtr-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:6px;}
+.qt{background:linear-gradient(160deg,#f7f9fc,#eef2f8);border:1px solid #d4dce8;border-radius:10px;padding:14px 16px;position:relative;transition:box-shadow .15s;overflow:hidden;}
+.qt::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--border2);border-radius:10px 10px 0 0;}
+.qt.active::before{background:var(--qh-blue);}
+.qt.hit::before{background:var(--qh-green);}
+.qt.past::before{background:var(--dim);}
+.qt.active{border-color:#b8cfe8;box-shadow:0 2px 14px rgba(0,119,181,.1);}
+.qt.hit{border-color:#b2d87a;background:linear-gradient(160deg,#f2fae8,#e8f5d4);}
+.qt-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:5px;}
+.qt-badge{font-size:8px;padding:1px 7px;border-radius:10px;font-weight:700;letter-spacing:.04em;}
+.qt-badge.current{background:#dbeeff;color:#0057a0;border:1px solid #9ac8f0;}
+.qt-badge.done{background:#e4f3ce;color:#3d7a00;border:1px solid #9fd460;}
+.qt-badge.future{background:var(--bg);color:var(--dim);border:1px solid var(--border);}
+.qt-amount{font-family:var(--slab);font-size:22px;font-weight:700;color:var(--text2);line-height:1;margin-bottom:2px;}
+.qt.active .qt-amount{color:var(--qh-blue);}
+.qt.hit .qt-amount{color:#3d7a00;}
+.qt.past .qt-amount{color:var(--muted);}
+.qt-quota{font-size:9px;color:var(--dim);margin-bottom:8px;font-family:var(--mono);}
+.qt-bar-wrap{height:5px;background:rgba(0,0,0,.08);border-radius:3px;overflow:hidden;margin-bottom:6px;}
+.qt-bar{height:100%;border-radius:3px;transition:width .7s ease;}
+.qt-sub{font-size:9px;color:var(--muted);display:flex;align-items:center;gap:4px;}
+.qt-sub-pct{font-family:var(--mono);font-weight:700;font-size:10px;}
+
+/* TEAM TREND STRIP */
+.trend-strip-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:14px;}
+.trend-strip-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.trend-strip-title{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.07em;}
+.trend-strip-sub{font-size:10px;color:var(--muted);}
+.trend-table{width:100%;border-collapse:collapse;font-size:11px;}
+.trend-table th{padding:6px 10px;text-align:center;font-weight:700;color:#fff;background:var(--qh-dark);font-size:10px;}
+.trend-table th:first-child{text-align:left;border-radius:6px 0 0 0;}
+.trend-table th:last-child{border-radius:0 6px 0 0;}
+.trend-table td{padding:6px 10px;text-align:center;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:11px;}
+.trend-table td:first-child{text-align:left;font-family:var(--font);font-size:11px;font-weight:600;color:var(--text2);font-family:var(--font);}
+.trend-table tr:last-child td{border-bottom:none;}
+.trend-table tr:nth-child(even) td{background:var(--bg);}
+.trend-up{color:#3d7a00;font-weight:700;}
+.trend-dn{color:#b82038;font-weight:700;}
+.trend-nc{color:var(--muted);}
+.trend-cur{font-weight:700;color:var(--text);}
+
+/* TEAM TREND STRIP */
+.trend-strip-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:14px;}
+.trend-strip-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+.trend-strip-title{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.07em;}
+.trend-strip-sub{font-size:10px;color:var(--muted);}
+.trend-table{width:100%;border-collapse:collapse;font-size:11px;}
+.trend-table th{padding:6px 10px;text-align:center;font-weight:700;color:#fff;background:var(--qh-dark);font-size:10px;}
+.trend-table th:first-child{text-align:left;border-radius:6px 0 0 0;}
+.trend-table th:last-child{border-radius:0 6px 0 0;}
+.trend-table td{padding:6px 10px;text-align:center;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:11px;}
+.trend-table td:first-child{text-align:left;font-family:var(--font);font-size:11px;font-weight:600;color:var(--text2);}
+.trend-table tr:last-child td{border-bottom:none;}
+.trend-table tr:nth-child(even) td{background:var(--bg);}
+.trend-up{color:#3d7a00;font-weight:700;}
+.trend-dn{color:#b82038;font-weight:700;}
+.trend-nc{color:var(--muted);}
+.trend-cur{font-weight:700;color:var(--text);}
 
 /* KPI STRIP */
 .kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;}
@@ -291,7 +363,6 @@ input[type=file]{display:none;}
 </div>
 
 <!-- TOP BAR -->
-<div class="dev-banner">⚠ DEV ENVIRONMENT <span>· changes here do not affect production · quanthub-dashboard-dev</span></div>
 <div class="topbar">
   <a class="qh-logo" href="#">
     <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
@@ -312,6 +383,11 @@ input[type=file]{display:none;}
     <span class="qh-wm">quanthub</span>
   </a>
   <div class="tb-r"><div><strong>Sales Rep Scorecard</strong> · Higher Education <span id="appVersionBadge" style="opacity:.5;font-size:9px;letter-spacing:.05em;margin-left:5px;font-family:var(--mono);"></span></div><div id="tbInfo">Upload files to begin</div></div>
+</div>
+
+<!-- ══ DEV ENVIRONMENT BANNER ══ -->
+<div id="devBanner" style="display:block;background:#C07800;color:#fff;text-align:center;padding:7px 16px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;">
+  ⚠ DEV ENVIRONMENT · Changes here do not affect production · quanthub-dashboard-dev
 </div>
 
 <!-- ══ SCREEN 1: UPLOAD ══════════════════════════════ -->
@@ -516,6 +592,10 @@ input[type=file]{display:none;}
       <span class="src-badge" id="srcBadge" style="font-size:10px;"></span>
     </div>
   </div>
+  <div id="annualTicker"></div>
+  <div class="qtr-section-label">Quarterly Revenue · 2026</div>
+  <div class="qtr-strip" id="qtrStrip"></div>
+  <div id="teamTrendStrip"></div>
   <div class="kpi-strip" id="kpiStrip"></div>
   <div class="sec">Rep Performance · Click to drill in</div>
   <div class="rep-grid" id="repGrid"></div>
@@ -558,7 +638,7 @@ input[type=file]{display:none;}
 const ADMIN_PIN         = null;  // PIN validated server-side by Cloudflare Worker — not stored here
 const WORKER_URL        = 'https://quanthub-proxy-dev.michael-20e.workers.dev/';
 const HUBSPOT_PORTAL_ID = '7316176';  // ← Your HubSpot portal ID (from any HubSpot URL)
-const APP_VERSION = 'v20-dev';
+const APP_VERSION = 'v20b-dev';
 
 let isAdminUnlocked = false;
 let pinMode  = 'load';
@@ -1052,10 +1132,10 @@ function buildScorecard(){
   const totS=repData.reduce((s,r)=>s+r.stale_7d,0);
   const aeN=repData.filter(r=>r.role.includes('Account')).length;
 
-  buildKpiStrip();
-
   const exportDateStr = new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  // Set _scorecardData BEFORE buildKpiStrip so buildQtrStrip can access history (empty on first load)
   window._scorecardData = { reps: repData, exportDate: exportDateStr, history: [] };
+  buildKpiStrip();
   // Remove any existing persist banner
   const pb = document.getElementById('persistBanner');
   if(pb) pb.remove();
@@ -1314,15 +1394,21 @@ function renderDetail(id){
   const thisRep = r;
 
   if (!weeks.length) {
-    document.getElementById('trContent').innerHTML = '<div style="padding:28px;text-align:center;color:var(--muted)"><div style="font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">Trends build over time</div><div style="font-size:11px">Week-over-week data accumulates automatically each week. Check back after the next sync cycle (7+ days).</div></div>';
+    document.getElementById('trContent').innerHTML = `
+      <div style="padding:24px;text-align:center;color:var(--muted)">
+        <div style="font-size:13px;font-weight:600;color:var(--text2);margin-bottom:6px">📈 Building Trend History</div>
+        <div style="font-size:11px;line-height:1.7">Week-over-week snapshots accumulate automatically.<br>
+        Each HubSpot Sync captures a new data point when 7+ days have passed since the last snapshot.<br><br>
+        <strong style="color:var(--text2)">Current week data is live above.</strong> Check back next week for trend arrows.</div>
+      </div>`;
     return;
   }
 
   // Build trend table — current week + up to 4 prior weeks
-  const allWeeks = [{ week: 'This Week', reps: window._scorecardData.reps }].concat(weeks.slice(0,4));
+  const allWeeks = [{ week: 'This Week', savedAt: window._scorecardData.savedAt, reps: window._scorecardData.reps }].concat(weeks.slice(0,4));
   const repHistory = allWeeks.map(w => {
     const rd = (w.reps || []).find(x => x.id === r.id);
-    return { week: w.week, cw: rd ? rd.cw_amount : null, pipe: rd ? rd.pipeline_value : null,
+    return { week: w.week, savedAt: w.savedAt, cw: rd ? rd.cw_amount : null, pipe: rd ? rd.pipeline_value : null,
              active: rd ? rd.active_deals : null, stale: rd ? rd.stale_7d : null,
              calls: rd ? rd.raw_calls : null, meetings: rd ? rd.raw_meetings : null };
   });
@@ -1340,7 +1426,9 @@ function renderDetail(id){
   trHtml += '<thead><tr style="background:var(--qh-dark);color:#fff">';
   trHtml += '<th style="padding:8px 10px;text-align:left;font-weight:700">Metric</th>';
   repHistory.forEach((w,i) => {
-    trHtml += '<th style="padding:8px 10px;text-align:center;font-weight:700;min-width:90px">' + w.week + (i===0?' <span style="font-size:9px;opacity:.7">(current)</span>':'') + '</th>';
+    const weekLabel = i===0 ? 'This Week' : (w.week || ('Week -' + i));
+    const dateLabel = (i>0 && w.savedAt) ? '<div style="font-size:8px;opacity:.55;font-weight:400;font-family:var(--font)">' + new Date(w.savedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}) + '</div>' : '';
+    trHtml += '<th style="padding:8px 10px;text-align:center;font-weight:700;min-width:90px">' + weekLabel + (i===0?'<span style="font-size:9px;opacity:.7"> (live)</span>':'') + dateLabel + '</th>';
   });
   trHtml += '</tr></thead><tbody>';
 
@@ -1442,8 +1530,309 @@ function reset(){
 
 
 
+// ── TEAM 4-WEEK TREND STRIP ───────────────────────────────────────────
+function buildTeamTrendStrip() {
+  const el = document.getElementById('teamTrendStrip');
+  if (!el) return;
+
+  const history = (window._scorecardData && window._scorecardData.history) ? window._scorecardData.history : [];
+  const weeks   = history.filter(w => w.reps);
+
+  if (!weeks.length) {
+    el.innerHTML = `<div style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:14px;">
+      <div style="font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;">Team 4-Week Trend</div>
+      <div style="font-size:11px;color:var(--muted);padding:10px 0;">Trend data accumulates week-over-week. Check back after the next sync cycle (7+ days).</div>
+    </div>`;
+    return;
+  }
+
+  // Build week columns: current + up to 4 prior
+  const allWeeks = [
+    { label: 'This Week', savedAt: window._scorecardData.savedAt, reps: window._scorecardData.reps }
+  ].concat(weeks.slice(0,4));
+
+  // Aggregate team totals per week
+  const weekTotals = allWeeks.map(w => {
+    const reps = w.reps || [];
+    const aes  = reps.filter(r => r.role && r.role.includes('Account'));
+    return {
+      label:    w.label || w.week || 'Week',
+      savedAt:  w.savedAt,
+      cw:       reps.reduce((s,r) => s+(r.cw_amount||0), 0),
+      pipe:     reps.reduce((s,r) => s+(r.pipeline_value||0), 0),
+      deals:    reps.reduce((s,r) => s+(r.active_deals||0), 0),
+      stale:    reps.reduce((s,r) => s+(r.stale_7d||0), 0),
+      calls:    reps.reduce((s,r) => s+(r.raw_calls||0), 0),
+      meetings: reps.reduce((s,r) => s+(r.raw_meetings||0), 0),
+      advanced: reps.reduce((s,r) => s+(r.deals_advanced_week||0), 0),
+    };
+  });
+
+  function fmtK(v) { return v==null?'—':'$'+(v>=1000?(v/1000).toFixed(0)+'K':v); }
+  function fmtN(v) { return v==null?'—':v; }
+
+  function arrow(curr, prev, goodDir) {
+    if (curr==null||prev==null) return '';
+    if (curr===prev) return '<span class="trend-nc"> —</span>';
+    const better = goodDir==='up' ? curr>prev : curr<prev;
+    const worse  = goodDir==='up' ? curr<prev : curr>prev;
+    if (better) return '<span class="trend-up"> ▲</span>';
+    if (worse)  return '<span class="trend-dn"> ▼</span>';
+    return '';
+  }
+
+  const metrics = [
+    { label:'CW Revenue (YTD)',   key:'cw',       fmt:fmtK, good:'up'   },
+    { label:'Active Pipeline',    key:'pipe',      fmt:fmtK, good:'up'   },
+    { label:'Active Deals',       key:'deals',     fmt:fmtN, good:'up'   },
+    { label:'Stale >7 Days',      key:'stale',     fmt:fmtN, good:'down' },
+    { label:'Deals Advanced',     key:'advanced',  fmt:fmtN, good:'up'   },
+    { label:'Calls (team)',        key:'calls',     fmt:fmtN, good:'up'   },
+    { label:'Meetings (team)',    key:'meetings',  fmt:fmtN, good:'up'   },
+  ];
+
+  let html = `<div class="trend-strip-wrap">
+    <div class="trend-strip-hdr">
+      <div class="trend-strip-title">📈 Team 4-Week Trend</div>
+      <div class="trend-strip-sub">${allWeeks.length} week${allWeeks.length>1?'s':''} of data · auto-captures every 7 days on sync</div>
+    </div>
+    <div style="overflow-x:auto"><table class="trend-table"><thead><tr>
+      <th style="text-align:left;min-width:140px">Metric</th>`;
+
+  weekTotals.forEach((w,i) => {
+    const dateStr = (w.savedAt) ? new Date(w.savedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '';
+    html += `<th style="min-width:100px">${i===0?'This Week':('Week -'+i)}<div style="font-size:8px;opacity:.55;font-weight:400;font-family:var(--font)">${dateStr}</div></th>`;
+  });
+
+  html += `</tr></thead><tbody>`;
+
+  metrics.forEach((m, mi) => {
+    html += `<tr>`;
+    html += `<td>${m.label}</td>`;
+    weekTotals.forEach((w, wi) => {
+      const val  = w[m.key];
+      const prev = wi < weekTotals.length-1 ? weekTotals[wi+1][m.key] : null;
+      const cls  = wi===0 ? 'trend-cur' : '';
+      const arr  = wi===0 ? arrow(val, prev, m.good) : '';
+      html += `<td class="${cls}">${m.fmt(val)}${arr}</td>`;
+    });
+    html += `</tr>`;
+  });
+
+  html += `</tbody></table></div>
+    <div style="font-size:9px;color:var(--muted);margin-top:8px;padding-top:6px;border-top:1px solid var(--border)">
+      ▲ Green = improvement vs prior week &nbsp;·&nbsp; ▼ Red = decline &nbsp;·&nbsp; Snapshots captured automatically on Sync when 7+ days have elapsed
+    </div>
+  </div>`;
+
+  el.innerHTML = html;
+}
+
+// ── TEAM 4-WEEK TREND STRIP ───────────────────────────────────────────
+function buildTeamTrendStrip() {
+  const el = document.getElementById('teamTrendStrip');
+  if (!el) return;
+  const history = (window._scorecardData && window._scorecardData.history) ? window._scorecardData.history : [];
+  const weeks   = history.filter(w => w.reps);
+  if (!weeks.length) {
+    el.innerHTML = `<div class="trend-strip-wrap"><div class="trend-strip-hdr"><div class="trend-strip-title">📈 Team 4-Week Trend</div></div><div style="font-size:11px;color:var(--muted);padding:6px 0">Trend data accumulates automatically week-over-week. Check back after the next sync cycle (7+ days).</div></div>`;
+    return;
+  }
+  const allWeeks = [{ week:'This Week', savedAt:window._scorecardData.savedAt, reps:window._scorecardData.reps }].concat(weeks.slice(0,4));
+  const weekTotals = allWeeks.map(w => {
+    const reps = w.reps||[];
+    return {
+      week: w.week, savedAt: w.savedAt,
+      cw:       reps.reduce((s,r)=>s+(r.cw_amount||0),0),
+      pipe:     reps.reduce((s,r)=>s+(r.pipeline_value||0),0),
+      deals:    reps.reduce((s,r)=>s+(r.active_deals||0),0),
+      stale:    reps.reduce((s,r)=>s+(r.stale_7d||0),0),
+      calls:    reps.reduce((s,r)=>s+(r.raw_calls||0),0),
+      meetings: reps.reduce((s,r)=>s+(r.raw_meetings||0),0),
+      advanced: reps.reduce((s,r)=>s+(r.deals_advanced_week||0),0),
+    };
+  });
+  function fmtK(v){return v==null?'—':'$'+(v>=1000?(v/1000).toFixed(0)+'K':v);}
+  function fmtN(v){return v==null?'—':v;}
+  function arrow(curr,prev,good){
+    if(curr==null||prev==null)return '';
+    if(curr===prev)return '<span class="trend-nc"> —</span>';
+    const better=good==='up'?curr>prev:curr<prev;
+    return better?'<span class="trend-up"> ▲</span>':'<span class="trend-dn"> ▼</span>';
+  }
+  const metrics=[
+    {label:'CW Revenue (YTD)',  key:'cw',       fmt:fmtK, good:'up'},
+    {label:'Active Pipeline',   key:'pipe',      fmt:fmtK, good:'up'},
+    {label:'Active Deals',      key:'deals',     fmt:fmtN, good:'up'},
+    {label:'Stale >7 Days',     key:'stale',     fmt:fmtN, good:'down'},
+    {label:'Deals Advanced',    key:'advanced',  fmt:fmtN, good:'up'},
+    {label:'Calls (team)',      key:'calls',     fmt:fmtN, good:'up'},
+    {label:'Meetings (team)',   key:'meetings',  fmt:fmtN, good:'up'},
+  ];
+  let html=`<div class="trend-strip-wrap"><div class="trend-strip-hdr"><div class="trend-strip-title">📈 Team 4-Week Trend</div><div class="trend-strip-sub">${allWeeks.length} week${allWeeks.length>1?'s':''} of data · auto-captures every 7 days on sync</div></div><div style="overflow-x:auto"><table class="trend-table"><thead><tr><th style="text-align:left;min-width:140px">Metric</th>`;
+  weekTotals.forEach((w,i)=>{
+    const ds=w.savedAt?new Date(w.savedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'';
+    html+=`<th style="min-width:100px">${i===0?'This Week':'Week -'+i}<div style="font-size:8px;opacity:.55;font-weight:400;font-family:var(--font)">${ds}</div></th>`;
+  });
+  html+=`</tr></thead><tbody>`;
+  metrics.forEach(m=>{
+    html+=`<tr>`;
+    html+=`<td>${m.label}</td>`;
+    weekTotals.forEach((w,wi)=>{
+      const val=w[m.key];
+      const prev=wi<weekTotals.length-1?weekTotals[wi+1][m.key]:null;
+      const arr=wi===0?arrow(val,prev,m.good):'';
+      html+=`<td class="${wi===0?'trend-cur':''}">${m.fmt(val)}${arr}</td>`;
+    });
+    html+=`</tr>`;
+  });
+  html+=`</tbody></table></div><div style="font-size:9px;color:var(--muted);margin-top:8px;padding-top:6px;border-top:1px solid var(--border)">▲ Green = improvement · ▼ Red = decline vs prior week · Snapshots captured automatically on Sync when 7+ days elapsed</div></div>`;
+  el.innerHTML=html;
+}
+
+// ── ANNUAL TICKER ─────────────────────────────────────────────────────
+function buildAnnualTicker() {
+  const totCW = repData.reduce((s,r)=>s+r.cw_amount,0);
+  const pct   = Math.min(100, Math.round(totCW / TEAM_TARGET * 100));
+  const gap   = Math.max(0, TEAM_TARGET - totCW);
+  const el    = document.getElementById('annualTicker');
+  if (!el) return;
+  el.innerHTML = `
+    <div class="annual-ticker">
+      <div class="at-top">
+        <div>
+          <div class="at-label">2026 Annual Revenue · Progress to $1M Target</div>
+          <div class="at-amount">$${(totCW/1000).toFixed(0)}K <span style="font-family:var(--font);font-size:14px;font-weight:400;opacity:.7">closed won</span></div>
+        </div>
+        <div style="text-align:right">
+          <div class="at-pct">${pct}% of $1M</div>
+          <div style="font-size:10px;color:rgba(255,255,255,.55);margin-top:4px">$${(gap/1000).toFixed(0)}K remaining</div>
+        </div>
+      </div>
+      <div class="at-bar-wrap"><div class="at-bar" style="width:${pct}%"></div></div>
+      <div class="at-sub">
+        <span>${repData.reduce((s,r)=>s+r.cw_deals,0)} deals closed · ${repData.filter(r=>r.cw_amount>0).length} of ${repData.filter(r=>r.role.includes('Account')).length} AEs producing</span>
+        <span>$${(TEAM_TARGET/1000).toFixed(0)}K target</span>
+      </div>
+    </div>`;
+}
+
+// ── QUARTERLY ROLLUP ───────────────────────────────────────────────────
+// Q definitions — dates are hard-coded for 2026 fiscal year
+const QUARTERS = [
+  { label: 'Q1 2026', start: '2026-01-01', end: '2026-03-31', quota: 250000 },
+  { label: 'Q2 2026', start: '2026-04-01', end: '2026-06-30', quota: 250000 },
+  { label: 'Q3 2026', start: '2026-07-01', end: '2026-09-30', quota: 250000 },
+  { label: 'Q4 2026', start: '2026-10-01', end: '2026-12-31', quota: 250000 },
+];
+
+function getQuarterForDate(dateStr) {
+  const d = new Date(dateStr);
+  return QUARTERS.findIndex(q => d >= new Date(q.start) && d <= new Date(q.end + 'T23:59:59'));
+}
+
+function buildQtrStrip() {
+  const el = document.getElementById('qtrStrip');
+  if (!el) return;
+
+  const now       = new Date();
+  const curQtrIdx = QUARTERS.findIndex(q => now >= new Date(q.start) && now <= new Date(q.end + 'T23:59:59'));
+
+  // Tally CW revenue per quarter from rep deal data
+  // We use rep.cw_amount for current quarter (already filtered to 2026 by worker)
+  // For prior quarters we'd need history — use history snapshots where available
+  const history = (window._scorecardData && window._scorecardData.history) ? window._scorecardData.history : [];
+
+  // Build quarter totals
+  // Current quarter: live rep data
+  // Prior quarters: look in history for snapshot closest to quarter end,
+  //   with fallback to live data for the most recent past quarter when
+  //   no history snapshot exists yet (e.g. first week of a new quarter)
+  // Use per-quarter CW from worker if available (q1_cw, q2_cw etc),
+  // otherwise fall back to history snapshots or live totals
+  const liveCW = repData.reduce((s,r) => s + r.cw_amount, 0);
+  const qCW = [
+    repData.reduce((s,r) => s + (r.q1_cw != null ? r.q1_cw : 0), 0),
+    repData.reduce((s,r) => s + (r.q2_cw != null ? r.q2_cw : 0), 0),
+    repData.reduce((s,r) => s + (r.q3_cw != null ? r.q3_cw : 0), 0),
+    repData.reduce((s,r) => s + (r.q4_cw != null ? r.q4_cw : 0), 0),
+  ];
+  const hasQBreakdown = repData.some(r => r.q1_cw != null);
+
+  const qTotals = QUARTERS.map((q, qi) => {
+    // Use per-quarter breakdown from worker if available
+    if (hasQBreakdown) return qCW[qi] || 0;
+
+    if (qi === curQtrIdx) {
+      // Current quarter — no per-quarter data yet, show 0 (nothing closed in new quarter)
+      // Exception: if we're in Q1 (no prior quarter), show live CW
+      return curQtrIdx === 0 ? liveCW : 0;
+    } else if (qi < curQtrIdx) {
+      // Past quarter — try history snapshot from within that quarter first
+      const qEnd   = new Date(q.end + 'T23:59:59');
+      const qStart = new Date(q.start);
+      const match  = history.find(h => {
+        if (!h.savedAt) return false;
+        const d = new Date(h.savedAt);
+        return d >= qStart && d <= qEnd;
+      });
+      if (match) return (match.reps || []).reduce((s,r) => s + (r.cw_amount||0), 0);
+
+      // No snapshot — if it's the quarter immediately before current, use live CW
+      // (safe assumption: all existing CW closed in that quarter since Q-current just started)
+      if (qi === curQtrIdx - 1) return liveCW;
+
+      return null; // older quarters with no data
+    } else {
+      return null; // future quarters
+    }
+  });
+
+  const aeN = repData.filter(r=>r.role.includes('Account')).length;
+
+  el.innerHTML = QUARTERS.map((q, qi) => {
+    const isCurrent = qi === curQtrIdx;
+    const isPast    = qi < curQtrIdx;
+    const isFuture  = qi > curQtrIdx;
+    const amt       = qTotals[qi];
+    const teamQuota = q.quota; // already team total ($250K/quarter)
+    const pct       = amt !== null ? Math.min(100, Math.round(amt / teamQuota * 100)) : 0;
+    const hit       = amt !== null && amt >= teamQuota;
+
+    let cls = 'qt';
+    if (isCurrent) cls += ' active';
+    if (hit) cls += ' hit';
+    if (isPast && !hit) cls += ' past';
+    if (isPast && !hit) cls += ' past';
+
+    let badgeLabel = isCurrent ? 'Current' : isPast ? 'Complete' : 'Upcoming';
+    let badgeCls   = isCurrent ? 'current' : isPast ? 'done' : 'future';
+
+    let amtDisplay = amt !== null ? '$' + (amt/1000).toFixed(0) + 'K' : '—';
+    let barColor   = hit ? 'var(--qh-green)' : isCurrent ? 'var(--qh-blue)' : isPast ? 'var(--dim)' : 'var(--border2)';
+    let subText    = isFuture
+      ? 'Starts ' + new Date(q.start).toLocaleDateString('en-US',{month:'short',day:'numeric'})
+      : amt !== null
+        ? (hit ? '✓ Quota hit' : pct + '% of $' + (teamQuota/1000).toFixed(0) + 'K quota')
+        : 'No data yet';
+
+    const pctDisplay = amt !== null && !isFuture ? `<span class="qt-sub-pct" style="color:${hit?'#3d7a00':isCurrent?'var(--qh-blue)':'var(--dim)'}">${pct}%</span>` : '';
+    return `<div class="${cls}">
+      <div class="qt-label">${q.label} <span class="qt-badge ${badgeCls}">${badgeLabel}</span></div>
+      <div class="qt-amount">${amtDisplay}</div>
+      <div class="qt-quota">of $${(teamQuota/1000).toFixed(0)}K team quota</div>
+      <div class="qt-bar-wrap"><div class="qt-bar" style="width:${pct}%;background:${barColor}"></div></div>
+      <div class="qt-sub">${pctDisplay} ${subText}</div>
+    </div>`;
+  }).join('');
+}
+
 // ── KPI STRIP BUILDER (shared by build + restore) ─────────────────────
 function buildKpiStrip() {
+  buildAnnualTicker();
+  buildQtrStrip();
+  buildTeamTrendStrip();
+  buildTeamTrendStrip();
   const totCW  = repData.reduce((s,r)=>s+r.cw_amount,0);
   const totPip = repData.reduce((s,r)=>s+r.pipeline_value,0);
   const totD   = repData.reduce((s,r)=>s+r.active_deals,0);
@@ -1725,6 +2114,14 @@ window.addEventListener('DOMContentLoaded', () => {
   var fv = document.getElementById('footerVersion');
   if(fv) fv.textContent = APP_VERSION;
 
+  // Show DEV banner if on dev URL
+  var devBanner = document.getElementById('devBanner');
+  if(devBanner && (window.location.hostname.includes('dashboard-dev') || window.location.search.includes('dev=1'))) {
+    devBanner.style.display = 'block';
+    // Also update version badge with -dev suffix
+    if(vb) vb.textContent = APP_VERSION + '-dev';
+  }
+
   // Show loading screen
   show('loadingScreen');
 
@@ -1780,8 +2177,9 @@ function restoreScorecard(saved) {
   const exportDate = saved.exportDate || 'Previous export';
   const savedAt = saved.savedAt ? (() => {
     const d = new Date(saved.savedAt);
-    return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) +
-           ' at ' + d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit'});
+    const datePart = d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+    const timePart = d.toLocaleTimeString('en-US',{hour:'numeric',minute:'2-digit',hour12:true,timeZone:'America/New_York'});
+    return datePart + ' · ' + timePart + ' ET';
   })() : 'unknown';
 
   document.getElementById('phSb').textContent = `${QUARTER} · Quota $${(QUOTA/1000).toFixed(0)}K/rep`;
@@ -1798,7 +2196,7 @@ function restoreScorecard(saved) {
 
   // Update the export badge with last saved info
   const srcBadge = document.getElementById('srcBadge');
-  if(srcBadge) srcBadge.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> ' + repData.reduce((s,r)=>s+r.active_deals,0) + ' deals · ' + exportDate;
+  if(srcBadge) srcBadge.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> ' + repData.reduce((s,r)=>s+r.active_deals,0) + ' deals · Synced ' + savedAt;
 
   dbg('calling buildCards...');
   buildCards();
