@@ -19,7 +19,7 @@
 #pinModal.open{display:flex;align-items:center;justify-content:center;}
 </style>
 <title>QuantHub · Sales Rep Scorecard</title>
-<!-- QH-VERSION: v20b-dev -->
+<!-- QH-VERSION: v20c-dev -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Slab:wght@400;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -109,6 +109,13 @@ input[type=file]{display:none;}
 .btn-rl{display:inline-flex;align-items:center;gap:6px;background:var(--surface);color:var(--qh-blue);border:1px solid var(--bl-bd);border-radius:7px;padding:6px 13px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);}
 .src-badge{font-size:10px;color:var(--ok);background:var(--ok-bg);padding:3px 8px;border-radius:20px;border:1px solid var(--ok-bd);display:inline-flex;align-items:center;gap:4px;}
 
+/* EXECUTIVE PANEL */
+.exec-panel{background:linear-gradient(180deg,#f0f5fb 0%,#f7f9fc 100%);border:1px solid #d0dae8;border-radius:14px;padding:18px 20px;margin-bottom:18px;box-shadow:0 2px 12px rgba(0,119,181,.06);}
+.exec-panel-hdr{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--qh-blue);display:flex;align-items:center;gap:7px;margin-bottom:14px;font-weight:700;}
+.exec-panel .annual-ticker{border-radius:10px;margin-bottom:12px;}
+.exec-panel .qtr-section-label{margin-top:2px;}
+.exec-panel .trend-strip-wrap{background:var(--surface);border-color:#d0dae8;margin-bottom:0;}
+
 /* ANNUAL TICKER */
 .annual-ticker{background:linear-gradient(135deg,#0B4971,#0077B5);border-radius:12px;padding:16px 20px;margin-bottom:14px;color:#fff;position:relative;overflow:hidden;}
 .annual-ticker::before{content:'';position:absolute;right:-20px;top:-20px;width:120px;height:120px;border-radius:50%;background:rgba(255,255,255,.06);}
@@ -158,24 +165,6 @@ input[type=file]{display:none;}
 .trend-table th:last-child{border-radius:0 6px 0 0;}
 .trend-table td{padding:6px 10px;text-align:center;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:11px;}
 .trend-table td:first-child{text-align:left;font-family:var(--font);font-size:11px;font-weight:600;color:var(--text2);font-family:var(--font);}
-.trend-table tr:last-child td{border-bottom:none;}
-.trend-table tr:nth-child(even) td{background:var(--bg);}
-.trend-up{color:#3d7a00;font-weight:700;}
-.trend-dn{color:#b82038;font-weight:700;}
-.trend-nc{color:var(--muted);}
-.trend-cur{font-weight:700;color:var(--text);}
-
-/* TEAM TREND STRIP */
-.trend-strip-wrap{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-bottom:14px;}
-.trend-strip-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
-.trend-strip-title{font-size:11px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.07em;}
-.trend-strip-sub{font-size:10px;color:var(--muted);}
-.trend-table{width:100%;border-collapse:collapse;font-size:11px;}
-.trend-table th{padding:6px 10px;text-align:center;font-weight:700;color:#fff;background:var(--qh-dark);font-size:10px;}
-.trend-table th:first-child{text-align:left;border-radius:6px 0 0 0;}
-.trend-table th:last-child{border-radius:0 6px 0 0;}
-.trend-table td{padding:6px 10px;text-align:center;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:11px;}
-.trend-table td:first-child{text-align:left;font-family:var(--font);font-size:11px;font-weight:600;color:var(--text2);}
 .trend-table tr:last-child td{border-bottom:none;}
 .trend-table tr:nth-child(even) td{background:var(--bg);}
 .trend-up{color:#3d7a00;font-weight:700;}
@@ -592,10 +581,16 @@ input[type=file]{display:none;}
       <span class="src-badge" id="srcBadge" style="font-size:10px;"></span>
     </div>
   </div>
-  <div id="annualTicker"></div>
-  <div class="qtr-section-label">Quarterly Revenue · 2026</div>
-  <div class="qtr-strip" id="qtrStrip"></div>
-  <div id="teamTrendStrip"></div>
+  <div class="exec-panel">
+    <div class="exec-panel-hdr">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      Executive Summary
+    </div>
+    <div id="annualTicker"></div>
+    <div class="qtr-section-label">Quarterly Revenue · 2026</div>
+    <div class="qtr-strip" id="qtrStrip"></div>
+    <div id="teamTrendStrip"></div>
+  </div>
   <div class="kpi-strip" id="kpiStrip"></div>
   <div class="sec">Rep Performance · Click to drill in</div>
   <div class="rep-grid" id="repGrid"></div>
@@ -638,7 +633,7 @@ input[type=file]{display:none;}
 const ADMIN_PIN         = null;  // PIN validated server-side by Cloudflare Worker — not stored here
 const WORKER_URL        = 'https://quanthub-proxy-dev.michael-20e.workers.dev/';
 const HUBSPOT_PORTAL_ID = '7316176';  // ← Your HubSpot portal ID (from any HubSpot URL)
-const APP_VERSION = 'v20b-dev';
+const APP_VERSION = 'v20c-dev';
 
 let isAdminUnlocked = false;
 let pinMode  = 'load';
@@ -1599,9 +1594,19 @@ function buildTeamTrendStrip() {
     <div style="overflow-x:auto"><table class="trend-table"><thead><tr>
       <th style="text-align:left;min-width:140px">Metric</th>`;
 
+  // Mon-Fri range label for each week column
+  function weekRange(dateStr) {
+    const d = dateStr ? new Date(dateStr) : new Date();
+    const day = d.getDay();
+    const mon = new Date(d); mon.setDate(d.getDate() - (day===0?6:day-1));
+    const fri = new Date(mon); fri.setDate(mon.getDate()+4);
+    const fmt = dt => dt.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+    return fmt(mon) + ' – ' + fmt(fri);
+  }
   weekTotals.forEach((w,i) => {
-    const dateStr = (w.savedAt) ? new Date(w.savedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}) : '';
-    html += `<th style="min-width:100px">${i===0?'This Week':('Week -'+i)}<div style="font-size:8px;opacity:.55;font-weight:400;font-family:var(--font)">${dateStr}</div></th>`;
+    const label = i===0?'This Week':i===1?'Last Week':i===2?'2 Weeks Ago':i===3?'3 Weeks Ago':'4 Weeks Ago';
+    const range = weekRange(w.savedAt);
+    html += `<th style="min-width:110px">${label}<div style="font-size:8px;opacity:.6;font-weight:400;font-family:var(--font);margin-top:2px">${range}</div></th>`;
   });
 
   html += `</tr></thead><tbody>`;
@@ -1626,68 +1631,6 @@ function buildTeamTrendStrip() {
   </div>`;
 
   el.innerHTML = html;
-}
-
-// ── TEAM 4-WEEK TREND STRIP ───────────────────────────────────────────
-function buildTeamTrendStrip() {
-  const el = document.getElementById('teamTrendStrip');
-  if (!el) return;
-  const history = (window._scorecardData && window._scorecardData.history) ? window._scorecardData.history : [];
-  const weeks   = history.filter(w => w.reps);
-  if (!weeks.length) {
-    el.innerHTML = `<div class="trend-strip-wrap"><div class="trend-strip-hdr"><div class="trend-strip-title">📈 Team 4-Week Trend</div></div><div style="font-size:11px;color:var(--muted);padding:6px 0">Trend data accumulates automatically week-over-week. Check back after the next sync cycle (7+ days).</div></div>`;
-    return;
-  }
-  const allWeeks = [{ week:'This Week', savedAt:window._scorecardData.savedAt, reps:window._scorecardData.reps }].concat(weeks.slice(0,4));
-  const weekTotals = allWeeks.map(w => {
-    const reps = w.reps||[];
-    return {
-      week: w.week, savedAt: w.savedAt,
-      cw:       reps.reduce((s,r)=>s+(r.cw_amount||0),0),
-      pipe:     reps.reduce((s,r)=>s+(r.pipeline_value||0),0),
-      deals:    reps.reduce((s,r)=>s+(r.active_deals||0),0),
-      stale:    reps.reduce((s,r)=>s+(r.stale_7d||0),0),
-      calls:    reps.reduce((s,r)=>s+(r.raw_calls||0),0),
-      meetings: reps.reduce((s,r)=>s+(r.raw_meetings||0),0),
-      advanced: reps.reduce((s,r)=>s+(r.deals_advanced_week||0),0),
-    };
-  });
-  function fmtK(v){return v==null?'—':'$'+(v>=1000?(v/1000).toFixed(0)+'K':v);}
-  function fmtN(v){return v==null?'—':v;}
-  function arrow(curr,prev,good){
-    if(curr==null||prev==null)return '';
-    if(curr===prev)return '<span class="trend-nc"> —</span>';
-    const better=good==='up'?curr>prev:curr<prev;
-    return better?'<span class="trend-up"> ▲</span>':'<span class="trend-dn"> ▼</span>';
-  }
-  const metrics=[
-    {label:'CW Revenue (YTD)',  key:'cw',       fmt:fmtK, good:'up'},
-    {label:'Active Pipeline',   key:'pipe',      fmt:fmtK, good:'up'},
-    {label:'Active Deals',      key:'deals',     fmt:fmtN, good:'up'},
-    {label:'Stale >7 Days',     key:'stale',     fmt:fmtN, good:'down'},
-    {label:'Deals Advanced',    key:'advanced',  fmt:fmtN, good:'up'},
-    {label:'Calls (team)',      key:'calls',     fmt:fmtN, good:'up'},
-    {label:'Meetings (team)',   key:'meetings',  fmt:fmtN, good:'up'},
-  ];
-  let html=`<div class="trend-strip-wrap"><div class="trend-strip-hdr"><div class="trend-strip-title">📈 Team 4-Week Trend</div><div class="trend-strip-sub">${allWeeks.length} week${allWeeks.length>1?'s':''} of data · auto-captures every 7 days on sync</div></div><div style="overflow-x:auto"><table class="trend-table"><thead><tr><th style="text-align:left;min-width:140px">Metric</th>`;
-  weekTotals.forEach((w,i)=>{
-    const ds=w.savedAt?new Date(w.savedAt).toLocaleDateString('en-US',{month:'short',day:'numeric'}):'';
-    html+=`<th style="min-width:100px">${i===0?'This Week':'Week -'+i}<div style="font-size:8px;opacity:.55;font-weight:400;font-family:var(--font)">${ds}</div></th>`;
-  });
-  html+=`</tr></thead><tbody>`;
-  metrics.forEach(m=>{
-    html+=`<tr>`;
-    html+=`<td>${m.label}</td>`;
-    weekTotals.forEach((w,wi)=>{
-      const val=w[m.key];
-      const prev=wi<weekTotals.length-1?weekTotals[wi+1][m.key]:null;
-      const arr=wi===0?arrow(val,prev,m.good):'';
-      html+=`<td class="${wi===0?'trend-cur':''}">${m.fmt(val)}${arr}</td>`;
-    });
-    html+=`</tr>`;
-  });
-  html+=`</tbody></table></div><div style="font-size:9px;color:var(--muted);margin-top:8px;padding-top:6px;border-top:1px solid var(--border)">▲ Green = improvement · ▼ Red = decline vs prior week · Snapshots captured automatically on Sync when 7+ days elapsed</div></div>`;
-  el.innerHTML=html;
 }
 
 // ── ANNUAL TICKER ─────────────────────────────────────────────────────
@@ -1803,7 +1746,6 @@ function buildQtrStrip() {
     if (isCurrent) cls += ' active';
     if (hit) cls += ' hit';
     if (isPast && !hit) cls += ' past';
-    if (isPast && !hit) cls += ' past';
 
     let badgeLabel = isCurrent ? 'Current' : isPast ? 'Complete' : 'Upcoming';
     let badgeCls   = isCurrent ? 'current' : isPast ? 'done' : 'future';
@@ -1831,7 +1773,6 @@ function buildQtrStrip() {
 function buildKpiStrip() {
   buildAnnualTicker();
   buildQtrStrip();
-  buildTeamTrendStrip();
   buildTeamTrendStrip();
   const totCW  = repData.reduce((s,r)=>s+r.cw_amount,0);
   const totPip = repData.reduce((s,r)=>s+r.pipeline_value,0);
