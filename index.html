@@ -19,7 +19,7 @@
 #pinModal.open{display:flex;align-items:center;justify-content:center;}
 </style>
 <title>QuantHub · Sales Rep Scorecard</title>
-<!-- QH-VERSION: v20l-dev -->
+<!-- QH-VERSION: v20m-dev -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Slab:wght@400;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -281,6 +281,23 @@ input[type=file]{display:none;}
 
 /* ALERT */
 .alert{background:var(--or-bg);border:1px solid var(--or-bd);border-radius:7px;padding:7px 10px;font-size:10px;color:var(--or);margin-top:8px;font-weight:500;}
+
+/* DEAL SCORE TOOLTIP */
+.ds-wrap{position:relative;display:inline-flex;align-items:center;}
+.ds-tip{position:absolute;z-index:9999;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);width:220px;background:#fff;border:1px solid var(--border2);border-radius:10px;box-shadow:0 6px 24px rgba(0,0,0,.15);padding:12px 14px;pointer-events:none;opacity:0;transition:opacity .15s;font-family:var(--font);}
+.ds-wrap:hover .ds-tip{opacity:1;}
+.ds-tip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--border2);}
+.ds-tip-score{display:flex;align-items:center;gap:10px;margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+.ds-tip-ring{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--slab);font-size:16px;font-weight:700;border:3px solid;flex-shrink:0;}
+.ds-tip-title{font-size:11px;font-weight:700;color:var(--text2);}
+.ds-tip-sub{font-size:10px;color:var(--muted);}
+.ds-section{margin-bottom:8px;}
+.ds-section-title{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:5px;}
+.ds-row{display:flex;align-items:center;gap:6px;padding:2px 0;font-size:10px;color:var(--text2);}
+.ds-arrow-up{color:#3d7a00;font-size:10px;}
+.ds-arrow-dn{color:#b82038;font-size:10px;}
+.ds-hs-link{font-size:9px;color:var(--bl);text-decoration:none;display:block;text-align:center;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);}
+.ds-hs-link:hover{text-decoration:underline;}
 
 /* FOOTER */
 .footer{margin-top:18px;padding-top:13px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
@@ -637,7 +654,7 @@ input[type=file]{display:none;}
 const ADMIN_PIN         = null;  // PIN validated server-side by Cloudflare Worker — not stored here
 const WORKER_URL        = 'https://quanthub-proxy-dev.michael-20e.workers.dev/';
 const HUBSPOT_PORTAL_ID = '7316176';  // ← Your HubSpot portal ID (from any HubSpot URL)
-const APP_VERSION = 'v20l-dev';
+const APP_VERSION = 'v20m-dev';
 
 let isAdminUnlocked = false;
 let pinMode  = 'load';
@@ -1379,13 +1396,56 @@ function renderDetail(id){
         ?'<a href="https://app.hubspot.com/contacts/'+HUBSPOT_PORTAL_ID+'/deal/'+d.id+'" target="_blank" style="color:var(--qh-blue);font-size:9px;text-decoration:none;opacity:.7;margin-left:5px;" title="Open in HubSpot">&#x2197;</a>'
         :'';
       const nextStep=d.next?'<div class="dns">'+d.next+'</div>':'';
-      // Deal score badge — HubSpot predictive score (0-100)
-      const dsColor = d.deal_score>=70?'#3d7a00':d.deal_score>=40?'#C07800':'#B82038';
-      const dsBg    = d.deal_score>=70?'#e4f3ce':d.deal_score>=40?'#FFF4DC':'#FFECEF';
-      const dsBadge = d.deal_score!=null
-        ?'<span title="HubSpot Deal Score" style="font-size:9px;font-family:var(--mono);font-weight:700;padding:1px 5px;border-radius:4px;background:'+dsBg+';color:'+dsColor+';margin-left:4px;border:1px solid '+dsColor+'40;flex-shrink:0">'+d.deal_score+'</span>'
-        :'';
-      pipHtml+='<div class="dr"><div class="dnw"><div class="dn">'+d.name+hsLink+dsBadge+'</div>'+nextStep+'</div><div class="da">'+fmt(d.amount)+'</div>'+sw+'</div>';
+      // Deal score tooltip — styled like HubSpot Key Factors panel
+      let dsBadge = '';
+      if (d.deal_score != null) {
+        const dsColor  = d.deal_score>=70?'#3d7a00':d.deal_score>=40?'#C07800':'#B82038';
+        const dsBg     = d.deal_score>=70?'#e4f3ce':d.deal_score>=40?'#FFF4DC':'#FFECEF';
+        const dsBorder = d.deal_score>=70?'#9fd460':d.deal_score>=40?'#F0C868':'#E8909A';
+        const dsLabel  = d.deal_score>=70?'Strong':d.deal_score>=40?'At Risk':'Weak';
+
+        // Progression rows
+        const probRow  = d.probability!=null
+          ? '<div class="ds-row"><span class="ds-arrow-up">▲</span>Deal probability is '+d.probability+'%</div>' : '';
+        const daysRow  = d.days_to_close!=null
+          ? '<div class="ds-row"><span class="'+(d.days_to_close<=30?'ds-arrow-up':'ds-arrow-dn')+'">'+
+            (d.days_to_close<=30?'▲':'▼')+'</span>'+d.days_to_close+' days until close date</div>' : '';
+        const staleRow = d.stale>14
+          ? '<div class="ds-row"><span class="ds-arrow-dn">▼</span>No activity in '+d.stale+' days</div>'
+          : d.stale>7
+          ? '<div class="ds-row"><span class="ds-arrow-dn">▼</span>Last touch '+d.stale+' days ago</div>'
+          : '<div class="ds-row"><span class="ds-arrow-up">▲</span>Active this week</div>';
+        const contactsRow = d.contacts
+          ? '<div class="ds-row"><span class="ds-arrow-up">▲</span>'+d.contacts+' associated contact'+(d.contacts>1?'s':'')+'</div>' : '';
+
+        const hsLink2 = (d.id && HUBSPOT_PORTAL_ID)
+          ? '<a class="ds-hs-link" href="https://app.hubspot.com/contacts/'+HUBSPOT_PORTAL_ID+'/deal/'+d.id+'" target="_blank">Open in HubSpot ↗</a>'
+          : '';
+
+        dsBadge = '<span class="ds-wrap">'+
+          '<span style="font-size:9px;font-family:var(--mono);font-weight:700;padding:1px 6px;border-radius:4px;'+
+          'background:'+dsBg+';color:'+dsColor+';margin-left:5px;border:1px solid '+dsBorder+';cursor:default;flex-shrink:0">'+
+          d.deal_score+'</span>'+
+          '<div class="ds-tip">'+
+            '<div class="ds-tip-score">'+
+              '<div class="ds-tip-ring" style="color:'+dsColor+';border-color:'+dsBorder+';background:'+dsBg+'">'+d.deal_score+'</div>'+
+              '<div><div class="ds-tip-title">Deal Score · '+dsLabel+'</div>'+
+              '<div class="ds-tip-sub">'+(d.likelihood!=null?d.likelihood+'% likelihood to close':'HubSpot predictive score')+'</div></div>'+
+            '</div>'+
+            '<div class="ds-section">'+
+              '<div class="ds-section-title">Progression</div>'+
+              probRow + daysRow + staleRow +
+            '</div>'+
+            '<div class="ds-section">'+
+              '<div class="ds-section-title">Engagement</div>'+
+              contactsRow +
+              '<div class="ds-row"><span style="color:var(--muted)">→</span>Next: '+(d.next||'No next step set')+'</div>'+
+            '</div>'+
+            hsLink2+
+          '</div>'+
+        '</span>';
+      }
+      pipHtml+='<div class="dr"><div class="dnw"><div class="dn" style="display:flex;align-items:center;flex-wrap:wrap;gap:2px;">'+d.name+hsLink+dsBadge+'</div>'+nextStep+'</div><div class="da">'+fmt(d.amount)+'</div>'+sw+'</div>';
     });
     pipHtml+='</div>';
   });
