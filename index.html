@@ -19,7 +19,7 @@
 #pinModal.open{display:flex;align-items:center;justify-content:center;}
 </style>
 <title>QuantHub · Sales Rep Scorecard</title>
-<!-- QH-VERSION: v20i-dev -->
+<!-- QH-VERSION: v20j-dev -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Slab:wght@400;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -138,10 +138,10 @@ input[type=file]{display:none;}
 .qtr-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:6px;}
 .qt{background:linear-gradient(160deg,#f7f9fc,#eef2f8);border:1px solid #d4dce8;border-radius:10px;padding:14px 16px;position:relative;transition:box-shadow .15s;overflow:hidden;}
 .qt::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--border2);border-radius:10px 10px 0 0;}
-.qt.active::before{background:var(--qh-blue);}
+.qt.active::before{background:linear-gradient(90deg,#4a9a0a,#69A62A);}
 .qt.hit::before{background:var(--qh-green);}
 .qt.past::before{background:var(--dim);}
-.qt.active{border-color:#b8cfe8;box-shadow:0 2px 14px rgba(0,119,181,.1);}
+.qt.active{border-color:#69A62A;box-shadow:0 0 0 4px rgba(105,166,42,.3),0 0 20px rgba(105,166,42,.18),0 2px 14px rgba(0,0,0,.06);}
 .qt.hit{border-color:#b2d87a;background:linear-gradient(160deg,#f2fae8,#e8f5d4);}
 .qt-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:8px;display:flex;align-items:center;gap:5px;}
 .qt-badge{font-size:8px;padding:1px 7px;border-radius:10px;font-weight:700;letter-spacing:.04em;}
@@ -149,7 +149,7 @@ input[type=file]{display:none;}
 .qt-badge.done{background:#e4f3ce;color:#3d7a00;border:1px solid #9fd460;}
 .qt-badge.future{background:var(--bg);color:var(--dim);border:1px solid var(--border);}
 .qt-amount{font-family:var(--slab);font-size:22px;font-weight:700;color:var(--text2);line-height:1;margin-bottom:2px;}
-.qt.active .qt-amount{color:var(--qh-blue);}
+.qt.active .qt-amount{color:#3d7a00;}
 .qt.hit .qt-amount{color:#3d7a00;}
 .qt.past .qt-amount{color:var(--muted);}
 .qt-quota{font-size:9px;color:var(--dim);margin-bottom:8px;font-family:var(--mono);}
@@ -637,7 +637,7 @@ input[type=file]{display:none;}
 const ADMIN_PIN         = null;  // PIN validated server-side by Cloudflare Worker — not stored here
 const WORKER_URL        = 'https://quanthub-proxy-dev.michael-20e.workers.dev/';
 const HUBSPOT_PORTAL_ID = '7316176';  // ← Your HubSpot portal ID (from any HubSpot URL)
-const APP_VERSION = 'v20i-dev';
+const APP_VERSION = 'v20j-dev';
 
 let isAdminUnlocked = false;
 let pinMode  = 'load';
@@ -1215,7 +1215,7 @@ function scoreRep(r){
 // ═══════════════════════════════════════════════════════
 //  RENDER
 // ═══════════════════════════════════════════════════════
-function fmt(v){if(!v&&v!==0)return'—';return v>=1000?'$'+(v/1000).toFixed(0)+'K':'$'+v;}
+function fmt(v){if(!v&&v!==0)return'—';if(v>=1000000)return'$'+(v/1000000).toFixed(2).replace(/\.?0+$/,'')+'M';return v>=1000?'$'+(v/1000).toFixed(0)+'K':'$'+v;}
 function radial(s,sz,sw){
   const g=grade(s),r=(sz-sw)/2,c=sz/2,ci=2*Math.PI*r,off=ci-s/100*ci;
   return`<svg width="${sz}" height="${sz}" style="transform:rotate(-90deg)"><circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="#DDE4EF" stroke-width="${sw}"/><circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${g.c}" stroke-width="${sw}" stroke-dasharray="${ci.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" stroke-linecap="round"/><text x="${c}" y="${c+sz*.08}" text-anchor="middle" fill="${g.c}" font-size="${sz*.22}" font-weight="700" font-family="'Roboto Mono',monospace" style="transform:rotate(90deg);transform-origin:${c}px ${c}px">${s}</text></svg>`;
@@ -1379,7 +1379,13 @@ function renderDetail(id){
         ?'<a href="https://app.hubspot.com/contacts/'+HUBSPOT_PORTAL_ID+'/deal/'+d.id+'" target="_blank" style="color:var(--qh-blue);font-size:9px;text-decoration:none;opacity:.7;margin-left:5px;" title="Open in HubSpot">&#x2197;</a>'
         :'';
       const nextStep=d.next?'<div class="dns">'+d.next+'</div>':'';
-      pipHtml+='<div class="dr"><div class="dnw"><div class="dn">'+d.name+hsLink+'</div>'+nextStep+'</div><div class="da">'+fmt(d.amount)+'</div>'+sw+'</div>';
+      // Deal score badge — HubSpot predictive score (0-100)
+      const dsColor = d.deal_score>=70?'#3d7a00':d.deal_score>=40?'#C07800':'#B82038';
+      const dsBg    = d.deal_score>=70?'#e4f3ce':d.deal_score>=40?'#FFF4DC':'#FFECEF';
+      const dsBadge = d.deal_score!=null
+        ?'<span title="HubSpot Deal Score" style="font-size:9px;font-family:var(--mono);font-weight:700;padding:1px 5px;border-radius:4px;background:'+dsBg+';color:'+dsColor+';margin-left:4px;border:1px solid '+dsColor+'40;flex-shrink:0">'+d.deal_score+'</span>'
+        :'';
+      pipHtml+='<div class="dr"><div class="dnw"><div class="dn">'+d.name+hsLink+dsBadge+'</div>'+nextStep+'</div><div class="da">'+fmt(d.amount)+'</div>'+sw+'</div>';
     });
     pipHtml+='</div>';
   });
@@ -1419,7 +1425,7 @@ function renderDetail(id){
     return '<span style="color:var(--muted);font-size:11px;margin-left:4px">—</span>';
   }
 
-  function fmtK(v) { return v === null ? '—' : v >= 1000 ? '$'+(v/1000).toFixed(0)+'K' : '$'+v; }
+  function fmtK(v) { if(v===null)return'—'; if(v>=1000000)return'$'+(v/1000000).toFixed(2).replace(/\.?0+$/,'')+'M'; return v>=1000?'$'+(v/1000).toFixed(0)+'K':'$'+v; }
 
   let trHtml = '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12px">';
   trHtml += '<thead><tr style="background:var(--qh-dark);color:#fff">';
@@ -1809,7 +1815,7 @@ function buildKpiStrip() {
       <div style="margin:5px 0 3px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;"><div style="height:100%;width:${Math.min(100,Math.round(totCW/TEAM_TARGET*100))}%;background:var(--qh-blue);border-radius:2px;transition:width .5s;"></div></div>
       <div class="kpi-s">${repData.reduce((s,r)=>s+r.cw_deals,0)} deals · vs <strong>$1M</strong> annual target</div>
     </div>
-    <div class="kpi g"><div class="kpi-l">Active Pipeline</div><div class="kpi-v-wrap"><div class="kpi-v">$${(totPip/1000).toFixed(0)}K</div><div class="ins-tip">${pipeInsight}</div></div><div class="kpi-s">${totD} active deals</div></div>
+    <div class="kpi g"><div class="kpi-l">Active Pipeline</div><div class="kpi-v-wrap"><div class="kpi-v">${totPip>=1000000?'$'+(totPip/1000000).toFixed(2).replace(/\.?0+$/,'')+'M':'$'+(totPip/1000).toFixed(0)+'K'}</div><div class="ins-tip">${pipeInsight}</div></div><div class="kpi-s">${totD} active deals</div></div>
     <div class="kpi ${totS>5?'r':totS>2?'a':'g'}"><div class="kpi-l">Stale &gt;7 Days</div><div class="kpi-v-wrap"><div class="kpi-v">${totS}</div><div class="ins-tip">${staleInsight}</div></div><div class="kpi-s">${totS>5?'⚠ Action required':totS>0?'Monitor standup':'All current ✓'}</div></div>
     <div class="kpi a"><div class="kpi-l">Team Quota Attainment</div><div class="kpi-v-wrap"><div class="kpi-v">${teamAtt}%</div><div class="ins-tip">${attInsight}</div></div><div class="kpi-s">vs $${(QUOTA*aeN/1000).toFixed(0)}K Q1 · $1M annual</div></div>`;
 }
