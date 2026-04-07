@@ -16,12 +16,12 @@
       "stale_7d": 0,
       "deals_advanced_week": 2,
       "avg_days_to_close": 148,
-      "ip_meetings_week": 5,
-      "vr_calls_week": 5,
-      "phone_calls_week": 12,
+      "ip_meetings_week": 10,
+      "vr_calls_week": 9,
+      "phone_calls_week": 0,
       "text_touches_week": 0,
-      "raw_calls": 12,
-      "raw_meetings": 10,
+      "raw_calls": 0,
+      "raw_meetings": 19,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 0,
@@ -149,12 +149,12 @@
       "stale_7d": 8,
       "deals_advanced_week": 14,
       "avg_days_to_close": 104,
-      "ip_meetings_week": 4,
-      "vr_calls_week": 3,
-      "phone_calls_week": 7,
+      "ip_meetings_week": 7,
+      "vr_calls_week": 6,
+      "phone_calls_week": 0,
       "text_touches_week": 0,
-      "raw_calls": 7,
-      "raw_meetings": 7,
+      "raw_calls": 0,
+      "raw_meetings": 13,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 0,
@@ -242,13 +242,13 @@
           "name": "Valdosta State University - New Deal",
           "stage": "Negotiation",
           "amount": 74000,
-          "stale": 1,
+          "stale": 0,
           "next": "3/20 - Guclu confirmed review, JD offered to sync on Tuesday 3/25",
           "id": "56549266038"
         },
         {
           "name": "AI in Marketing Loras College - New Deal",
-          "stage": "Sales Opportunity",
+          "stage": "Trial (optional)",
           "amount": 960,
           "stale": 5,
           "next": "Working w/ IT to integrate w/ Moodle - Bob Adams. Send Bob Interation \n",
@@ -320,12 +320,12 @@
       "stale_7d": 0,
       "deals_advanced_week": 3,
       "avg_days_to_close": 2,
-      "ip_meetings_week": 5,
-      "vr_calls_week": 5,
-      "phone_calls_week": 55,
+      "ip_meetings_week": 4,
+      "vr_calls_week": 3,
+      "phone_calls_week": 0,
       "text_touches_week": 0,
-      "raw_calls": 55,
-      "raw_meetings": 10,
+      "raw_calls": 0,
+      "raw_meetings": 7,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 0,
@@ -382,12 +382,12 @@
       "stale_7d": 3,
       "deals_advanced_week": 20,
       "avg_days_to_close": 63,
-      "ip_meetings_week": 6,
-      "vr_calls_week": 6,
-      "phone_calls_week": 93,
+      "ip_meetings_week": 12,
+      "vr_calls_week": 12,
+      "phone_calls_week": 0,
       "text_touches_week": 0,
-      "raw_calls": 93,
-      "raw_meetings": 12,
+      "raw_calls": 0,
+      "raw_meetings": 24,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 2,
@@ -587,12 +587,12 @@
       "stale_7d": 0,
       "deals_advanced_week": 2,
       "avg_days_to_close": 12,
-      "ip_meetings_week": 0,
-      "vr_calls_week": 0,
-      "phone_calls_week": 32,
+      "ip_meetings_week": 7,
+      "vr_calls_week": 6,
+      "phone_calls_week": 0,
       "text_touches_week": 0,
-      "raw_calls": 32,
-      "raw_meetings": 0,
+      "raw_calls": 0,
+      "raw_meetings": 13,
       "raw_emails": 0,
       "raw_sms": 2,
       "raw_linkedin": 0,
@@ -628,9 +628,9 @@
   ],
   "version": 10,
   "source": "hubspot-api",
-  "workerVersion": "w1.2-dev",
+  "workerVersion": "w1.4-dev",
   "exportDate": "April 7, 2026",
-  "savedAt": "2026-04-07T13:32:16.724Z",
+  "savedAt": "2026-04-07T13:58:06.993Z",
   "history": [
     {
       "week": "Mar 30 – Apr 3",
@@ -645,7 +645,7 @@
           "pipeline_value": 105265,
           "stale_7d": 0,
           "raw_calls": 0,
-          "raw_meetings": 2,
+          "raw_meetings": 10,
           "deals_advanced_week": 0
         },
         {
@@ -657,8 +657,8 @@
           "pipeline_value": 538210,
           "stale_7d": 1,
           "raw_calls": 0,
-          "raw_meetings": 0,
-          "deals_advanced_week": 31
+          "raw_meetings": 7,
+          "deals_advanced_week": 30
         },
         {
           "id": "mf",
@@ -669,7 +669,7 @@
           "pipeline_value": 5760,
           "stale_7d": 2,
           "raw_calls": 0,
-          "raw_meetings": 0,
+          "raw_meetings": 3,
           "deals_advanced_week": 0
         },
         {
@@ -681,7 +681,7 @@
           "pipeline_value": 149217,
           "stale_7d": 1,
           "raw_calls": 0,
-          "raw_meetings": 0,
+          "raw_meetings": 12,
           "deals_advanced_week": 8
         },
         {
@@ -693,7 +693,7 @@
           "pipeline_value": 30800,
           "stale_7d": 0,
           "raw_calls": 0,
-          "raw_meetings": 0,
+          "raw_meetings": 5,
           "deals_advanced_week": 0
         }
       ]
@@ -711,7 +711,7 @@
           "pipeline_value": 107905,
           "stale_7d": 0,
           "raw_calls": 0,
-          "raw_meetings": 1,
+          "raw_meetings": 9,
           "deals_advanced_week": 0
         },
         {
@@ -723,7 +723,7 @@
           "pipeline_value": 538210,
           "stale_7d": 0,
           "raw_calls": 0,
-          "raw_meetings": 0,
+          "raw_meetings": 8,
           "deals_advanced_week": 1
         },
         {
@@ -735,7 +735,7 @@
           "pipeline_value": 2400,
           "stale_7d": 2,
           "raw_calls": 0,
-          "raw_meetings": 0,
+          "raw_meetings": 4,
           "deals_advanced_week": 0
         },
         {
@@ -747,7 +747,7 @@
           "pipeline_value": 148017,
           "stale_7d": 1,
           "raw_calls": 0,
-          "raw_meetings": 1,
+          "raw_meetings": 3,
           "deals_advanced_week": 0
         },
         {
@@ -759,7 +759,7 @@
           "pipeline_value": 15800,
           "stale_7d": 0,
           "raw_calls": 0,
-          "raw_meetings": 0,
+          "raw_meetings": 4,
           "deals_advanced_week": 0
         }
       ]
@@ -777,7 +777,7 @@
           "pipeline_value": 107905,
           "stale_7d": 0,
           "raw_calls": 0,
-          "raw_meetings": 4,
+          "raw_meetings": 14,
           "deals_advanced_week": 0
         },
         {
@@ -789,7 +789,7 @@
           "pipeline_value": 460210,
           "stale_7d": 0,
           "raw_calls": 0,
-          "raw_meetings": 5,
+          "raw_meetings": 8,
           "deals_advanced_week": 0
         },
         {
@@ -813,7 +813,7 @@
           "pipeline_value": 147537,
           "stale_7d": 1,
           "raw_calls": 0,
-          "raw_meetings": 7,
+          "raw_meetings": 12,
           "deals_advanced_week": 0
         },
         {
@@ -842,7 +842,7 @@
           "active_deals": 7,
           "pipeline_value": 107905,
           "stale_7d": 0,
-          "raw_calls": 12,
+          "raw_calls": 0,
           "raw_meetings": 2,
           "deals_advanced_week": 0
         },
@@ -854,7 +854,7 @@
           "active_deals": 43,
           "pipeline_value": 445210,
           "stale_7d": 0,
-          "raw_calls": 7,
+          "raw_calls": 0,
           "raw_meetings": 2,
           "deals_advanced_week": 0
         },
@@ -866,7 +866,7 @@
           "active_deals": 2,
           "pipeline_value": 2400,
           "stale_7d": 0,
-          "raw_calls": 55,
+          "raw_calls": 0,
           "raw_meetings": 8,
           "deals_advanced_week": 2
         },
@@ -878,7 +878,7 @@
           "active_deals": 19,
           "pipeline_value": 109137,
           "stale_7d": 0,
-          "raw_calls": 93,
+          "raw_calls": 0,
           "raw_meetings": 3,
           "deals_advanced_week": 1
         },
@@ -890,7 +890,7 @@
           "active_deals": 0,
           "pipeline_value": 0,
           "stale_7d": 0,
-          "raw_calls": 32,
+          "raw_calls": 0,
           "raw_meetings": 0,
           "deals_advanced_week": 0
         }
