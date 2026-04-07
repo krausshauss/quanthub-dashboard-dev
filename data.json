@@ -16,12 +16,12 @@
       "stale_7d": 0,
       "deals_advanced_week": 2,
       "avg_days_to_close": 148,
-      "ip_meetings_week": 10,
-      "vr_calls_week": 9,
+      "ip_meetings_week": 4,
+      "vr_calls_week": 4,
       "phone_calls_week": 0,
       "text_touches_week": 0,
       "raw_calls": 0,
-      "raw_meetings": 19,
+      "raw_meetings": 8,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 0,
@@ -149,12 +149,12 @@
       "stale_7d": 8,
       "deals_advanced_week": 14,
       "avg_days_to_close": 104,
-      "ip_meetings_week": 7,
-      "vr_calls_week": 6,
+      "ip_meetings_week": 2,
+      "vr_calls_week": 2,
       "phone_calls_week": 0,
       "text_touches_week": 0,
       "raw_calls": 0,
-      "raw_meetings": 13,
+      "raw_meetings": 4,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 0,
@@ -274,7 +274,7 @@
           "name": "West Georgia UoWG John Upson",
           "stage": "Negotiation",
           "amount": 15800,
-          "stale": 5,
+          "stale": 0,
           "next": "",
           "id": "58025395292"
         },
@@ -315,24 +315,24 @@
       "q2_cw": 0,
       "q3_cw": 0,
       "q4_cw": 0,
-      "active_deals": 3,
-      "pipeline_value": 963360,
+      "active_deals": 2,
+      "pipeline_value": 483360,
       "stale_7d": 0,
-      "deals_advanced_week": 3,
-      "avg_days_to_close": 2,
-      "ip_meetings_week": 4,
-      "vr_calls_week": 3,
+      "deals_advanced_week": 2,
+      "avg_days_to_close": 3,
+      "ip_meetings_week": 0,
+      "vr_calls_week": 0,
       "phone_calls_week": 0,
       "text_touches_week": 0,
       "raw_calls": 0,
-      "raw_meetings": 7,
+      "raw_meetings": 0,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 0,
       "meetings_target": 6,
       "calls_target": 15,
       "text_target": 5,
-      "next_step_pct": 67,
+      "next_step_pct": 100,
       "amount_populated": 100,
       "close_date_set": 100,
       "stage_flow_pct": 0,
@@ -352,17 +352,9 @@
           "name": "Alabama Community College System for Jeff State - New Deal",
           "stage": "Discovery/Demo (SQL)",
           "amount": 480000,
-          "stale": 1,
+          "stale": 0,
           "next": "Have these modules ready to present and review during the  April 7th meeting to secure final approval for fall rollout.",
           "id": "58798284126"
-        },
-        {
-          "name": "Jeff State - Alabama Community College System New Deal",
-          "stage": "Discovery/Demo (SQL)",
-          "amount": 480000,
-          "stale": 1,
-          "next": "",
-          "id": "58827763088"
         }
       ]
     },
@@ -382,12 +374,12 @@
       "stale_7d": 3,
       "deals_advanced_week": 20,
       "avg_days_to_close": 63,
-      "ip_meetings_week": 12,
-      "vr_calls_week": 12,
+      "ip_meetings_week": 4,
+      "vr_calls_week": 3,
       "phone_calls_week": 0,
       "text_touches_week": 0,
       "raw_calls": 0,
-      "raw_meetings": 24,
+      "raw_meetings": 7,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 2,
@@ -587,12 +579,12 @@
       "stale_7d": 0,
       "deals_advanced_week": 2,
       "avg_days_to_close": 12,
-      "ip_meetings_week": 7,
-      "vr_calls_week": 6,
+      "ip_meetings_week": 0,
+      "vr_calls_week": 0,
       "phone_calls_week": 0,
       "text_touches_week": 0,
       "raw_calls": 0,
-      "raw_meetings": 13,
+      "raw_meetings": 0,
       "raw_emails": 0,
       "raw_sms": 2,
       "raw_linkedin": 0,
@@ -630,7 +622,7 @@
   "source": "hubspot-api",
   "workerVersion": "w1.4-dev",
   "exportDate": "April 7, 2026",
-  "savedAt": "2026-04-07T13:58:06.993Z",
+  "savedAt": "2026-04-07T15:11:03.347Z",
   "history": [
     {
       "week": "Mar 30 – Apr 3",
@@ -645,7 +637,7 @@
           "pipeline_value": 105265,
           "stale_7d": 0,
           "raw_calls": 0,
-          "raw_meetings": 10,
+          "raw_meetings": 8,
           "deals_advanced_week": 0
         },
         {
@@ -657,8 +649,8 @@
           "pipeline_value": 538210,
           "stale_7d": 1,
           "raw_calls": 0,
-          "raw_meetings": 7,
-          "deals_advanced_week": 30
+          "raw_meetings": 2,
+          "deals_advanced_week": 29
         },
         {
           "id": "mf",
@@ -669,7 +661,7 @@
           "pipeline_value": 5760,
           "stale_7d": 2,
           "raw_calls": 0,
-          "raw_meetings": 3,
+          "raw_meetings": 0,
           "deals_advanced_week": 0
         },
         {
@@ -681,7 +673,7 @@
           "pipeline_value": 149217,
           "stale_7d": 1,
           "raw_calls": 0,
-          "raw_meetings": 12,
+          "raw_meetings": 7,
           "deals_advanced_week": 8
         },
         {
@@ -693,7 +685,7 @@
           "pipeline_value": 30800,
           "stale_7d": 0,
           "raw_calls": 0,
-          "raw_meetings": 5,
+          "raw_meetings": 0,
           "deals_advanced_week": 0
         }
       ]
@@ -711,7 +703,7 @@
           "pipeline_value": 107905,
           "stale_7d": 0,
           "raw_calls": 0,
-          "raw_meetings": 9,
+          "raw_meetings": 8,
           "deals_advanced_week": 0
         },
         {
@@ -735,7 +727,7 @@
           "pipeline_value": 2400,
           "stale_7d": 2,
           "raw_calls": 0,
-          "raw_meetings": 4,
+          "raw_meetings": 2,
           "deals_advanced_week": 0
         },
         {
@@ -759,7 +751,7 @@
           "pipeline_value": 15800,
           "stale_7d": 0,
           "raw_calls": 0,
-          "raw_meetings": 4,
+          "raw_meetings": 3,
           "deals_advanced_week": 0
         }
       ]
@@ -842,7 +834,7 @@
           "active_deals": 7,
           "pipeline_value": 107905,
           "stale_7d": 0,
-          "raw_calls": 0,
+          "raw_calls": 12,
           "raw_meetings": 2,
           "deals_advanced_week": 0
         },
@@ -854,7 +846,7 @@
           "active_deals": 43,
           "pipeline_value": 445210,
           "stale_7d": 0,
-          "raw_calls": 0,
+          "raw_calls": 7,
           "raw_meetings": 2,
           "deals_advanced_week": 0
         },
@@ -866,8 +858,8 @@
           "active_deals": 2,
           "pipeline_value": 2400,
           "stale_7d": 0,
-          "raw_calls": 0,
-          "raw_meetings": 8,
+          "raw_calls": 54,
+          "raw_meetings": 7,
           "deals_advanced_week": 2
         },
         {
@@ -878,7 +870,7 @@
           "active_deals": 19,
           "pipeline_value": 109137,
           "stale_7d": 0,
-          "raw_calls": 0,
+          "raw_calls": 95,
           "raw_meetings": 3,
           "deals_advanced_week": 1
         },
@@ -890,7 +882,7 @@
           "active_deals": 0,
           "pipeline_value": 0,
           "stale_7d": 0,
-          "raw_calls": 0,
+          "raw_calls": 32,
           "raw_meetings": 0,
           "deals_advanced_week": 0
         }
