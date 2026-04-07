@@ -19,7 +19,7 @@
 #pinModal.open{display:flex;align-items:center;justify-content:center;}
 </style>
 <title>QuantHub · Sales Rep Scorecard</title>
-<!-- QH-VERSION: v20j-dev -->
+<!-- QH-VERSION: v20k-dev -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Slab:wght@400;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -637,7 +637,7 @@ input[type=file]{display:none;}
 const ADMIN_PIN         = null;  // PIN validated server-side by Cloudflare Worker — not stored here
 const WORKER_URL        = 'https://quanthub-proxy-dev.michael-20e.workers.dev/';
 const HUBSPOT_PORTAL_ID = '7316176';  // ← Your HubSpot portal ID (from any HubSpot URL)
-const APP_VERSION = 'v20j-dev';
+const APP_VERSION = 'v20k-dev';
 
 let isAdminUnlocked = false;
 let pinMode  = 'load';
@@ -1182,30 +1182,30 @@ function scoreRep(r){
   // Meetings = highest value (weight 50%)
   // Calls/SMS/LinkedIn score equally (weight 50% combined)
   // Each can individually reach 100% — exceeding any target = full score for that component
-  // Score = max of individual component scores, weighted by hierarchy
-  const meetings_total = r.ip_meetings_week + r.vr_calls_week + (r.raw_meetings||0);
-  const calls_total    = r.phone_calls_week + (r.raw_calls||0);
-  const sms_total      = (r.raw_sms||0) + r.text_touches_week;
-  const linkedin_total = r.raw_linkedin||0;
+  // Activity counts — deduplicate overlapping sources
+  const mtgCount      = Math.max(r.ip_meetings_week + r.vr_calls_week, r.raw_meetings||0);
+  const callCount     = Math.max(r.phone_calls_week, r.raw_calls||0);
+  const sms_total     = (r.raw_sms||0) + r.text_touches_week;
+  const linkedin_total= r.raw_linkedin||0;
+  const touch_total   = callCount + sms_total + linkedin_total; // all non-meeting touches combined
 
-  // Deduplicate — use whichever raw count is higher
-  const mtgCount  = Math.max(meetings_total, r.raw_meetings||0);
-  const callCount = Math.max(calls_total,    r.raw_calls||0);
+  // Individual component scores
+  const mtg      = clamp(pct(mtgCount,   r.meetings_target));
+  const callScore= clamp(pct(callCount,  r.calls_target));
+  const liScore  = clamp(pct(linkedin_total + sms_total, r.text_target));
+  const touchScore = clamp(pct(touch_total, r.calls_target)); // combined touches vs call target
 
-  // Meeting score (can reach 100% at target, bonus for exceeding)
-  const mtg = clamp(pct(mtgCount, r.meetings_target));
+  // OR logic: meetings target hit OR calls target hit OR combined touches hit = full score
+  // Best single channel wins — rep only needs to excel at one primary channel
+  const bestChannel = Math.max(mtg, callScore, touchScore);
 
-  // Non-meeting touches — calls, SMS, LinkedIn all count equally
-  // If any one of them hits target, that component is 100%
-  const callScore = clamp(pct(callCount,    r.calls_target));
-  const smsScore  = clamp(pct(sms_total,    r.text_target));
-  const liScore   = clamp(pct(linkedin_total, r.text_target)); // same target as texts
+  // LinkedIn/SMS bonus — adds up to 20 points on top if doing outreach
+  const liBonus = Math.min(20, Math.round(liScore * 20));
 
-  // Best non-meeting touch score (you only need to excel at one)
-  const bestNonMtg = Math.max(callScore, smsScore, liScore);
+  // Final activity score: best primary channel + LinkedIn bonus
+  const act = Math.min(100, Math.round(bestChannel * 0.85 + liBonus + (mtg>0&&callScore>0?5:0)));
 
-  // Combined: meetings 50% weight, best non-meeting touch 50% weight
-  const act = Math.round(mtg * 0.5 + bestNonMtg * 0.5);
+  // Keep mtg for return (used in grade insight)
   const qal=Math.round(r.next_step_pct*.25+r.amount_populated*.15+r.close_date_set*.15+r.bant_pct*.2+r.stage_flow_pct*.15+r.daily_verified*.1);
   const expB=Math.min(8,r.expansion_deals.filter(d=>d.cw).length*4);
   const overall=clamp(Math.round(cw*.4+vel*.25+act*.2+qal*.15)+expB);
@@ -1315,14 +1315,14 @@ function renderDetail(id){
         <div class="act-detail-title">This week · live from HubSpot API</div>
         <div class="act-row"><span class="act-row-l">Meetings (all types)</span><span class="act-row-v">${r.raw_meetings}</span></div>
         <div class="act-row"><span class="act-row-l">Calls logged</span><span class="act-row-v">${r.raw_calls}</span></div>
-        <div class="act-row"><span class="act-row-l">LinkedIn touches</span><span class="act-row-v">${r.raw_linkedin||0}</span></div>
+        <div class="act-row"><span class="act-row-l">LinkedIn / Sales Nav</span><span class="act-row-v">${r.raw_linkedin||0}</span></div>
         <div class="act-row"><span class="act-row-l">SMS / Text logged</span><span class="act-row-v">${(r.raw_sms||0)+r.text_touches_week}</span></div>
         <div class="act-row"><span class="act-row-l">Emails sent (not scored)</span><span class="act-row-v" style="color:var(--muted)">${r.raw_emails}</span></div>
       </div>
       ${mRow('Meetings vs target',r.raw_meetings,r.meetings_target,INS.mtg)}
       ${mRow('Calls vs target',r.raw_calls,r.calls_target,INS.calls)}
-      ${mRow('SMS + LinkedIn vs target',(r.raw_sms||0)+(r.raw_linkedin||0)+r.text_touches_week,r.text_target,INS.texts)}
-      <div style="margin-top:6px;font-size:9px;color:var(--muted)">Note: HubSpot does not distinguish IP vs VR meeting type. Both count as high-touch.</div>
+      ${mRow('LinkedIn + SMS touches',(r.raw_sms||0)+(r.raw_linkedin||0)+r.text_touches_week,r.text_target,INS.texts)}
+      <div style="margin-top:6px;font-size:9px;color:var(--muted)">Scoring: Meetings OR Calls OR LinkedIn hitting target = full score. All channels count — excel at your primary channel. LinkedIn/Sales Nav touches from all contacts and leads, not just deal-associated.</div>
     </div>
 
     <div class="pc" style="border-top-color:${qG.c}">
@@ -1570,6 +1570,7 @@ function buildTeamTrendStrip() {
       calls:    reps.reduce((s,r) => s+(r.raw_calls||0), 0),
       meetings: reps.reduce((s,r) => s+(r.raw_meetings||0), 0),
       advanced: reps.reduce((s,r) => s+(r.deals_advanced_week||0), 0),
+      linkedin: reps.reduce((s,r) => s+(r.raw_linkedin||0), 0),
     };
   });
 
@@ -1594,6 +1595,7 @@ function buildTeamTrendStrip() {
     { label:'Deals Advanced (wk)', key:'advanced',  fmt:fmtN, good:'up'   },
     { label:'Calls (wk)',          key:'calls',     fmt:fmtN, good:'up'   },
     { label:'Meetings (wk)',       key:'meetings',  fmt:fmtN, good:'up'   },
+    { label:'LinkedIn/SalesNav (wk)', key:'linkedin', fmt:fmtN, good:'up' },
   ];
 
   let html = `<div class="trend-strip-wrap">
