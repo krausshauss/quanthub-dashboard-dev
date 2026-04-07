@@ -16,12 +16,12 @@
       "stale_7d": 0,
       "deals_advanced_week": 2,
       "avg_days_to_close": 148,
-      "ip_meetings_week": 4,
-      "vr_calls_week": 4,
-      "phone_calls_week": 0,
+      "ip_meetings_week": 10,
+      "vr_calls_week": 10,
+      "phone_calls_week": 4,
       "text_touches_week": 0,
-      "raw_calls": 0,
-      "raw_meetings": 8,
+      "raw_calls": 4,
+      "raw_meetings": 20,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 0,
@@ -121,7 +121,9 @@
           "amount": 55825,
           "stale": 1,
           "next": "",
-          "id": "42089843285"
+          "id": "42089843285",
+          "deal_score": null,
+          "likelihood": null
         },
         {
           "name": "High Point University - University Wide AI Foundations",
@@ -129,7 +131,9 @@
           "amount": 40000,
           "stale": 7,
           "next": "",
-          "id": "57618912060"
+          "id": "57618912060",
+          "deal_score": 77,
+          "likelihood": null
         }
       ]
     },
@@ -149,12 +153,12 @@
       "stale_7d": 8,
       "deals_advanced_week": 14,
       "avg_days_to_close": 104,
-      "ip_meetings_week": 2,
-      "vr_calls_week": 2,
-      "phone_calls_week": 0,
+      "ip_meetings_week": 7,
+      "vr_calls_week": 6,
+      "phone_calls_week": 6,
       "text_touches_week": 0,
-      "raw_calls": 0,
-      "raw_meetings": 4,
+      "raw_calls": 6,
+      "raw_meetings": 13,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 0,
@@ -188,7 +192,9 @@
           "amount": 1344,
           "stale": 414,
           "next": "3/26: Met with Ben and Jeff—there’s interest in running a quick pilot before rolling it out to students.",
-          "id": "28432600466"
+          "id": "28432600466",
+          "deal_score": null,
+          "likelihood": null
         },
         {
           "name": "Silvanus Udoka - Clark Atlanta University-SBAA",
@@ -196,7 +202,9 @@
           "amount": 3600,
           "stale": 4,
           "next": "Get bookstore intro ",
-          "id": "40613389058"
+          "id": "40613389058",
+          "deal_score": null,
+          "likelihood": null
         },
         {
           "name": "University of Evansville -Marketing Strat",
@@ -204,7 +212,9 @@
           "amount": 3040,
           "stale": 5,
           "next": "Connect with Suresh - regarding intro to bookstore\n",
-          "id": "42100108688"
+          "id": "42100108688",
+          "deal_score": null,
+          "likelihood": null
         },
         {
           "name": "SciF - Corp Deal",
@@ -212,7 +222,9 @@
           "amount": 256000,
           "stale": 1,
           "next": "Putting together rationale for Racquel - to share with Exec team",
-          "id": "52224419690"
+          "id": "52224419690",
+          "deal_score": null,
+          "likelihood": null
         },
         {
           "name": "Illinois State University - New Deal AI / Excel Pilot",
@@ -220,7 +232,9 @@
           "amount": 2160,
           "stale": 8,
           "next": "Della and I sync first week in may - asking for book store intro \n",
-          "id": "54352107577"
+          "id": "54352107577",
+          "deal_score": 21,
+          "likelihood": null
         },
         {
           "name": "Georgia Southern University - Entrepreneurship ",
@@ -228,7 +242,9 @@
           "amount": 2960,
           "stale": 6,
           "next": "Meeting canceled for 4/2 - JD to request Bookstore intro to move things along\n\n\n",
-          "id": "54943321264"
+          "id": "54943321264",
+          "deal_score": 27,
+          "likelihood": null
         },
         {
           "name": "CLARK UNIVERSITY - MBA Excel",
@@ -236,7 +252,9 @@
           "amount": 3600,
           "stale": 19,
           "next": "Still gap in QuantHub firing inside of Canvas - Charity looking into. Professor is waiting on charity to resolve. \n",
-          "id": "55623966115"
+          "id": "55623966115",
+          "deal_score": 30,
+          "likelihood": null
         },
         {
           "name": "Valdosta State University - New Deal",
@@ -244,7 +262,9 @@
           "amount": 74000,
           "stale": 0,
           "next": "3/20 - Guclu confirmed review, JD offered to sync on Tuesday 3/25",
-          "id": "56549266038"
+          "id": "56549266038",
+          "deal_score": 69,
+          "likelihood": null
         },
         {
           "name": "AI in Marketing Loras College - New Deal",
@@ -252,7 +272,9 @@
           "amount": 960,
           "stale": 5,
           "next": "Working w/ IT to integrate w/ Moodle - Bob Adams. Send Bob Interation \n",
-          "id": "56896784292"
+          "id": "56896784292",
+          "deal_score": 49,
+          "likelihood": null
         },
         {
           "name": "Lewis University - AI In Marketing",
@@ -260,7 +282,9 @@
           "amount": 1344,
           "stale": 16,
           "next": "3/20- Jim reviewing. JD to lock follow up meeting. ",
-          "id": "57553905670"
+          "id": "57553905670",
+          "deal_score": 20,
+          "likelihood": null
         },
         {
           "name": "Coastal Alabama Community College - Student Pilot ",
@@ -268,7 +292,9 @@
           "amount": 1360,
           "stale": 8,
           "next": "Set a follow-up task for early April to reconnect after Ryan speaks with Ann, and prepare a brief recap of how QuantHub could support their AI pilot so you're ready when he circles back.",
-          "id": "57941138841"
+          "id": "57941138841",
+          "deal_score": 51,
+          "likelihood": null
         },
         {
           "name": "West Georgia UoWG John Upson",
@@ -276,7 +302,9 @@
           "amount": 15800,
           "stale": 0,
           "next": "",
-          "id": "58025395292"
+          "id": "58025395292",
+          "deal_score": 80,
+          "likelihood": null
         },
         {
           "name": "Lander University - New Deal",
@@ -284,7 +312,9 @@
           "amount": 1200,
           "stale": 21,
           "next": "JD Scheudled Meeting for Thursday 3/18",
-          "id": "58029852189"
+          "id": "58029852189",
+          "deal_score": null,
+          "likelihood": null
         },
         {
           "name": "IMG Academy - AI Literacy ",
@@ -292,7 +322,9 @@
           "amount": 78000,
           "stale": 14,
           "next": "Call w/ Portia to review Catalog and modules to move forward ",
-          "id": "58288931374"
+          "id": "58288931374",
+          "deal_score": 28,
+          "likelihood": null
         },
         {
           "name": "Southeastern Louisiana University - New Deal",
@@ -300,7 +332,9 @@
           "amount": null,
           "stale": 8,
           "next": "",
-          "id": "58404371467"
+          "id": "58404371467",
+          "deal_score": 56,
+          "likelihood": null
         }
       ]
     },
@@ -320,12 +354,12 @@
       "stale_7d": 0,
       "deals_advanced_week": 2,
       "avg_days_to_close": 3,
-      "ip_meetings_week": 0,
-      "vr_calls_week": 0,
-      "phone_calls_week": 0,
+      "ip_meetings_week": 3,
+      "vr_calls_week": 3,
+      "phone_calls_week": 3,
       "text_touches_week": 0,
-      "raw_calls": 0,
-      "raw_meetings": 0,
+      "raw_calls": 3,
+      "raw_meetings": 6,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 0,
@@ -346,7 +380,9 @@
           "amount": 3360,
           "stale": 1,
           "next": "Book meeting with LMS admin",
-          "id": "58630731586"
+          "id": "58630731586",
+          "deal_score": 80,
+          "likelihood": null
         },
         {
           "name": "Alabama Community College System for Jeff State - New Deal",
@@ -354,7 +390,9 @@
           "amount": 480000,
           "stale": 0,
           "next": "Have these modules ready to present and review during the  April 7th meeting to secure final approval for fall rollout.",
-          "id": "58798284126"
+          "id": "58798284126",
+          "deal_score": null,
+          "likelihood": null
         }
       ]
     },
@@ -374,12 +412,12 @@
       "stale_7d": 3,
       "deals_advanced_week": 20,
       "avg_days_to_close": 63,
-      "ip_meetings_week": 4,
-      "vr_calls_week": 3,
-      "phone_calls_week": 0,
+      "ip_meetings_week": 12,
+      "vr_calls_week": 11,
+      "phone_calls_week": 12,
       "text_touches_week": 0,
-      "raw_calls": 0,
-      "raw_meetings": 7,
+      "raw_calls": 12,
+      "raw_meetings": 23,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 2,
@@ -407,7 +445,9 @@
           "amount": null,
           "stale": 8,
           "next": "Sched intro meeting - JR\nEmail Dr. Mazzei about connecting with the marketing teachers for a review and demo session with Nate and Matthew",
-          "id": "37626456748"
+          "id": "37626456748",
+          "deal_score": null,
+          "likelihood": null
         },
         {
           "name": "University of Nebraska–Lincoln - New Deal",
@@ -415,7 +455,9 @@
           "amount": 20000,
           "stale": 5,
           "next": "Sched intro meeting - JR\n\nAI Marketing introduction + syllabus submission + setup next meeting after his spring break - Returns 3-23",
-          "id": "52036268604"
+          "id": "52036268604",
+          "deal_score": null,
+          "likelihood": null
         },
         {
           "name": "University of Nebraska–Lincoln - New Deal",
@@ -423,7 +465,9 @@
           "amount": 4000,
           "stale": 5,
           "next": "Sched intro meeting - JR",
-          "id": "52038717369"
+          "id": "52038717369",
+          "deal_score": null,
+          "likelihood": null
         },
         {
           "name": "RISK: Florida State University - Spring Pilot - Marina Girju",
@@ -431,7 +475,9 @@
           "amount": 9600,
           "stale": 7,
           "next": "Send agreement doc to Marina, Initiate pilot implementation process",
-          "id": "55478515839"
+          "id": "55478515839",
+          "deal_score": 18,
+          "likelihood": null
         },
         {
           "name": "Middle Georgia State University - Catherine Whelan - Summer Pilot",
@@ -439,7 +485,9 @@
           "amount": 80,
           "stale": 4,
           "next": "Meeting sched for 4-15 to discuss module selections, next steps for pilot set up",
-          "id": "55478407713"
+          "id": "55478407713",
+          "deal_score": 64,
+          "likelihood": null
         },
         {
           "name": "Mississippi College - Retha Price - Fall",
@@ -447,7 +495,9 @@
           "amount": 1920,
           "stale": 7,
           "next": "Need to get meeting sched to review module alignment",
-          "id": "55927331339"
+          "id": "55927331339",
+          "deal_score": 26,
+          "likelihood": null
         },
         {
           "name": "FIU - Tofazzal Hossain",
@@ -455,7 +505,9 @@
           "amount": 1872,
           "stale": 7,
           "next": "Circle back in summer to finalize fall course",
-          "id": "55922545591"
+          "id": "55922545591",
+          "deal_score": 13,
+          "likelihood": null
         },
         {
           "name": "RISK - Miami Dade College - Max Ramirez",
@@ -463,7 +515,9 @@
           "amount": 1440,
           "stale": 4,
           "next": "Circle back with updated / corrected content",
-          "id": "55927271211"
+          "id": "55927271211",
+          "deal_score": 51,
+          "likelihood": null
         },
         {
           "name": "AUDIT - The College of New Jersey - New Deal",
@@ -471,7 +525,9 @@
           "amount": 28800,
           "stale": 8,
           "next": "Sched intro meeting after return from spring break on 3-23 - JR\nGet Louis Tucci in the platform. He is on a committee and needs their approval for QH. Wants a foundational course for all students to take. 600 students to start, he is mostly interested in AI foundations and AI in the age of marketing. ",
-          "id": "55927464840"
+          "id": "55927464840",
+          "deal_score": 26,
+          "likelihood": null
         },
         {
           "name": "Alabama A&M University - New Deal",
@@ -479,7 +535,9 @@
           "amount": 3200,
           "stale": 5,
           "next": "Sched intro meeting - JR\nMap her syllabus to Quanthub modules. Meeting 2/25 to discuss next steps. ",
-          "id": "55922594665"
+          "id": "55922594665",
+          "deal_score": 40,
+          "likelihood": null
         },
         {
           "name": "Alabama A&M University - Potential New Deal after Dr. McKey",
@@ -487,7 +545,9 @@
           "amount": 10625,
           "stale": 5,
           "next": "Sched intro meeting - JR\nKeep talking to Dr. McKey about other professors to add. See what modules they'd want and get them in the platform.",
-          "id": "56122128190"
+          "id": "56122128190",
+          "deal_score": null,
+          "likelihood": null
         },
         {
           "name": "University of Alabama at Birmingham - New Deal",
@@ -495,7 +555,9 @@
           "amount": 2400,
           "stale": 5,
           "next": "Reach out in late April per George's request to sched intro meeting - JR",
-          "id": "56175409521"
+          "id": "56175409521",
+          "deal_score": null,
+          "likelihood": null
         },
         {
           "name": "Oakland University - Brandon Gustafson",
@@ -503,7 +565,9 @@
           "amount": 840,
           "stale": 1,
           "next": "Working to get call sched to finalize module selections for summer\n",
-          "id": "57019339560"
+          "id": "57019339560",
+          "deal_score": 77,
+          "likelihood": null
         },
         {
           "name": "George Fox University - New Deal",
@@ -511,15 +575,19 @@
           "amount": 5760,
           "stale": 5,
           "next": "Follow up meeting sched",
-          "id": "57396962627"
+          "id": "57396962627",
+          "deal_score": 22,
+          "likelihood": null
         },
         {
           "name": "Pensacola Christian College - Jim White",
           "stage": "Trial (optional)",
           "amount": 1920,
-          "stale": 13,
+          "stale": 14,
           "next": "Follow Up Meeting Sched for 4-8, reviewing Applied Data Science modules for fall",
-          "id": "57553412763"
+          "id": "57553412763",
+          "deal_score": 18,
+          "likelihood": null
         },
         {
           "name": "University of Maryland - Mary Beth Furst - Fall",
@@ -527,7 +595,9 @@
           "amount": 5400,
           "stale": 7,
           "next": "Sched meeting to preview updates with Mary Beth\nSched meeting for June/July to finalize for fall",
-          "id": "57619336846"
+          "id": "57619336846",
+          "deal_score": 13,
+          "likelihood": null
         },
         {
           "name": "University of North Texas at Dallas - Jason Garrett",
@@ -535,7 +605,9 @@
           "amount": 1680,
           "stale": 1,
           "next": "Get Jason resched after missing meeting on 4-6, obtain syllabi & LMS admin intro ",
-          "id": "57830356277"
+          "id": "57830356277",
+          "deal_score": 51,
+          "likelihood": null
         },
         {
           "name": "Rutgers Business School - Marshall Sponder Spring 27",
@@ -543,7 +615,9 @@
           "amount": 48000,
           "stale": 6,
           "next": "Next meeting sched 4-21",
-          "id": "58029806122"
+          "id": "58029806122",
+          "deal_score": 18,
+          "likelihood": null
         },
         {
           "name": "University of North Carolina Wilmington - Barry Wray",
@@ -551,7 +625,9 @@
           "amount": 480,
           "stale": 6,
           "next": "Check in on 4-1 to confirm specific modules for fall",
-          "id": "58208304444"
+          "id": "58208304444",
+          "deal_score": 61,
+          "likelihood": null
         },
         {
           "name": "Embry-Riddle Aeronautical University - Laura Valenti - Fall 26",
@@ -559,7 +635,9 @@
           "amount": 1200,
           "stale": 1,
           "next": "Working to resched call initially set for 4-6, need to finalize modules for fall",
-          "id": "58562149241"
+          "id": "58562149241",
+          "deal_score": 68,
+          "likelihood": null
         }
       ]
     },
@@ -579,12 +657,12 @@
       "stale_7d": 0,
       "deals_advanced_week": 2,
       "avg_days_to_close": 12,
-      "ip_meetings_week": 0,
-      "vr_calls_week": 0,
-      "phone_calls_week": 0,
+      "ip_meetings_week": 7,
+      "vr_calls_week": 6,
+      "phone_calls_week": 1,
       "text_touches_week": 0,
-      "raw_calls": 0,
-      "raw_meetings": 0,
+      "raw_calls": 1,
+      "raw_meetings": 13,
       "raw_emails": 0,
       "raw_sms": 2,
       "raw_linkedin": 0,
@@ -605,7 +683,9 @@
           "amount": 15800,
           "stale": 4,
           "next": "Coordinate with Stewart to demo 1:1 with each professor in their Canvas instance. ",
-          "id": "58134866019"
+          "id": "58134866019",
+          "deal_score": 47,
+          "likelihood": null
         },
         {
           "name": "The University of Texas Rio Grande Valley - New Deal",
@@ -613,16 +693,18 @@
           "amount": 15000,
           "stale": 1,
           "next": "Follow up with Jerald to finalize deal shaping and move to signatures. ",
-          "id": "58686450958"
+          "id": "58686450958",
+          "deal_score": 71,
+          "likelihood": null
         }
       ]
     }
   ],
   "version": 10,
   "source": "hubspot-api",
-  "workerVersion": "w1.4-dev",
+  "workerVersion": "w1.5-dev",
   "exportDate": "April 7, 2026",
-  "savedAt": "2026-04-07T15:11:03.347Z",
+  "savedAt": "2026-04-07T15:28:28.912Z",
   "history": [
     {
       "week": "Mar 30 – Apr 3",
@@ -636,8 +718,8 @@
           "active_deals": 6,
           "pipeline_value": 105265,
           "stale_7d": 0,
-          "raw_calls": 0,
-          "raw_meetings": 8,
+          "raw_calls": 6,
+          "raw_meetings": 10,
           "deals_advanced_week": 0
         },
         {
@@ -648,8 +730,8 @@
           "active_deals": 46,
           "pipeline_value": 538210,
           "stale_7d": 1,
-          "raw_calls": 0,
-          "raw_meetings": 2,
+          "raw_calls": 5,
+          "raw_meetings": 7,
           "deals_advanced_week": 29
         },
         {
@@ -661,7 +743,7 @@
           "pipeline_value": 5760,
           "stale_7d": 2,
           "raw_calls": 0,
-          "raw_meetings": 0,
+          "raw_meetings": 3,
           "deals_advanced_week": 0
         },
         {
@@ -672,8 +754,8 @@
           "active_deals": 21,
           "pipeline_value": 149217,
           "stale_7d": 1,
-          "raw_calls": 0,
-          "raw_meetings": 7,
+          "raw_calls": 8,
+          "raw_meetings": 12,
           "deals_advanced_week": 8
         },
         {
@@ -684,8 +766,8 @@
           "active_deals": 2,
           "pipeline_value": 30800,
           "stale_7d": 0,
-          "raw_calls": 0,
-          "raw_meetings": 0,
+          "raw_calls": 1,
+          "raw_meetings": 5,
           "deals_advanced_week": 0
         }
       ]
@@ -702,8 +784,8 @@
           "active_deals": 7,
           "pipeline_value": 107905,
           "stale_7d": 0,
-          "raw_calls": 0,
-          "raw_meetings": 8,
+          "raw_calls": 9,
+          "raw_meetings": 9,
           "deals_advanced_week": 0
         },
         {
@@ -714,7 +796,7 @@
           "active_deals": 46,
           "pipeline_value": 538210,
           "stale_7d": 0,
-          "raw_calls": 0,
+          "raw_calls": 1,
           "raw_meetings": 8,
           "deals_advanced_week": 1
         },
@@ -726,8 +808,8 @@
           "active_deals": 2,
           "pipeline_value": 2400,
           "stale_7d": 2,
-          "raw_calls": 0,
-          "raw_meetings": 2,
+          "raw_calls": 2,
+          "raw_meetings": 4,
           "deals_advanced_week": 0
         },
         {
@@ -738,7 +820,7 @@
           "active_deals": 20,
           "pipeline_value": 148017,
           "stale_7d": 1,
-          "raw_calls": 0,
+          "raw_calls": 6,
           "raw_meetings": 3,
           "deals_advanced_week": 0
         },
@@ -750,8 +832,8 @@
           "active_deals": 1,
           "pipeline_value": 15800,
           "stale_7d": 0,
-          "raw_calls": 0,
-          "raw_meetings": 3,
+          "raw_calls": 1,
+          "raw_meetings": 4,
           "deals_advanced_week": 0
         }
       ]
@@ -768,7 +850,7 @@
           "active_deals": 7,
           "pipeline_value": 107905,
           "stale_7d": 0,
-          "raw_calls": 0,
+          "raw_calls": 9,
           "raw_meetings": 14,
           "deals_advanced_week": 0
         },
@@ -780,7 +862,7 @@
           "active_deals": 44,
           "pipeline_value": 460210,
           "stale_7d": 0,
-          "raw_calls": 0,
+          "raw_calls": 4,
           "raw_meetings": 8,
           "deals_advanced_week": 0
         },
@@ -804,7 +886,7 @@
           "active_deals": 19,
           "pipeline_value": 147537,
           "stale_7d": 1,
-          "raw_calls": 0,
+          "raw_calls": 27,
           "raw_meetings": 12,
           "deals_advanced_week": 0
         },
@@ -816,7 +898,7 @@
           "active_deals": 1,
           "pipeline_value": 15800,
           "stale_7d": 0,
-          "raw_calls": 0,
+          "raw_calls": 1,
           "raw_meetings": 0,
           "deals_advanced_week": 0
         }
@@ -846,7 +928,7 @@
           "active_deals": 43,
           "pipeline_value": 445210,
           "stale_7d": 0,
-          "raw_calls": 7,
+          "raw_calls": 21,
           "raw_meetings": 2,
           "deals_advanced_week": 0
         },
@@ -858,7 +940,7 @@
           "active_deals": 2,
           "pipeline_value": 2400,
           "stale_7d": 0,
-          "raw_calls": 54,
+          "raw_calls": 79,
           "raw_meetings": 7,
           "deals_advanced_week": 2
         },
@@ -870,7 +952,7 @@
           "active_deals": 19,
           "pipeline_value": 109137,
           "stale_7d": 0,
-          "raw_calls": 95,
+          "raw_calls": 126,
           "raw_meetings": 3,
           "deals_advanced_week": 1
         },
@@ -882,7 +964,7 @@
           "active_deals": 0,
           "pipeline_value": 0,
           "stale_7d": 0,
-          "raw_calls": 32,
+          "raw_calls": 66,
           "raw_meetings": 0,
           "deals_advanced_week": 0
         }
