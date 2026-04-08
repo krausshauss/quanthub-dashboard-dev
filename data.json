@@ -799,9 +799,9 @@
   ],
   "version": 10,
   "source": "hubspot-api",
-  "workerVersion": "w2.6-dev",
+  "workerVersion": "w2.7-dev",
   "exportDate": "April 8, 2026",
-  "savedAt": "2026-04-08T19:17:24.299Z",
+  "savedAt": "2026-04-08T19:59:17.065Z",
   "history": [
     {
       "week": "Mar 30 to Apr 3",
@@ -1028,7 +1028,7 @@
           "active_deals": 7,
           "pipeline_value": 107905,
           "stale_7d": 0,
-          "raw_calls": 5,
+          "raw_calls": 2,
           "raw_meetings": 1,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
@@ -1041,7 +1041,7 @@
           "active_deals": 43,
           "pipeline_value": 445210,
           "stale_7d": 0,
-          "raw_calls": 6,
+          "raw_calls": 0,
           "raw_meetings": 1,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
@@ -1054,7 +1054,7 @@
           "active_deals": 2,
           "pipeline_value": 2400,
           "stale_7d": 0,
-          "raw_calls": 52,
+          "raw_calls": 47,
           "raw_meetings": 3,
           "raw_linkedin": 0,
           "deals_advanced_week": 2
@@ -1067,7 +1067,7 @@
           "active_deals": 17,
           "pipeline_value": 95312,
           "stale_7d": 0,
-          "raw_calls": 105,
+          "raw_calls": 45,
           "raw_meetings": 2,
           "raw_linkedin": 0,
           "deals_advanced_week": 1
@@ -1080,7 +1080,7 @@
           "active_deals": 0,
           "pipeline_value": 0,
           "stale_7d": 0,
-          "raw_calls": 32,
+          "raw_calls": 6,
           "raw_meetings": 0,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
