@@ -13,15 +13,15 @@
       "q4_cw": 0,
       "active_deals": 2,
       "pipeline_value": 95825,
-      "stale_7d": 0,
+      "stale_7d": 1,
       "deals_advanced_week": 2,
-      "avg_days_to_close": 148,
-      "ip_meetings_week": 10,
+      "avg_days_to_close": 149,
+      "ip_meetings_week": 11,
       "vr_calls_week": 10,
-      "phone_calls_week": 0,
+      "phone_calls_week": 5,
       "text_touches_week": 0,
-      "raw_calls": 0,
-      "raw_meetings": 20,
+      "raw_calls": 5,
+      "raw_meetings": 21,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 0,
@@ -119,21 +119,27 @@
           "name": "Mercer - University-wide AI Literacy Expansion",
           "stage": "Negotiation",
           "amount": 55825,
-          "stale": 1,
+          "stale": 2,
           "next": "",
           "id": "42089843285",
           "deal_score": null,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 70,
+          "days_to_close": null,
+          "contacts": 3
         },
         {
           "name": "High Point University - University Wide AI Foundations",
           "stage": "Negotiation",
           "amount": 40000,
-          "stale": 7,
+          "stale": 8,
           "next": "",
           "id": "57618912060",
           "deal_score": 77,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 70,
+          "days_to_close": null,
+          "contacts": 2
         }
       ]
     },
@@ -148,16 +154,16 @@
       "q2_cw": 3200,
       "q3_cw": 0,
       "q4_cw": 0,
-      "active_deals": 15,
-      "pipeline_value": 445368,
+      "active_deals": 16,
+      "pipeline_value": 451768,
       "stale_7d": 8,
-      "deals_advanced_week": 14,
-      "avg_days_to_close": 104,
+      "deals_advanced_week": 15,
+      "avg_days_to_close": 98,
       "ip_meetings_week": 7,
       "vr_calls_week": 6,
-      "phone_calls_week": 0,
+      "phone_calls_week": 6,
       "text_touches_week": 0,
-      "raw_calls": 0,
+      "raw_calls": 6,
       "raw_meetings": 13,
       "raw_emails": 0,
       "raw_sms": 0,
@@ -165,8 +171,8 @@
       "meetings_target": 6,
       "calls_target": 15,
       "text_target": 5,
-      "next_step_pct": 87,
-      "amount_populated": 93,
+      "next_step_pct": 88,
+      "amount_populated": 94,
       "close_date_set": 100,
       "stage_flow_pct": 0,
       "bant_pct": 50,
@@ -190,151 +196,209 @@
           "name": "Auburn University at Montgomery",
           "stage": "Discovery/Demo (SQL)",
           "amount": 1344,
-          "stale": 414,
+          "stale": 415,
           "next": "3/26: Met with Ben and Jeff—there’s interest in running a quick pilot before rolling it out to students.",
           "id": "28432600466",
           "deal_score": null,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 20,
+          "days_to_close": null,
+          "contacts": 5
         },
         {
           "name": "Silvanus Udoka - Clark Atlanta University-SBAA",
           "stage": "Commit/Verbal",
           "amount": 3600,
-          "stale": 0,
+          "stale": 1,
           "next": "Get bookstore intro ",
           "id": "40613389058",
           "deal_score": null,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 90,
+          "days_to_close": null,
+          "contacts": 3
         },
         {
           "name": "University of Evansville -Marketing Strat",
           "stage": "Trial (optional)",
           "amount": 3040,
-          "stale": 5,
+          "stale": 6,
           "next": "Connect with Suresh - regarding intro to bookstore\n",
           "id": "42100108688",
           "deal_score": null,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 40,
+          "days_to_close": null,
+          "contacts": 3
         },
         {
           "name": "SciF - Corp Deal",
           "stage": "Negotiation",
           "amount": 256000,
-          "stale": 1,
+          "stale": 2,
           "next": "Putting together rationale for Racquel - to share with Exec team",
           "id": "52224419690",
           "deal_score": null,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 70,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "Illinois State University - New Deal AI / Excel Pilot",
           "stage": "Trial (optional)",
           "amount": 2160,
-          "stale": 8,
+          "stale": 9,
           "next": "Della and I sync first week in may - asking for book store intro \n",
           "id": "54352107577",
           "deal_score": 21,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 40,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "Georgia Southern University - Entrepreneurship ",
           "stage": "Trial (optional)",
           "amount": 2960,
-          "stale": 6,
+          "stale": 7,
           "next": "Meeting canceled for 4/2 - JD to request Bookstore intro to move things along\n\n\n",
           "id": "54943321264",
           "deal_score": 27,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 40,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "CLARK UNIVERSITY - MBA Excel",
           "stage": "Sales Opportunity",
           "amount": 3600,
-          "stale": 19,
+          "stale": 20,
           "next": "Still gap in QuantHub firing inside of Canvas - Charity looking into. Professor is waiting on charity to resolve. \n",
           "id": "55623966115",
           "deal_score": 30,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 30,
+          "days_to_close": null,
+          "contacts": 2
         },
         {
           "name": "Valdosta State University - New Deal",
           "stage": "Negotiation",
           "amount": 74000,
-          "stale": 0,
-          "next": "3/20 - Guclu confirmed review, JD offered to sync on Tuesday 3/25",
+          "stale": 1,
+          "next": "JD - To revise proposal to $5oK Pilot based on feedback. Spoke to Guclu to decrease budget to 47K - push back was to only do 50 to see if its what they want prior to full rollout ",
           "id": "56549266038",
-          "deal_score": 69,
-          "likelihood": null
+          "deal_score": 62,
+          "likelihood": null,
+          "probability": 70,
+          "days_to_close": null,
+          "contacts": 2
         },
         {
           "name": "AI in Marketing Loras College - New Deal",
           "stage": "Trial (optional)",
           "amount": 960,
-          "stale": 5,
+          "stale": 6,
           "next": "Working w/ IT to integrate w/ Moodle - Bob Adams. Send Bob Interation \n",
           "id": "56896784292",
-          "deal_score": 49,
-          "likelihood": null
+          "deal_score": 45,
+          "likelihood": null,
+          "probability": 40,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "Lewis University - AI In Marketing",
           "stage": "Discovery/Demo (SQL)",
           "amount": 1344,
-          "stale": 16,
+          "stale": 17,
           "next": "3/20- Jim reviewing. JD to lock follow up meeting. ",
           "id": "57553905670",
           "deal_score": 20,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 20,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "Coastal Alabama Community College - Student Pilot ",
           "stage": "Sales Opportunity",
           "amount": 1360,
-          "stale": 8,
+          "stale": 9,
           "next": "Set a follow-up task for early April to reconnect after Ryan speaks with Ann, and prepare a brief recap of how QuantHub could support their AI pilot so you're ready when he circles back.",
           "id": "57941138841",
           "deal_score": 51,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 30,
+          "days_to_close": null,
+          "contacts": 2
         },
         {
           "name": "West Georgia UoWG John Upson",
           "stage": "Negotiation",
           "amount": 15800,
-          "stale": 0,
-          "next": "",
+          "stale": 1,
+          "next": "JD - Called john at 12:30 per email and txt exchange. No pickup will keep trying: \nThe plan currently is to get Quanthub integrated with their LMS outside of Day One. That appears to be the best solution for fall.  Set call to addreses \" Do you bill the university? Do students pay on your site? Or another method? \"\n ",
           "id": "58025395292",
           "deal_score": 80,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 70,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "Lander University - New Deal",
           "stage": "Discovery/Demo (SQL)",
           "amount": 1200,
-          "stale": 21,
+          "stale": 22,
           "next": "JD Scheudled Meeting for Thursday 3/18",
           "id": "58029852189",
           "deal_score": null,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 20,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "IMG Academy - AI Literacy ",
           "stage": "Discovery/Demo (SQL)",
           "amount": 78000,
-          "stale": 14,
+          "stale": 15,
           "next": "Call w/ Portia to review Catalog and modules to move forward ",
           "id": "58288931374",
-          "deal_score": 28,
-          "likelihood": null
+          "deal_score": 24,
+          "likelihood": null,
+          "probability": 20,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "Southeastern Louisiana University - New Deal",
           "stage": "Identified",
           "amount": null,
-          "stale": 8,
+          "stale": 9,
           "next": "",
           "id": "58404371467",
           "deal_score": 56,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 10,
+          "days_to_close": null,
+          "contacts": 1
+        },
+        {
+          "name": "Illinois State University - Digital Marketing",
+          "stage": "Sales Opportunity",
+          "amount": 6400,
+          "stale": 1,
+          "next": "",
+          "id": "58906081047",
+          "deal_score": null,
+          "likelihood": null,
+          "probability": 30,
+          "days_to_close": null,
+          "contacts": 3
         }
       ]
     },
@@ -353,13 +417,13 @@
       "pipeline_value": 483360,
       "stale_7d": 0,
       "deals_advanced_week": 2,
-      "avg_days_to_close": 3,
-      "ip_meetings_week": 3,
+      "avg_days_to_close": 4,
+      "ip_meetings_week": 4,
       "vr_calls_week": 3,
-      "phone_calls_week": 0,
+      "phone_calls_week": 3,
       "text_touches_week": 0,
-      "raw_calls": 0,
-      "raw_meetings": 6,
+      "raw_calls": 3,
+      "raw_meetings": 7,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 0,
@@ -378,21 +442,27 @@
           "name": "University of Montevallo - New Deal",
           "stage": "Negotiation",
           "amount": 3360,
-          "stale": 1,
+          "stale": 0,
           "next": "Book meeting with LMS admin",
           "id": "58630731586",
           "deal_score": 80,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 70,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "Alabama Community College System for Jeff State - New Deal",
           "stage": "Discovery/Demo (SQL)",
           "amount": 480000,
-          "stale": 0,
+          "stale": 1,
           "next": "Have these modules ready to present and review during the  April 7th meeting to secure final approval for fall rollout.",
           "id": "58798284126",
-          "deal_score": null,
-          "likelihood": null
+          "deal_score": 47,
+          "likelihood": null,
+          "probability": 20,
+          "days_to_close": null,
+          "contacts": 2
         }
       ]
     },
@@ -407,25 +477,25 @@
       "q2_cw": 0,
       "q3_cw": 0,
       "q4_cw": 0,
-      "active_deals": 19,
-      "pipeline_value": 139617,
+      "active_deals": 17,
+      "pipeline_value": 125792,
       "stale_7d": 3,
-      "deals_advanced_week": 19,
-      "avg_days_to_close": 64,
-      "ip_meetings_week": 11,
+      "deals_advanced_week": 16,
+      "avg_days_to_close": 65,
+      "ip_meetings_week": 12,
       "vr_calls_week": 11,
-      "phone_calls_week": 0,
+      "phone_calls_week": 15,
       "text_touches_week": 0,
-      "raw_calls": 0,
-      "raw_meetings": 22,
+      "raw_calls": 15,
+      "raw_meetings": 23,
       "raw_emails": 0,
       "raw_sms": 0,
-      "raw_linkedin": 3,
+      "raw_linkedin": 2,
       "meetings_target": 6,
       "calls_target": 15,
       "text_target": 5,
       "next_step_pct": 100,
-      "amount_populated": 95,
+      "amount_populated": 94,
       "close_date_set": 100,
       "stage_flow_pct": 0,
       "bant_pct": 50,
@@ -440,154 +510,173 @@
       ],
       "deals": [
         {
-          "name": "AUDIT - Samford University - Matt Mazzei",
+          "name": "Samford University - Matt Mazzei",
           "stage": "Discovery/Demo (SQL)",
           "amount": null,
-          "stale": 8,
-          "next": "Sched intro meeting - JR\nEmail Dr. Mazzei about connecting with the marketing teachers for a review and demo session with Nate and Matthew",
+          "stale": 1,
+          "next": "Intro meeting sched for 4-17",
           "id": "37626456748",
           "deal_score": null,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 20,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "University of Nebraska–Lincoln - New Deal",
           "stage": "Sales Opportunity",
           "amount": 20000,
-          "stale": 5,
+          "stale": 6,
           "next": "Sched intro meeting - JR\n\nAI Marketing introduction + syllabus submission + setup next meeting after his spring break - Returns 3-23",
           "id": "52036268604",
           "deal_score": null,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 30,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "University of Nebraska–Lincoln - New Deal",
           "stage": "Discovery/Demo (SQL)",
           "amount": 4000,
-          "stale": 5,
+          "stale": 6,
           "next": "Sched intro meeting - JR",
           "id": "52038717369",
           "deal_score": null,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 20,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "Middle Georgia State University - Catherine Whelan - Summer Pilot",
           "stage": "Trial (optional)",
           "amount": 80,
-          "stale": 4,
+          "stale": 5,
           "next": "Meeting sched for 4-15 to discuss module selections, next steps for pilot set up",
           "id": "55478407713",
-          "deal_score": 64,
-          "likelihood": null
+          "deal_score": 61,
+          "likelihood": null,
+          "probability": 40,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "Mississippi College - Retha Price - Fall",
           "stage": "Sales Opportunity",
           "amount": 1920,
-          "stale": 7,
+          "stale": 8,
           "next": "Need to get meeting sched to review module alignment",
           "id": "55927331339",
           "deal_score": 26,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 30,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
-          "name": "FIU - Tofazzal Hossain",
+          "name": "FIU - Tofazzal Hossain - Fall",
           "stage": "Sales Opportunity",
           "amount": 1872,
-          "stale": 7,
+          "stale": 8,
           "next": "Circle back in summer to finalize fall course",
           "id": "55922545591",
           "deal_score": 13,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 30,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "RISK - Miami Dade College - Max Ramirez",
           "stage": "Trial (optional)",
           "amount": 1440,
-          "stale": 4,
+          "stale": 1,
           "next": "Circle back with updated / corrected content",
           "id": "55927271211",
-          "deal_score": 51,
-          "likelihood": null
+          "deal_score": 56,
+          "likelihood": null,
+          "probability": 40,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "AUDIT - The College of New Jersey - New Deal",
           "stage": "Discovery/Demo (SQL)",
           "amount": 28800,
-          "stale": 8,
+          "stale": 1,
           "next": "Sched intro meeting after return from spring break on 3-23 - JR\nGet Louis Tucci in the platform. He is on a committee and needs their approval for QH. Wants a foundational course for all students to take. 600 students to start, he is mostly interested in AI foundations and AI in the age of marketing. ",
           "id": "55927464840",
           "deal_score": 26,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 20,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
-          "name": "REM: Alabama A&M University - New Deal",
-          "stage": "Discovery/Demo (SQL)",
-          "amount": 3200,
-          "stale": 5,
-          "next": "Sched intro meeting - JR\nMap her syllabus to Quanthub modules. Meeting 2/25 to discuss next steps. ",
-          "id": "55922594665",
-          "deal_score": 40,
-          "likelihood": null
-        },
-        {
-          "name": "REM: Alabama A&M University - Potential New Deal after Dr. McKey",
-          "stage": "Discovery/Demo (SQL)",
-          "amount": 10625,
-          "stale": 5,
-          "next": "Sched intro meeting - JR\nKeep talking to Dr. McKey about other professors to add. See what modules they'd want and get them in the platform.",
-          "id": "56122128190",
-          "deal_score": null,
-          "likelihood": null
-        },
-        {
-          "name": "University of Alabama at Birmingham - New Deal",
+          "name": "University of Alabama at Birmingham - George Munchus - Fall",
           "stage": "Discovery/Demo (SQL)",
           "amount": 2400,
-          "stale": 5,
+          "stale": 6,
           "next": "Reach out in late April per George's request to sched intro meeting - JR",
           "id": "56175409521",
           "deal_score": null,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 20,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "Oakland University - Brandon Gustafson",
           "stage": "Negotiation",
           "amount": 840,
-          "stale": 1,
+          "stale": 0,
           "next": "Working to get call sched to finalize module selections for summer\n",
           "id": "57019339560",
-          "deal_score": 77,
-          "likelihood": null
+          "deal_score": 72,
+          "likelihood": null,
+          "probability": 70,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
-          "name": "George Fox University - New Deal",
+          "name": "George Fox University - Jim Simmons - Fall",
           "stage": "Discovery/Demo (SQL)",
           "amount": 5760,
-          "stale": 5,
-          "next": "Follow up meeting sched",
+          "stale": 6,
+          "next": "Meeting sched for 6-18",
           "id": "57396962627",
-          "deal_score": 22,
-          "likelihood": null
+          "deal_score": 19,
+          "likelihood": null,
+          "probability": 20,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "Pensacola Christian College - Jim White",
           "stage": "Trial (optional)",
           "amount": 1920,
-          "stale": 14,
+          "stale": 1,
           "next": "Follow Up Meeting Sched for 4-8, reviewing Applied Data Science modules for fall",
           "id": "57553412763",
-          "deal_score": 18,
-          "likelihood": null
+          "deal_score": 22,
+          "likelihood": null,
+          "probability": 40,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "University of Maryland - Mary Beth Furst - Fall",
           "stage": "Trial (optional)",
           "amount": 5400,
-          "stale": 7,
+          "stale": 8,
           "next": "Sched meeting to preview updates with Mary Beth\nSched meeting for June/July to finalize for fall",
           "id": "57619336846",
           "deal_score": 13,
-          "likelihood": null
+          "likelihood": null,
+          "probability": 40,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "University of North Texas at Dallas - Jason Garrett",
@@ -596,38 +685,50 @@
           "stale": 1,
           "next": "Meeting sched for 4-24, obtain syllabi & LMS admin intro prior to",
           "id": "57830356277",
-          "deal_score": 51,
-          "likelihood": null
+          "deal_score": 54,
+          "likelihood": null,
+          "probability": 20,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "Rutgers Business School - Marshall Sponder Spring 27",
           "stage": "Trial (optional)",
           "amount": 48000,
-          "stale": 6,
+          "stale": 7,
           "next": "Next meeting sched 4-21",
           "id": "58029806122",
-          "deal_score": 18,
-          "likelihood": null
+          "deal_score": 15,
+          "likelihood": null,
+          "probability": 40,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "University of North Carolina Wilmington - Barry Wray",
           "stage": "Negotiation",
           "amount": 480,
-          "stale": 6,
+          "stale": 1,
           "next": "Check in on 4-1 to confirm specific modules for fall",
           "id": "58208304444",
-          "deal_score": 61,
-          "likelihood": null
+          "deal_score": 70,
+          "likelihood": null,
+          "probability": 70,
+          "days_to_close": null,
+          "contacts": 1
         },
         {
           "name": "Embry-Riddle Aeronautical University - Laura Valenti - Fall 26",
           "stage": "Negotiation",
           "amount": 1200,
-          "stale": 1,
+          "stale": 2,
           "next": "Working to resched call initially set for 4-6, need to finalize modules for fall",
           "id": "58562149241",
-          "deal_score": 68,
-          "likelihood": null
+          "deal_score": 65,
+          "likelihood": null,
+          "probability": 70,
+          "days_to_close": null,
+          "contacts": 1
         }
       ]
     },
@@ -646,12 +747,12 @@
       "pipeline_value": 30800,
       "stale_7d": 0,
       "deals_advanced_week": 2,
-      "avg_days_to_close": 12,
+      "avg_days_to_close": 13,
       "ip_meetings_week": 8,
       "vr_calls_week": 7,
-      "phone_calls_week": 0,
+      "phone_calls_week": 3,
       "text_touches_week": 0,
-      "raw_calls": 0,
+      "raw_calls": 3,
       "raw_meetings": 15,
       "raw_emails": 0,
       "raw_sms": 3,
@@ -674,8 +775,11 @@
           "stale": 0,
           "next": "Coordinate with Stewart to demo 1:1 with each professor in their Canvas instance. ",
           "id": "58134866019",
-          "deal_score": 52,
-          "likelihood": null
+          "deal_score": 53,
+          "likelihood": null,
+          "probability": 30,
+          "days_to_close": null,
+          "contacts": 2
         },
         {
           "name": "The University of Texas Rio Grande Valley - New Deal",
@@ -684,20 +788,23 @@
           "stale": 1,
           "next": "Follow up with Jerald to finalize deal shaping and move to signatures. ",
           "id": "58686450958",
-          "deal_score": 71,
-          "likelihood": null
+          "deal_score": 68,
+          "likelihood": null,
+          "probability": 70,
+          "days_to_close": null,
+          "contacts": 1
         }
       ]
     }
   ],
   "version": 10,
   "source": "hubspot-api",
-  "workerVersion": "w1.6-dev",
-  "exportDate": "April 7, 2026",
-  "savedAt": "2026-04-07T17:31:33.361Z",
+  "workerVersion": "w1.8-dev",
+  "exportDate": "April 8, 2026",
+  "savedAt": "2026-04-08T14:48:35.176Z",
   "history": [
     {
-      "week": "Mar 30 – Apr 3",
+      "week": "Mar 30 to Apr 3",
       "savedAt": "2026-04-03T23:59:59.999Z",
       "reps": [
         {
@@ -708,7 +815,7 @@
           "active_deals": 6,
           "pipeline_value": 105265,
           "stale_7d": 0,
-          "raw_calls": 0,
+          "raw_calls": 6,
           "raw_meetings": 10,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
@@ -721,10 +828,10 @@
           "active_deals": 46,
           "pipeline_value": 538210,
           "stale_7d": 1,
-          "raw_calls": 0,
+          "raw_calls": 5,
           "raw_meetings": 7,
           "raw_linkedin": 0,
-          "deals_advanced_week": 29
+          "deals_advanced_week": 28
         },
         {
           "id": "mf",
@@ -744,13 +851,13 @@
           "name": "Jason Rupert",
           "cw_amount": 9600,
           "cw_deals": 1,
-          "active_deals": 21,
-          "pipeline_value": 149217,
+          "active_deals": 19,
+          "pipeline_value": 135392,
           "stale_7d": 1,
-          "raw_calls": 0,
+          "raw_calls": 8,
           "raw_meetings": 12,
           "raw_linkedin": 2,
-          "deals_advanced_week": 6
+          "deals_advanced_week": 2
         },
         {
           "id": "mk",
@@ -760,7 +867,7 @@
           "active_deals": 2,
           "pipeline_value": 30800,
           "stale_7d": 0,
-          "raw_calls": 0,
+          "raw_calls": 1,
           "raw_meetings": 5,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
@@ -768,7 +875,7 @@
       ]
     },
     {
-      "week": "Mar 23 – Mar 27",
+      "week": "Mar 23 to Mar 27",
       "savedAt": "2026-03-27T23:59:59.999Z",
       "reps": [
         {
@@ -779,7 +886,7 @@
           "active_deals": 7,
           "pipeline_value": 107905,
           "stale_7d": 0,
-          "raw_calls": 0,
+          "raw_calls": 9,
           "raw_meetings": 9,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
@@ -792,7 +899,7 @@
           "active_deals": 46,
           "pipeline_value": 538210,
           "stale_7d": 0,
-          "raw_calls": 0,
+          "raw_calls": 1,
           "raw_meetings": 8,
           "raw_linkedin": 0,
           "deals_advanced_week": 1
@@ -805,7 +912,7 @@
           "active_deals": 2,
           "pipeline_value": 2400,
           "stale_7d": 2,
-          "raw_calls": 0,
+          "raw_calls": 2,
           "raw_meetings": 4,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
@@ -815,10 +922,10 @@
           "name": "Jason Rupert",
           "cw_amount": 9600,
           "cw_deals": 1,
-          "active_deals": 20,
-          "pipeline_value": 148017,
+          "active_deals": 18,
+          "pipeline_value": 134192,
           "stale_7d": 1,
-          "raw_calls": 0,
+          "raw_calls": 6,
           "raw_meetings": 3,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
@@ -831,7 +938,7 @@
           "active_deals": 1,
           "pipeline_value": 15800,
           "stale_7d": 0,
-          "raw_calls": 0,
+          "raw_calls": 1,
           "raw_meetings": 4,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
@@ -839,7 +946,7 @@
       ]
     },
     {
-      "week": "Mar 16 – Mar 20",
+      "week": "Mar 16 to Mar 20",
       "savedAt": "2026-03-20T23:59:59.999Z",
       "reps": [
         {
@@ -850,7 +957,7 @@
           "active_deals": 7,
           "pipeline_value": 107905,
           "stale_7d": 0,
-          "raw_calls": 0,
+          "raw_calls": 9,
           "raw_meetings": 14,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
@@ -863,7 +970,7 @@
           "active_deals": 44,
           "pipeline_value": 460210,
           "stale_7d": 0,
-          "raw_calls": 0,
+          "raw_calls": 4,
           "raw_meetings": 8,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
@@ -886,10 +993,10 @@
           "name": "Jason Rupert",
           "cw_amount": 9600,
           "cw_deals": 1,
-          "active_deals": 19,
-          "pipeline_value": 147537,
+          "active_deals": 17,
+          "pipeline_value": 133712,
           "stale_7d": 1,
-          "raw_calls": 0,
+          "raw_calls": 27,
           "raw_meetings": 12,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
@@ -902,7 +1009,7 @@
           "active_deals": 1,
           "pipeline_value": 15800,
           "stale_7d": 0,
-          "raw_calls": 0,
+          "raw_calls": 1,
           "raw_meetings": 0,
           "raw_linkedin": 1,
           "deals_advanced_week": 0
@@ -910,7 +1017,7 @@
       ]
     },
     {
-      "week": "Mar 9 – Mar 13",
+      "week": "Mar 9 to Mar 13",
       "savedAt": "2026-03-13T23:59:59.999Z",
       "reps": [
         {
@@ -921,7 +1028,7 @@
           "active_deals": 7,
           "pipeline_value": 107905,
           "stale_7d": 0,
-          "raw_calls": 12,
+          "raw_calls": 8,
           "raw_meetings": 1,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
@@ -934,7 +1041,7 @@
           "active_deals": 43,
           "pipeline_value": 445210,
           "stale_7d": 0,
-          "raw_calls": 7,
+          "raw_calls": 21,
           "raw_meetings": 2,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
@@ -947,8 +1054,8 @@
           "active_deals": 2,
           "pipeline_value": 2400,
           "stale_7d": 0,
-          "raw_calls": 52,
-          "raw_meetings": 7,
+          "raw_calls": 76,
+          "raw_meetings": 5,
           "raw_linkedin": 0,
           "deals_advanced_week": 2
         },
@@ -957,10 +1064,10 @@
           "name": "Jason Rupert",
           "cw_amount": 0,
           "cw_deals": 0,
-          "active_deals": 19,
-          "pipeline_value": 109137,
+          "active_deals": 17,
+          "pipeline_value": 95312,
           "stale_7d": 0,
-          "raw_calls": 97,
+          "raw_calls": 126,
           "raw_meetings": 3,
           "raw_linkedin": 0,
           "deals_advanced_week": 1
@@ -973,7 +1080,7 @@
           "active_deals": 0,
           "pipeline_value": 0,
           "stale_7d": 0,
-          "raw_calls": 32,
+          "raw_calls": 66,
           "raw_meetings": 0,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
