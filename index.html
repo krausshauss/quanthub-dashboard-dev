@@ -19,7 +19,7 @@
 #pinModal.open{display:flex;align-items:center;justify-content:center;}
 </style>
 <title>QuantHub · Sales Rep Scorecard</title>
-<!-- QH-VERSION: v20m-dev -->
+<!-- QH-VERSION: v20n-dev -->
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Slab:wght@400;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -654,7 +654,7 @@ input[type=file]{display:none;}
 const ADMIN_PIN         = null;  // PIN validated server-side by Cloudflare Worker — not stored here
 const WORKER_URL        = 'https://quanthub-proxy-dev.michael-20e.workers.dev/';
 const HUBSPOT_PORTAL_ID = '7316176';  // ← Your HubSpot portal ID (from any HubSpot URL)
-const APP_VERSION = 'v20m-dev';
+const APP_VERSION = 'v20n-dev';
 
 let isAdminUnlocked = false;
 let pinMode  = 'load';
@@ -1344,13 +1344,40 @@ function renderDetail(id){
 
     <div class="pc" style="border-top-color:${qG.c}">
       <div class="ph2"><div class="pn">Deal Quality <span style="color:var(--muted);font-weight:400">(15%)</span></div><div class="grade-wrap"><div class="pbg" style="color:${qG.c};background:${qG.bg};border-color:${qG.bd}">${s.qal}·${qG.l}</div><div class="ins-tip">${gradeInsight('qal',s.qal,r)}</div></div></div>
+      <div style="background:var(--bg);border-radius:7px;padding:8px 10px;margin-bottom:10px;font-size:10px;">
+        <div style="font-weight:700;color:var(--text2);margin-bottom:6px;font-size:10px;text-transform:uppercase;letter-spacing:.06em;">Score Breakdown</div>
+        <div style="display:grid;grid-template-columns:1fr auto auto;gap:3px 8px;align-items:center;">
+          <span style="color:var(--muted)">Next Step (25%)</span>
+          <span style="font-family:var(--mono);font-weight:700;color:${r.next_step_pct>=80?'var(--ok)':r.next_step_pct>=50?'var(--wa)':'var(--rd)'}">${r.next_step_pct}%</span>
+          <span style="font-family:var(--mono);font-size:9px;color:var(--dim)">→${Math.round(r.next_step_pct*.25)}pts</span>
+          <span style="color:var(--muted)">Amount Populated (15%)</span>
+          <span style="font-family:var(--mono);font-weight:700;color:${r.amount_populated>=80?'var(--ok)':r.amount_populated>=50?'var(--wa)':'var(--rd)'}">${r.amount_populated}%</span>
+          <span style="font-family:var(--mono);font-size:9px;color:var(--dim)">→${Math.round(r.amount_populated*.15)}pts</span>
+          <span style="color:var(--muted)">Close Date Set (15%)</span>
+          <span style="font-family:var(--mono);font-weight:700;color:${r.close_date_set>=80?'var(--ok)':r.close_date_set>=50?'var(--wa)':'var(--rd)'}">${r.close_date_set}%</span>
+          <span style="font-family:var(--mono);font-size:9px;color:var(--dim)">→${Math.round(r.close_date_set*.15)}pts</span>
+          <span style="color:var(--muted)">BANT Qualified (20%)</span>
+          <span style="font-family:var(--mono);font-weight:700;color:${r.bant_pct>=80?'var(--ok)':r.bant_pct>=50?'var(--wa)':'var(--rd)'}">${r.bant_pct}%</span>
+          <span style="font-family:var(--mono);font-size:9px;color:var(--dim)">→${Math.round(r.bant_pct*.20)}pts</span>
+          <span style="color:var(--muted)">Stage Flow (15%)</span>
+          <span style="font-family:var(--mono);font-weight:700;color:${r.stage_flow_pct>=80?'var(--ok)':r.stage_flow_pct>=50?'var(--wa)':'var(--rd)'}">${r.stage_flow_pct}%</span>
+          <span style="font-family:var(--mono);font-size:9px;color:var(--dim)">→${Math.round(r.stage_flow_pct*.15)}pts</span>
+          <span style="color:var(--muted)">Daily Verified (10%)</span>
+          <span style="font-family:var(--mono);font-weight:700;color:${r.daily_verified>=80?'var(--ok)':r.daily_verified>=50?'var(--wa)':'var(--rd)'}">${r.daily_verified}%</span>
+          <span style="font-family:var(--mono);font-size:9px;color:var(--dim)">→${Math.round(r.daily_verified*.10)}pts</span>
+        </div>
+        <div style="margin-top:8px;padding-top:6px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+          <span style="font-size:9px;color:var(--muted)">BANT = Budget · Authority · Need · Timeline</span>
+          <span style="font-family:var(--mono);font-size:11px;font-weight:700;color:${qG.c}">Total: ${s.qal}/100</span>
+        </div>
+      </div>
       ${mPct('Next Step Populated',r.next_step_pct,INS.ns)}
       ${mPct('Amount / ARR Populated',r.amount_populated,INS.amt)}
       ${mPct('Close Date Set',r.close_date_set,INS.cd)}
       ${mPct('BANT Criteria Complete',r.bant_pct,INS.bant)}
       ${mPct('Proper Stage Flow',r.stage_flow_pct,INS.sf)}
       ${mPct('Active Deals Verified Daily',r.daily_verified,INS.dv)}
-      <div style="margin-top:7px;font-size:9px;color:var(--muted);font-style:italic">First 4 auto-computed · BANT & daily verification from standup</div>
+      <div style="margin-top:7px;font-size:9px;color:var(--muted);font-style:italic">Next Step, Amount, Close Date, Stage Flow auto-computed · BANT % & daily verification entered in standup</div>
     </div>`;
 
   // EXPANSION
@@ -1889,7 +1916,21 @@ function buildKpiStrip() {
     </div>
     <div class="kpi g"><div class="kpi-l">Active Pipeline</div><div class="kpi-v-wrap"><div class="kpi-v">${totPip>=1000000?'$'+(totPip/1000000).toFixed(2).replace(/\.?0+$/,'')+'M':'$'+(totPip/1000).toFixed(0)+'K'}</div><div class="ins-tip">${pipeInsight}</div></div><div class="kpi-s">${totD} active deals</div></div>
     <div class="kpi ${totS>5?'r':totS>2?'a':'g'}"><div class="kpi-l">Stale &gt;7 Days</div><div class="kpi-v-wrap"><div class="kpi-v">${totS}</div><div class="ins-tip">${staleInsight}</div></div><div class="kpi-s">${totS>5?'⚠ Action required':totS>0?'Monitor standup':'All current ✓'}</div></div>
-    <div class="kpi a"><div class="kpi-l">Team Quota Attainment</div><div class="kpi-v-wrap"><div class="kpi-v">${teamAtt}%</div><div class="ins-tip">${attInsight}</div></div><div class="kpi-s">vs $${(QUOTA*aeN/1000).toFixed(0)}K Q1 · $1M annual</div></div>`;
+    <div class="kpi a" style="border-top-width:4px;">
+      <div class="kpi-l">Q2 Quota Progress</div>
+      <div class="kpi-v-wrap" style="display:flex;align-items:baseline;gap:8px;">
+        <div class="kpi-v" style="color:${teamAtt>=100?'var(--ok)':teamAtt>=75?'var(--wa)':'var(--rd)'};">${teamAtt}%</div>
+        <div style="font-family:var(--mono);font-size:11px;color:var(--muted);">attained</div>
+        <div class="ins-tip">${attInsight}</div>
+      </div>
+      <div style="margin:5px 0 3px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;">
+        <div style="height:100%;width:${Math.min(100,teamAtt)}%;background:${teamAtt>=100?'var(--qh-green)':teamAtt>=75?'#C07800':'var(--rd)'};border-radius:2px;transition:width .5s;"></div>
+      </div>
+      <div class="kpi-s" style="display:flex;justify-content:space-between;">
+        <span>${fmt(totCW)} closed</span>
+        <span style="color:var(--muted)">$${(Math.max(0,QUOTA*aeN-totCW)/1000).toFixed(0)}K remaining</span>
+      </div>
+    </div>\`;
 }
 
 // ── GRADE INSIGHT COPY ─────────────────────────────────────────────────
