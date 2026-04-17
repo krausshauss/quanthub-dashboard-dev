@@ -386,7 +386,7 @@
       "pipeline_value": 122912,
       "stale_7d": 2,
       "deals_advanced_week": 17,
-      "avg_days_to_close": 69,
+      "avg_days_to_close": 70,
       "ip_meetings_week": 7,
       "vr_calls_week": 6,
       "phone_calls_week": 45,
@@ -708,11 +708,21 @@
       ]
     }
   ],
+  "team": {
+    "pipeline": 3781883,
+    "active_deals": 374,
+    "stale_7d": 296,
+    "cw_amount": 1649476,
+    "q1_cw": 1631076,
+    "q2_cw": 18400,
+    "q3_cw": 0,
+    "q4_cw": 0
+  },
   "version": 10,
   "source": "hubspot-api",
-  "workerVersion": "w3.0-dev",
+  "workerVersion": "w3.1",
   "exportDate": "April 17, 2026",
-  "savedAt": "2026-04-17T04:50:54.214Z",
+  "savedAt": "2026-04-17T05:27:53.760Z",
   "history": [
     {
       "week": "Apr 6 to Apr 10",
