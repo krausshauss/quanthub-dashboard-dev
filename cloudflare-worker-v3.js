@@ -504,8 +504,36 @@ async function buildData(env) {
     console.warn('[QH] History computation failed (non-fatal):', e.message);
   }
 
+  // Team aggregates from ALL deals (full Higher Ed pipeline, all owners)
+  const teamActive = allDeals.filter(d => {
+    const stage    = (d.properties.dealstage || '').toLowerCase();
+    const isWon    = d.properties.hs_is_closed_won === 'true';
+    const isClosed = d.properties.hs_is_closed     === 'true';
+    return !isWon && !isClosed && !stage.includes('closedlost') && !stage.includes('closed_lost');
+  });
+  const teamCW2026 = allDeals.filter(d => {
+    if (d.properties.hs_is_closed_won !== 'true') return false;
+    const cd = d.properties.closedate ? new Date(d.properties.closedate) : null;
+    return cd && cd >= y2026;
+  });
+  const inQtr = (d, qs, qe) => { const cd = d.properties.closedate ? new Date(d.properties.closedate) : null; return cd && cd >= qs && cd <= qe; };
+  const team = {
+    pipeline:     teamActive.reduce((s,d) => s + (parseFloat(d.properties.amount)||0), 0),
+    active_deals: teamActive.length,
+    stale_7d:     teamActive.filter(d => {
+      const la = d.properties.notes_last_updated || d.properties.hs_lastmodifieddate;
+      return !la || new Date(la) < weekAgo;
+    }).length,
+    cw_amount: teamCW2026.reduce((s,d) => s + (parseFloat(d.properties.amount)||0), 0),
+    q1_cw: teamCW2026.filter(d => inQtr(d, y2026,   q1End  )).reduce((s,d) => s+(parseFloat(d.properties.amount)||0), 0),
+    q2_cw: teamCW2026.filter(d => inQtr(d, q2Start, q2End  )).reduce((s,d) => s+(parseFloat(d.properties.amount)||0), 0),
+    q3_cw: teamCW2026.filter(d => inQtr(d, q3Start, q3End  )).reduce((s,d) => s+(parseFloat(d.properties.amount)||0), 0),
+    q4_cw: teamCW2026.filter(d => inQtr(d, q4Start, now    )).reduce((s,d) => s+(parseFloat(d.properties.amount)||0), 0),
+  };
+  console.log('[QH] Team pipeline: $' + Math.round(team.pipeline/1000) + 'K across ' + team.active_deals + ' deals');
+
   return {
-    reps, version: 10, source: 'hubspot-api',
+    reps, team, version: 10, source: 'hubspot-api',
     workerVersion: WORKER_VERSION,
     exportDate: now.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
     savedAt:    now.toISOString(),

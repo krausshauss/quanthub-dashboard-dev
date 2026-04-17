@@ -1142,10 +1142,11 @@ function buildScorecard(){
   document.getElementById('srcBadge').innerHTML=`<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> ${repData.reduce((s,r)=>s+r.active_deals,0)} deals · ${today}`;
   document.getElementById('tbInfo').innerHTML=`<strong>Export: ${today}</strong>`;
 
-  const totCW=repData.reduce((s,r)=>s+r.cw_amount,0);
-  const totPip=repData.reduce((s,r)=>s+r.pipeline_value,0);
-  const totD=repData.reduce((s,r)=>s+r.active_deals,0);
-  const totS=repData.reduce((s,r)=>s+r.stale_7d,0);
+  const _team = window._scorecardData?.team || {};
+  const totCW  = _team.cw_amount   ?? repData.reduce((s,r)=>s+r.cw_amount,0);
+  const totPip = _team.pipeline    ?? repData.reduce((s,r)=>s+r.pipeline_value,0);
+  const totD   = _team.active_deals?? repData.reduce((s,r)=>s+r.active_deals,0);
+  const totS   = _team.stale_7d   ?? repData.reduce((s,r)=>s+r.stale_7d,0);
   const aeN=repData.filter(r=>r.role.includes('Account')||r.role.includes('Sales')).length;
 
   const exportDateStr = new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
@@ -1744,7 +1745,7 @@ function buildTeamTrendStrip() {
 
 // ── ANNUAL TICKER ─────────────────────────────────────────────────────
 function buildAnnualTicker() {
-  const totCW = repData.reduce((s,r)=>s+r.cw_amount,0);
+  const totCW = (window._scorecardData?.team?.cw_amount) ?? repData.reduce((s,r)=>s+r.cw_amount,0);
   const pct   = Math.min(100, Math.round(totCW / TEAM_TARGET * 100));
   const gap   = Math.max(0, TEAM_TARGET - totCW);
   const el    = document.getElementById('annualTicker');
@@ -1883,16 +1884,17 @@ function buildKpiStrip() {
   buildAnnualTicker();
   buildQtrStrip();
   buildTeamTrendStrip();
-  const totCW  = repData.reduce((s,r)=>s+r.cw_amount,0);
-  const totPip = repData.reduce((s,r)=>s+r.pipeline_value,0);
-  const totD   = repData.reduce((s,r)=>s+r.active_deals,0);
-  const totS   = repData.reduce((s,r)=>s+r.stale_7d,0);
+  const _t     = window._scorecardData?.team || {};
+  const totCW  = _t.cw_amount    ?? repData.reduce((s,r)=>s+r.cw_amount,0);
+  const totPip = _t.pipeline     ?? repData.reduce((s,r)=>s+r.pipeline_value,0);
+  const totD   = _t.active_deals ?? repData.reduce((s,r)=>s+r.active_deals,0);
+  const totS   = _t.stale_7d    ?? repData.reduce((s,r)=>s+r.stale_7d,0);
   const aeN    = repData.filter(r=>r.role.includes('Account')||r.role.includes('Sales')).length;
   // Current quarter CW — use q2_cw (April onward) for Q2 quota progress
   const now = new Date();
   const curQtr = now >= new Date('2026-07-01') ? 3 : now >= new Date('2026-04-01') ? 2 : 1;
   const qKey = 'q' + curQtr + '_cw';
-  const totQtrCW = repData.reduce((s,r) => s + (r[qKey] || 0), 0);
+  const totQtrCW = (_t[qKey] != null) ? _t[qKey] : repData.reduce((s,r) => s + (r[qKey] || 0), 0);
   const qtrQuota = QUOTA * Math.max(1, aeN);
   const teamAtt = Math.round(totQtrCW / qtrQuota * 100);
 
@@ -2263,10 +2265,11 @@ function restoreScorecard(saved) {
   document.getElementById('srcBadge').innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg> ${repData.reduce((s,r)=>s+r.active_deals,0)} deals · ${exportDate}`;
   document.getElementById('tbInfo').innerHTML = `<strong>Restored:</strong> ${exportDate}`;
 
-  const totCW  = repData.reduce((s,r)=>s+r.cw_amount,0);
-  const totPip = repData.reduce((s,r)=>s+r.pipeline_value,0);
-  const totD   = repData.reduce((s,r)=>s+r.active_deals,0);
-  const totS   = repData.reduce((s,r)=>s+r.stale_7d,0);
+  const _tc    = window._scorecardData?.team || {};
+  const totCW  = _tc.cw_amount    ?? repData.reduce((s,r)=>s+r.cw_amount,0);
+  const totPip = _tc.pipeline     ?? repData.reduce((s,r)=>s+r.pipeline_value,0);
+  const totD   = _tc.active_deals ?? repData.reduce((s,r)=>s+r.active_deals,0);
+  const totS   = _tc.stale_7d    ?? repData.reduce((s,r)=>s+r.stale_7d,0);
   const aeN    = repData.filter(r=>r.role.includes('Account')||r.role.includes('Sales')).length;
 
   buildKpiStrip();
