@@ -1146,7 +1146,7 @@ function buildScorecard(){
   const totPip=repData.reduce((s,r)=>s+r.pipeline_value,0);
   const totD=repData.reduce((s,r)=>s+r.active_deals,0);
   const totS=repData.reduce((s,r)=>s+r.stale_7d,0);
-  const aeN=repData.filter(r=>r.role.includes('Account')).length;
+  const aeN=repData.filter(r=>r.role.includes('Account')||r.role.includes('Sales')).length;
 
   const exportDateStr = new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
   // Set _scorecardData BEFORE buildKpiStrip so buildQtrStrip can access history (empty on first load)
@@ -1535,7 +1535,7 @@ function renderDetail(id){
   trHtml += '</tr></thead><tbody>';
 
   const metrics = [
-    { label: 'CW Revenue',     key: 'cw',       fmt: fmtK,  good: 'up' },
+    { label: 'CW Revenue (YTD)', key: 'cw',      fmt: fmtK,  good: 'up' },
     { label: 'Pipeline Value', key: 'pipe',      fmt: fmtK,  good: 'up' },
     { label: 'Active Deals',   key: 'active',    fmt: v=>v===null?'—':v, good: 'up' },
     { label: 'Stale >7d',      key: 'stale',     fmt: v=>v===null?'—':v, good: 'down' },
@@ -1763,7 +1763,7 @@ function buildAnnualTicker() {
       </div>
       <div class="at-bar-wrap"><div class="at-bar" style="width:${pct}%"></div></div>
       <div class="at-sub">
-        <span>${repData.reduce((s,r)=>s+r.cw_deals,0)} deals closed · ${repData.filter(r=>r.cw_amount>0).length} of ${repData.filter(r=>r.role.includes('Account')).length} AEs producing</span>
+        <span>${repData.reduce((s,r)=>s+r.cw_deals,0)} deals closed · ${repData.filter(r=>r.cw_amount>0).length} of ${repData.filter(r=>r.role.includes('Account')||r.role.includes('Sales')).length} AEs producing</span>
         <span>$${(TEAM_TARGET/1000).toFixed(0)}K target</span>
       </div>
     </div>`;
@@ -1840,7 +1840,7 @@ function buildQtrStrip() {
     }
   });
 
-  const aeN = repData.filter(r=>r.role.includes('Account')).length;
+  const aeN = repData.filter(r=>r.role.includes('Account')||r.role.includes('Sales')).length;
 
   el.innerHTML = QUARTERS.map((q, qi) => {
     const isCurrent = qi === curQtrIdx;
@@ -1887,7 +1887,7 @@ function buildKpiStrip() {
   const totPip = repData.reduce((s,r)=>s+r.pipeline_value,0);
   const totD   = repData.reduce((s,r)=>s+r.active_deals,0);
   const totS   = repData.reduce((s,r)=>s+r.stale_7d,0);
-  const aeN    = repData.filter(r=>r.role.includes('Account')).length;
+  const aeN    = repData.filter(r=>r.role.includes('Account')||r.role.includes('Sales')).length;
   // Current quarter CW — use q2_cw (April onward) for Q2 quota progress
   const now = new Date();
   const curQtr = now >= new Date('2026-07-01') ? 3 : now >= new Date('2026-04-01') ? 2 : 1;
@@ -2267,7 +2267,7 @@ function restoreScorecard(saved) {
   const totPip = repData.reduce((s,r)=>s+r.pipeline_value,0);
   const totD   = repData.reduce((s,r)=>s+r.active_deals,0);
   const totS   = repData.reduce((s,r)=>s+r.stale_7d,0);
-  const aeN    = repData.filter(r=>r.role.includes('Account')).length;
+  const aeN    = repData.filter(r=>r.role.includes('Account')||r.role.includes('Sales')).length;
 
   buildKpiStrip();
 
