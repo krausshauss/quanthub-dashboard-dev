@@ -17,11 +17,10 @@ const TEAM_TARGET   = 1000000;
 const STALE_DAYS    = 7;
 
 const REPS = {
-  '80811940': { name: 'Nate Spargo',     role: 'Director of CS',              initials: 'NS' },
-  '87448455': { name: 'Michael Krause',  role: 'Strategic Advisor',           initials: 'MK' },
-  '81657454': { name: 'Joe DeRario',     role: 'Sr. Sales Account Executive', initials: 'JD' },
-  '86826804': { name: 'Jason Rupert',    role: 'Sales Account Executive',     initials: 'JR' },
-  '84255670': { name: 'Matthew Fickling',role: 'Sales Account Executive',     initials: 'MF' },
+  '80811940': { name: 'Nate Spargo',  role: 'Director of CS',                        initials: 'NS' },
+  '81657454': { name: 'Joe DeRario',  role: 'Sr. Sales Account Executive',           initials: 'JD' },
+  '86826804': { name: 'Jason Rupert', role: 'Sales Account Executive',               initials: 'JR' },
+  '90736265': { name: 'Jakob Krause', role: 'Director of Sales and Client Consulting', initials: 'JK' },
 };
 const REP_IDS = Object.keys(REPS);
 
@@ -393,7 +392,6 @@ async function buildData(env) {
     const info  = REPS[ownerId];
     const deals = grouped[ownerId] || [];
     const act   = actMap[ownerId]  || { calls: 0, meetings: 0, emails: 0 };
-    const isMK  = ownerId === '87448455';
 
     const isWon    = d => d.hs_is_closed_won === 'true' || d.hs_is_closed_won === true;
     const isClosed = d => d.hs_is_closed     === 'true' || d.hs_is_closed     === true;
@@ -486,7 +484,7 @@ async function buildData(env) {
       phone_calls_week: act.calls, text_touches_week: 0,
       raw_calls: act.calls, raw_meetings: act.meetings, raw_emails: act.emails,
       raw_sms: act.sms||0, raw_linkedin: act.linkedin||0,
-      meetings_target: isMK ? 4 : 6, calls_target: isMK ? 8 : 15, text_target: isMK ? 3 : 5,
+      meetings_target: 6, calls_target: 15, text_target: 5,
       next_step_pct:    total ? Math.round(hasNS  / total * 100) : 0,
       amount_populated: total ? Math.round(hasAmt  / total * 100) : 0,
       close_date_set:   total ? Math.round(hasCD   / total * 100) : 0,
