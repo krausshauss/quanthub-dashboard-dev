@@ -274,9 +274,11 @@ async function buildData(env) {
     'Closed Won':            'Closed Won',
     'Closed Lost':           'Closed Lost',
   };
+  let higherEdPipelineId = null;
   try {
     const pipelines = await hsGet(env, '/crm/v3/pipelines/deals');
     (pipelines.results || []).forEach(p => {
+      if ((p.label || '').toLowerCase().includes('higher ed')) higherEdPipelineId = p.id;
       (p.stages || []).forEach(s => {
         const label = (s.label || '').trim();
         const id    = (s.id    || '').trim();
@@ -295,6 +297,7 @@ async function buildData(env) {
       });
     });
     console.log('[QH] Stage map:', Object.keys(stageMap).join(', '));
+    console.log('[QH] Higher Ed pipeline ID:', higherEdPipelineId);
   } catch(e) {
     console.warn('[QH] Stage map skipped:', e.message);
   }
@@ -504,14 +507,17 @@ async function buildData(env) {
     console.warn('[QH] History computation failed (non-fatal):', e.message);
   }
 
-  // Team aggregates from ALL deals (full Higher Ed pipeline, all owners)
+  // Team aggregates — Higher Ed pipeline only, active deals only
+  const isHigherEd = d => !higherEdPipelineId || d.properties.pipeline === higherEdPipelineId;
   const teamActive = allDeals.filter(d => {
+    if (!isHigherEd(d)) return false;
     const stage    = (d.properties.dealstage || '').toLowerCase();
     const isWon    = d.properties.hs_is_closed_won === 'true';
     const isClosed = d.properties.hs_is_closed     === 'true';
     return !isWon && !isClosed && !stage.includes('closedlost') && !stage.includes('closed_lost');
   });
   const teamCW2026 = allDeals.filter(d => {
+    if (!isHigherEd(d)) return false;
     if (d.properties.hs_is_closed_won !== 'true') return false;
     const cd = d.properties.closedate ? new Date(d.properties.closedate) : null;
     return cd && cd >= y2026;
