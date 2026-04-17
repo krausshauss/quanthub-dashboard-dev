@@ -7,11 +7,8 @@
 //  Worker:   quanthub-proxy-dev.michael-20e.workers.dev
 // ═══════════════════════════════════════════════════════════════════
 
-const WORKER_VERSION = 'w3.0-dev';  // ← bump this on every deploy
-const GITHUB_OWNER  = 'krausshauss';
-const GITHUB_REPO   = 'quanthub-dashboard-dev';
-const GITHUB_BRANCH = 'dev';
-const DATA_FILE     = 'data.json';
+const WORKER_VERSION = 'w3.1';  // ← bump this on every deploy
+const DATA_FILE      = 'data.json';
 const QUOTA         = 100000;
 const TEAM_TARGET   = 1000000;
 const STALE_DAYS    = 7;
@@ -115,10 +112,16 @@ async function fetchLeadActivities(env, objectType, props, cutoff, ownerIds) {
     const body = {
       properties: allProps,
       limit: 100,
-      filterGroups: [{ filters: [
-        { propertyName: 'hs_timestamp', operator: 'GTE', value: cutoff },
-        { propertyName: 'hubspot_owner_id', operator: 'IN', values: ownerIds },
-      ]}],
+      filterGroups: [
+        { filters: [
+          { propertyName: 'hs_timestamp', operator: 'GTE', value: cutoff },
+          { propertyName: 'hubspot_owner_id', operator: 'IN', values: ownerIds },
+        ]},
+        { filters: [
+          { propertyName: 'hs_timestamp', operator: 'GTE', value: cutoff },
+          { propertyName: 'hs_created_by_user_id', operator: 'IN', values: ownerIds },
+        ]},
+      ],
     };
     if (after) body.after = after;
     try {
@@ -512,6 +515,9 @@ async function buildData(env) {
 
 // ── GITHUB CACHE ─────────────────────────────────────────────────────
 async function ghRead(env) {
+  const GITHUB_OWNER  = env.GITHUB_OWNER  || 'krausshauss';
+  const GITHUB_REPO   = env.GITHUB_REPO   || 'quanthub-dashboard-dev';
+  const GITHUB_BRANCH = env.GITHUB_BRANCH || 'dev';
   const url = 'https://api.github.com/repos/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/contents/' + DATA_FILE + '?ref=' + GITHUB_BRANCH;
   const r   = await fetch(url, { headers: { 'Authorization': 'token ' + env.GITHUB_TOKEN, 'Accept': 'application/vnd.github.v3+json', 'User-Agent': 'QH-Worker/3' } });
   if (r.status === 404) return { content: null, sha: null };
@@ -521,6 +527,9 @@ async function ghRead(env) {
 }
 
 async function ghWrite(env, data, sha) {
+  const GITHUB_OWNER  = env.GITHUB_OWNER  || 'krausshauss';
+  const GITHUB_REPO   = env.GITHUB_REPO   || 'quanthub-dashboard-dev';
+  const GITHUB_BRANCH = env.GITHUB_BRANCH || 'dev';
   const url  = 'https://api.github.com/repos/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/contents/' + DATA_FILE;
   const body = {
     message: 'Scorecard update: ' + (data.exportDate || new Date().toDateString()),
