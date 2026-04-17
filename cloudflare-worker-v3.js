@@ -89,6 +89,12 @@ async function buildScorecardData(env) {
   const y2026   = new Date('2026-01-01T00:00:00Z');
   const weekAgo = new Date(today); weekAgo.setDate(weekAgo.getDate() - STALE_DAYS);
   const yearAgo = new Date(today); yearAgo.setFullYear(today.getFullYear() - 1);
+  const quarters = [
+    { key: 'q1_cw', start: new Date('2026-01-01T00:00:00Z'), end: new Date('2026-04-01T00:00:00Z') },
+    { key: 'q2_cw', start: new Date('2026-04-01T00:00:00Z'), end: new Date('2026-07-01T00:00:00Z') },
+    { key: 'q3_cw', start: new Date('2026-07-01T00:00:00Z'), end: new Date('2026-10-01T00:00:00Z') },
+    { key: 'q4_cw', start: new Date('2026-10-01T00:00:00Z'), end: new Date('2027-01-01T00:00:00Z') },
+  ];
 
   // ── 1. FETCH ALL DEALS owned by scored reps ──────────────────────────────
   const dealProps = [
@@ -295,6 +301,10 @@ async function buildScorecardData(env) {
       // CW
       cw_amount:  cwAmount,
       cw_deals:   cwDeals2026.length,
+      ...Object.fromEntries(quarters.map(q => [q.key, cwDeals2026
+        .filter(d => { const cd = new Date(d.closedate); return cd >= q.start && cd < q.end; })
+        .reduce((s, d) => s + (parseFloat(d.amount) || 0), 0)
+      ])),
       // Pipeline
       active_deals:        total,
       pipeline_value:      pipeValue,
