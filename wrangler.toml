@@ -1,0 +1,7 @@
+name = "quanthub-proxy"
+main = "cloudflare-worker-v3.js"
+compatibility_date = "2024-01-01"
+account_id = "20e7b178f91a4ca92328922dd22abdf2"
+
+[env.dev]
+name = "quanthub-proxy-dev"

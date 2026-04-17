@@ -109,8 +109,8 @@ async function buildScorecardData(env) {
 
   // ── 2. FETCH ENGAGEMENTS (calls + meetings) for last 7 days ──────────────
   // Use associations to get activities per owner
-  const activityMap = {}; // ownerId → { calls, meetings, emails }
-  SCORED_REPS.forEach(id => { activityMap[id] = { calls: 0, meetings: 0, emails: 0 }; });
+  const activityMap = {}; // ownerId → { calls, meetings, emails, linkedin }
+  SCORED_REPS.forEach(id => { activityMap[id] = { calls: 0, meetings: 0, emails: 0, linkedin: 0 }; });
 
   // Fetch calls
   try {
@@ -157,6 +157,23 @@ async function buildScorecardData(env) {
       if (oid && activityMap[oid]) activityMap[oid].emails++;
     });
   } catch(e) { console.warn('Emails fetch failed:', e.message); }
+
+  // Fetch LinkedIn / Sales Navigator connection request tasks
+  try {
+    const linkedinTasks = await hsAll(env, 'tasks', [
+      'hubspot_owner_id', 'hs_timestamp', 'hs_task_status', 'hs_task_type'
+    ], [{
+      filters: [
+        { propertyName: 'hs_timestamp',   operator: 'GTE', value: weekAgo.toISOString() },
+        { propertyName: 'hs_task_status', operator: 'EQ',  value: 'COMPLETED' },
+        { propertyName: 'hs_task_type',   operator: 'EQ',  value: 'LINKED_IN_CONNECT' },
+      ]
+    }]);
+    linkedinTasks.forEach(t => {
+      const oid = t.properties?.hubspot_owner_id;
+      if (oid && activityMap[oid]) activityMap[oid].linkedin++;
+    });
+  } catch(e) { console.warn('LinkedIn tasks fetch failed:', e.message); }
 
   // ── 3. GROUP DEALS BY REP ─────────────────────────────────────────────────
   const grouped = {};
@@ -292,6 +309,7 @@ async function buildScorecardData(env) {
       raw_calls:           act.calls,
       raw_meetings:        act.meetings,
       raw_emails:          act.emails,
+      raw_linkedin:        act.linkedin,
       meetings_target:     isMK ? 4  : 6,
       calls_target:        isMK ? 8  : 15,
       text_target:         isMK ? 3  : 5,
