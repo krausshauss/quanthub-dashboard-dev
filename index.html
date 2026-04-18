@@ -215,6 +215,8 @@ input[type=file]{display:none;}
 .tabs{display:flex;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:3px;gap:3px;}
 .tab{padding:5px 14px;border-radius:6px;border:none;cursor:pointer;font-family:var(--font);font-size:11px;font-weight:500;background:transparent;color:var(--muted);transition:all .15s;}
 .tab.on{background:var(--qh-blue);color:#fff;box-shadow:0 1px 4px rgba(0,119,181,.3);}
+.tab.tab-agent{background:linear-gradient(135deg,#0077B5,#22C55E);color:#fff;font-weight:700;}
+.tab.tab-agent:hover{opacity:.9;}
 .tc{display:none;}.tc.on{display:block;}
 
 /* PILLARS */
@@ -605,6 +607,7 @@ input[type=file]{display:none;}
         <button class="tab on" onclick="switchTab(this,'sc')">Scorecard</button>
         <button class="tab"    onclick="switchTab(this,'pl')">Pipeline</button>
         <button class="tab"    onclick="switchTab(this,'tr')">Trends</button>
+        <button class="tab tab-agent" onclick="openSalesAgent()">⚡ Sales Agent</button>
       </div>
     </div>
     <div class="tc on" id="tc-sc"><div class="pg" id="pillarGrid"></div><div id="expSec"></div></div>
@@ -1566,6 +1569,29 @@ function show(id){
       el.style.display='none';
     }
   });
+}
+
+
+const SALES_AGENT_URL = 'https://krausshauss.github.io/quanthub-sales-agent-dev/';
+
+async function openSalesAgent() {
+  const r = repData.find(x => x.id === activeId);
+  if (!r) return;
+  // Fetch HubSpot owners and match by name to get email
+  try {
+    const res = await fetch('https://quanthub-sales-agent-dev.michael-20e.workers.dev/hubspot/owners');
+    const data = await res.json();
+    const owners = data.results || [];
+    const nameParts = r.name.toLowerCase().split(' ');
+    const match = owners.find(o => {
+      const full = ((o.firstName||'') + ' ' + (o.lastName||'')).toLowerCase();
+      return nameParts.every(p => full.includes(p));
+    });
+    const email = match?.email || '';
+    window.open(SALES_AGENT_URL + (email ? '?rep=' + encodeURIComponent(email) : ''), '_blank');
+  } catch(e) {
+    window.open(SALES_AGENT_URL, '_blank');
+  }
 }
 
 function switchTab(btn,name){
