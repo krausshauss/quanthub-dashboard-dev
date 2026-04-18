@@ -43,8 +43,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 
 /* TOP BAR */
 .topbar{background:linear-gradient(90deg,#0077B5,#0B4971);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:52px;box-shadow:0 2px 10px rgba(0,119,181,.25);}
-.qh-logo{display:flex;align-items:center;gap:9px;text-decoration:none;}
-.qh-wm{font-family:var(--font);font-size:17px;font-weight:700;color:#fff;letter-spacing:-.01em;}
+.qh-logo{display:flex;align-items:center;text-decoration:none;}.qh-logo-img{height:28px;width:auto;display:block;filter:brightness(0) invert(1);}
+
 .tb-r{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.7);text-align:right;line-height:1.7;}
 .tb-r strong{color:#fff;}
 
@@ -374,24 +374,7 @@ input[type=file]{display:none;}
 
 <!-- TOP BAR -->
 <div class="topbar">
-  <a class="qh-logo" href="#">
-    <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
-      <circle cx="20" cy="4" r="3" fill="white"/><circle cx="36" cy="20" r="3" fill="white"/>
-      <circle cx="20" cy="36" r="3" fill="white"/><circle cx="4" cy="20" r="3" fill="white"/>
-      <circle cx="8" cy="8" r="2.2" fill="rgba(255,255,255,.5)"/><circle cx="32" cy="8" r="2.2" fill="rgba(255,255,255,.5)"/>
-      <circle cx="32" cy="32" r="2.2" fill="rgba(255,255,255,.5)"/><circle cx="8" cy="32" r="2.2" fill="rgba(255,255,255,.5)"/>
-      <circle cx="20" cy="20" r="4" fill="white"/>
-      <line x1="20" y1="7" x2="20" y2="16" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
-      <line x1="33" y1="20" x2="24" y2="20" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
-      <line x1="20" y1="24" x2="20" y2="33" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
-      <line x1="7" y1="20" x2="16" y2="20" stroke="white" stroke-width="1.8" stroke-linecap="round"/>
-      <line x1="9.5" y1="9.5" x2="16.5" y2="16.5" stroke="rgba(255,255,255,.35)" stroke-width="1.2" stroke-linecap="round"/>
-      <line x1="30.5" y1="9.5" x2="23.5" y2="16.5" stroke="rgba(255,255,255,.35)" stroke-width="1.2" stroke-linecap="round"/>
-      <line x1="30.5" y1="30.5" x2="23.5" y2="23.5" stroke="rgba(255,255,255,.35)" stroke-width="1.2" stroke-linecap="round"/>
-      <line x1="9.5" y1="30.5" x2="16.5" y2="23.5" stroke="rgba(255,255,255,.35)" stroke-width="1.2" stroke-linecap="round"/>
-    </svg>
-    <span class="qh-wm">quanthub</span>
-  </a>
+  <a class="qh-logo" href="#"><img src="QuantHub Logos/Color (horizontal).svg" alt="QuantHub" class="qh-logo-img"></a>
   <div class="tb-r"><div><strong>Sales Rep Scorecard</strong> · Higher Education <span id="appVersionBadge" style="opacity:.5;font-size:9px;letter-spacing:.05em;margin-left:5px;font-family:var(--mono);"></span><span id="workerVersionBadge" style="opacity:.4;font-size:9px;margin-left:6px;font-family:var(--mono);"></span></div><div id="tbInfo">Upload files to begin</div></div>
 </div>
 
