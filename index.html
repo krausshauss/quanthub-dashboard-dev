@@ -20,22 +20,22 @@
 </style>
 <title>QuantHub · Sales Rep Scorecard</title>
 <!-- QH-VERSION: v20o-dev -->
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&family=Roboto+Slab:wght@400;600;700&family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
-  --qh-blue:#0077B5;--qh-dark:#0B4971;--qh-green:#69A62A;
+  --qh-blue:#0077B5;--qh-dark:#0B4971;--qh-green:#22C55E;
   --bg:#F4F6F9;--surface:#FFF;--surface2:#F0F4F8;
   --border:#DDE4EF;--border2:#B8C8DC;
   --text:#3A3C3E;--text2:#4A5568;--muted:#7A8FA6;--dim:#B0BCC8;
-  --ok:#5A9420;--ok-bg:#EBF5DC;--ok-bd:#B2D87A;
+  --ok:#16a34a;--ok-bg:#f0fdf4;--ok-bd:#86efac;
   --bl:#0077B5;--bl-bg:#E0F0FA;--bl-bd:#7ABDE0;
   --wa:#C07800;--wa-bg:#FFF4DC;--wa-bd:#F0C868;
   --or:#C04A10;--or-bg:#FFEDE4;--or-bd:#F0A080;
   --rd:#B82038;--rd-bg:#FFECEF;--rd-bd:#E8909A;
   --gd:#9A7000;--gd-bg:#FFF8DC;--gd-bd:#E8D060;
-  --font:'Roboto',system-ui,sans-serif;
-  --slab:'Roboto Slab',Georgia,serif;
-  --mono:'Roboto Mono','Courier New',monospace;
+  --font:'Manrope',system-ui,sans-serif;
+  --slab:'Manrope',system-ui,sans-serif;
+  --mono:'DM Mono','Courier New',monospace;
   --r:8px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
@@ -1236,7 +1236,7 @@ function scoreRep(r){
 function fmt(v){if(!v&&v!==0)return'—';if(v>=1000000)return'$'+(v/1000000).toFixed(2).replace(/\.?0+$/,'')+'M';return v>=1000?'$'+(v/1000).toFixed(0)+'K':'$'+v;}
 function radial(s,sz,sw){
   const g=grade(s),r=(sz-sw)/2,c=sz/2,ci=2*Math.PI*r,off=ci-s/100*ci;
-  return`<svg width="${sz}" height="${sz}" style="transform:rotate(-90deg)"><circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="#DDE4EF" stroke-width="${sw}"/><circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${g.c}" stroke-width="${sw}" stroke-dasharray="${ci.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" stroke-linecap="round"/><text x="${c}" y="${c+sz*.08}" text-anchor="middle" fill="${g.c}" font-size="${sz*.22}" font-weight="700" font-family="'Roboto Mono',monospace" style="transform:rotate(90deg);transform-origin:${c}px ${c}px">${s}</text></svg>`;
+  return`<svg width="${sz}" height="${sz}" style="transform:rotate(-90deg)"><circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="#DDE4EF" stroke-width="${sw}"/><circle cx="${c}" cy="${c}" r="${r}" fill="none" stroke="${g.c}" stroke-width="${sw}" stroke-dasharray="${ci.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" stroke-linecap="round"/><text x="${c}" y="${c+sz*.08}" text-anchor="middle" fill="${g.c}" font-size="${sz*.22}" font-weight="700" font-family="'DM Mono',monospace" style="transform:rotate(90deg);transform-origin:${c}px ${c}px">${s}</text></svg>`;
 }
 function bar(v,col){return`<div class="bt"><div class="bf" style="width:${clamp(v)}%;background:${col}"></div></div>`;}
 function mRow(l,v,t,tip=''){
