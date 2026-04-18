@@ -43,7 +43,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:1
 
 /* TOP BAR */
 .topbar{background:linear-gradient(90deg,#0077B5,#0B4971);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:64px;box-shadow:0 2px 10px rgba(0,119,181,.25);}
-.qh-logo{display:flex;align-items:center;text-decoration:none;}.qh-logo-img{height:44px;width:auto;display:block;filter:brightness(0) invert(1);}
+.qh-logo{display:flex;align-items:center;text-decoration:none;}.qh-logo-pill{background:#fff;border-radius:8px;padding:5px 12px;display:flex;align-items:center;}.qh-logo-img{height:38px;width:auto;display:block;}
 
 .tb-r{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.7);text-align:right;line-height:1.7;}
 .tb-r strong{color:#fff;}
@@ -376,7 +376,7 @@ input[type=file]{display:none;}
 
 <!-- TOP BAR -->
 <div class="topbar">
-  <a class="qh-logo" href="#"><img src="QuantHub Logos/qh-website-logo-2.svg" alt="QuantHub" class="qh-logo-img"></a>
+  <a class="qh-logo" href="#"><div class="qh-logo-pill"><img src="QuantHub Logos/qh-website-logo-2.svg" alt="QuantHub" class="qh-logo-img"></div></a>
   <div class="tb-r"><div><strong>Sales Rep Scorecard</strong> · Higher Education <span id="appVersionBadge" style="opacity:.5;font-size:9px;letter-spacing:.05em;margin-left:5px;font-family:var(--mono);"></span><span id="workerVersionBadge" style="opacity:.4;font-size:9px;margin-left:6px;font-family:var(--mono);"></span></div><div id="tbInfo">Upload files to begin</div></div>
 </div>
 
