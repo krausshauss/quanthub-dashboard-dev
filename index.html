@@ -1574,24 +1574,27 @@ function show(id){
 
 const SALES_AGENT_URL = 'https://krausshauss.github.io/quanthub-sales-agent-dev/';
 
-async function openSalesAgent() {
+function openSalesAgent() {
   const r = repData.find(x => x.id === activeId);
   if (!r) return;
-  // Fetch HubSpot owners and match by name to get email
-  try {
-    const res = await fetch('https://quanthub-sales-agent-dev.michael-20e.workers.dev/hubspot/owners');
-    const data = await res.json();
-    const owners = data.results || [];
-    const nameParts = r.name.toLowerCase().split(' ');
-    const match = owners.find(o => {
-      const full = ((o.firstName||'') + ' ' + (o.lastName||'')).toLowerCase();
-      return nameParts.every(p => full.includes(p));
-    });
-    const email = match?.email || '';
-    window.open(SALES_AGENT_URL + (email ? '?rep=' + encodeURIComponent(email) : ''), '_blank');
-  } catch(e) {
-    window.open(SALES_AGENT_URL, '_blank');
-  }
+  // Open immediately (synchronous) so mobile browsers don't block it as a popup.
+  // Then update the URL once the owner email lookup resolves.
+  const win = window.open(SALES_AGENT_URL, '_blank');
+  fetch('https://quanthub-sales-agent-dev.michael-20e.workers.dev/hubspot/owners')
+    .then(res => res.json())
+    .then(data => {
+      const owners = data.results || [];
+      const nameParts = r.name.toLowerCase().split(' ');
+      const match = owners.find(o => {
+        const full = ((o.firstName||'') + ' ' + (o.lastName||'')).toLowerCase();
+        return nameParts.every(p => full.includes(p));
+      });
+      const email = match?.email || '';
+      if (email && win && !win.closed) {
+        win.location.href = SALES_AGENT_URL + '?rep=' + encodeURIComponent(email);
+      }
+    })
+    .catch(() => {}); // window already open at base URL, that's fine
 }
 
 function switchTab(btn,name){
