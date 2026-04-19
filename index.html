@@ -639,7 +639,7 @@ input[type=file]{display:none;}
 // ═══════════════════════════════════════════════════════
 const ADMIN_PIN         = null;  // PIN validated server-side by Cloudflare Worker — not stored here
 const WORKER_URL        = 'https://quanthub-proxy-dev.michael-20e.workers.dev/';
-const HUBSPOT_PORTAL_ID = '7316176';  // ← Your HubSpot portal ID (from any HubSpot URL)
+let HUBSPOT_PORTAL_ID = ''; // fetched dynamically from HubSpot on load
 const APP_VERSION = 'v20o-dev';
 
 let isAdminUnlocked = false;
@@ -1573,6 +1573,12 @@ function show(id){
 
 
 const SALES_AGENT_URL = 'https://krausshauss.github.io/quanthub-sales-agent-dev/';
+
+// Prefetch HubSpot portal ID for deal deep-links
+fetch('https://quanthub-sales-agent-dev.michael-20e.workers.dev/hubspot/portal')
+  .then(r => r.json())
+  .then(d => { if (d.portalId) HUBSPOT_PORTAL_ID = String(d.portalId); })
+  .catch(() => {});
 
 // Prefetch owner→email map so openSalesAgent() has it synchronously
 let _ownerEmailCache = {}; // { "Rep Name lowercase": "email@..." }
