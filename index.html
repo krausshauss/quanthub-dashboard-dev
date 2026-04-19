@@ -1574,41 +1574,47 @@ function show(id){
 
 const SALES_AGENT_URL = 'https://krausshauss.github.io/quanthub-sales-agent-dev/';
 
+// Prefetch owner→email map so openSalesAgent() has it synchronously
+let _ownerEmailCache = {}; // { "Rep Name lowercase": "email@..." }
+fetch('https://quanthub-sales-agent-dev.michael-20e.workers.dev/hubspot/owners')
+  .then(r => r.json())
+  .then(data => {
+    (data.results || []).forEach(o => {
+      const full = ((o.firstName||'') + ' ' + (o.lastName||'')).toLowerCase().trim();
+      if (full && o.email) _ownerEmailCache[full] = o.email;
+    });
+  })
+  .catch(() => {});
+
+function _repEmail(repName) {
+  const parts = repName.toLowerCase().split(' ');
+  const key = Object.keys(_ownerEmailCache).find(k => parts.every(p => k.includes(p)));
+  return key ? _ownerEmailCache[key] : '';
+}
+
 function openSalesAgent() {
   const r = repData.find(x => x.id === activeId);
   if (!r) return;
 
-  // Strategy 1: standard new tab (works on desktop, blocked in some iframes/mobile)
-  let win = null;
-  try { win = window.open(SALES_AGENT_URL, '_blank'); } catch(e) {}
+  // Email is already cached — build the full URL synchronously
+  const email = _repEmail(r.name);
+  const url = SALES_AGENT_URL + (email ? '?rep=' + encodeURIComponent(email) : '');
 
-  // Strategy 2: open from top frame (escapes HubSpot iframe sandbox)
+  // Strategy 1: standard new tab
+  let win = null;
+  try { win = window.open(url, '_blank'); } catch(e) {}
+
+  // Strategy 2: open from top frame (escapes HubSpot iframe)
   if (!win) {
-    try { win = window.top.open(SALES_AGENT_URL, '_blank'); } catch(e) {}
+    try { win = window.top.open(url, '_blank'); } catch(e) {}
   }
 
-  // Strategy 3: navigate top frame directly (always works, leaves HubSpot)
+  // Strategy 3: navigate top frame directly
   if (!win) {
-    try { window.top.location.href = SALES_AGENT_URL; } catch(e) {
-      window.location.href = SALES_AGENT_URL;
+    try { window.top.location.href = url; } catch(e) {
+      window.location.href = url;
     }
   }
-
-  // Once open, redirect to the right rep URL
-  fetch('https://quanthub-sales-agent-dev.michael-20e.workers.dev/hubspot/owners')
-    .then(res => res.json())
-    .then(data => {
-      const nameParts = r.name.toLowerCase().split(' ');
-      const match = (data.results || []).find(o => {
-        const full = ((o.firstName||'') + ' ' + (o.lastName||'')).toLowerCase();
-        return nameParts.every(p => full.includes(p));
-      });
-      const email = match?.email || '';
-      if (!email) return;
-      const finalUrl = SALES_AGENT_URL + '?rep=' + encodeURIComponent(email);
-      if (win && !win.closed) { win.location.href = finalUrl; }
-    })
-    .catch(() => {});
 }
 
 function switchTab(btn,name){
