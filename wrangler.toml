@@ -5,7 +5,7 @@ account_id = "20e7b178f91a4ca92328922dd22abdf2"
 
 [vars]
 GITHUB_OWNER  = "krausshauss"
-GITHUB_REPO   = "quahthub-dashboard"
+GITHUB_REPO   = "quanthub-dashboard"
 GITHUB_BRANCH = "main"
 
 [env.dev]
