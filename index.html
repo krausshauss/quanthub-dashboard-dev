@@ -2120,6 +2120,7 @@ async function doHubSpotRefresh() {
     if (!res.ok) throw new Error('Worker returned ' + res.status);
     const payload = await res.json();
     if (!payload || !payload.reps || !payload.reps.length) throw new Error('No data returned');
+    window._scorecardData = payload;
     repData  = payload.reps;
     activeId = repData[0].id;
     restoreScorecard(payload);

@@ -181,12 +181,14 @@ function buildWeeklyHistory(allDeals, allCalls, allMeetings, allComms, allSalesN
       });
 
       const active = repDeals.filter(d => {
-        const created  = d.properties.createdate ? new Date(d.properties.createdate) : null;
-        const closed   = d.properties.closedate  ? new Date(d.properties.closedate)  : null;
+        const created      = d.properties.createdate ? new Date(d.properties.createdate) : null;
+        const closed       = d.properties.closedate  ? new Date(d.properties.closedate)  : null;
         const isClosedWon  = d.properties.hs_is_closed_won === 'true';
+        const isClosed     = d.properties.hs_is_closed     === 'true';
         const isClosedLost = (d.properties.dealstage || '').toLowerCase().includes('closed lost');
         if (!created || created > wFri) return false;
         if (isClosedWon  && closed && closed <= wFri) return false;
+        if (isClosed     && closed && closed <= wFri) return false;
         if (isClosedLost && closed && closed <= wFri) return false;
         return true;
       });
