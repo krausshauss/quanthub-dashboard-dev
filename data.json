@@ -761,7 +761,7 @@
   "source": "hubspot-api",
   "workerVersion": "w3.1",
   "exportDate": "April 24, 2026",
-  "savedAt": "2026-04-24T12:43:55.123Z",
+  "savedAt": "2026-04-24T12:47:19.247Z",
   "history": [
     {
       "week": "Apr 13 to Apr 17",
@@ -833,7 +833,7 @@
           "active_deals": 3,
           "pipeline_value": 101585,
           "stale_7d": 0,
-          "raw_calls": 6,
+          "raw_calls": 0,
           "raw_meetings": 0,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
@@ -846,7 +846,7 @@
           "active_deals": 16,
           "pipeline_value": 382568,
           "stale_7d": 0,
-          "raw_calls": 2,
+          "raw_calls": 0,
           "raw_meetings": 0,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
@@ -859,7 +859,7 @@
           "active_deals": 17,
           "pipeline_value": 125225,
           "stale_7d": 0,
-          "raw_calls": 69,
+          "raw_calls": 0,
           "raw_meetings": 0,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
@@ -891,7 +891,7 @@
           "active_deals": 3,
           "pipeline_value": 101585,
           "stale_7d": 0,
-          "raw_calls": 6,
+          "raw_calls": 0,
           "raw_meetings": 0,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
@@ -904,7 +904,7 @@
           "active_deals": 16,
           "pipeline_value": 378568,
           "stale_7d": 0,
-          "raw_calls": 5,
+          "raw_calls": 0,
           "raw_meetings": 0,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
@@ -917,7 +917,7 @@
           "active_deals": 18,
           "pipeline_value": 134025,
           "stale_7d": 0,
-          "raw_calls": 8,
+          "raw_calls": 0,
           "raw_meetings": 0,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
@@ -949,7 +949,7 @@
           "active_deals": 4,
           "pipeline_value": 104225,
           "stale_7d": 0,
-          "raw_calls": 3,
+          "raw_calls": 0,
           "raw_meetings": 0,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
