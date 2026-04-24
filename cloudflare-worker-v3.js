@@ -722,51 +722,63 @@ export default {
         }
       }
 
-      // GET / — serve data (cache then live)
+      // GET / — serve data (cache-first, stale-while-revalidate)
       if (m === 'GET') {
         const forceRefresh = url.searchParams.get('refresh') === '1';
 
-        if (!forceRefresh) {
-          try {
-            const { content } = await ghRead(env);
-            if (content && content.reps && content.reps.length) {
-              let age = 999;
-              if (content.savedAt) {
-                const savedMs = new Date(content.savedAt).getTime();
-                age = (Date.now() - savedMs) / 3600000;
-              }
-              if (age < 4) {
-                console.log('[QH] Serving from cache, age: ' + age.toFixed(1) + 'h');
-                return json(content, 200, { ...c, 'X-Source': 'cache' });
-              }
+        // Always read cache first
+        let cachedContent = null, cachedSha = null, cacheAge = 999;
+        try {
+          const { content, sha } = await ghRead(env);
+          if (content && content.reps && content.reps.length) {
+            cachedContent = content;
+            cachedSha     = sha;
+            if (content.savedAt) {
+              cacheAge = (Date.now() - new Date(content.savedAt).getTime()) / 3600000;
             }
-          } catch(e) { console.warn('[QH] Cache miss:', e.message); }
+          }
+        } catch(e) { console.warn('[QH] Cache read failed:', e.message); }
+
+        // Serve stale cache immediately if not forcing refresh and cache is under 24h
+        if (!forceRefresh && cachedContent && cacheAge < 24) {
+          console.log('[QH] Serving from cache, age: ' + cacheAge.toFixed(1) + 'h');
+          // Refresh in background if older than 4h
+          if (cacheAge >= 4 && ctx && ctx.waitUntil) {
+            ctx.waitUntil((async () => {
+              try {
+                const data = await buildData(env);
+                const { sha: freshSha } = await ghRead(env).catch(() => ({ sha: cachedSha }));
+                await ghWrite(env, data, freshSha || cachedSha);
+                console.log('[QH] Background refresh done');
+              } catch(e) { console.warn('[QH] Background refresh failed:', e.message); }
+            })());
+          }
+          return json(cachedContent, 200, { ...c, 'X-Source': 'cache' });
         }
 
-        let existingContent = null, existingSha = null;
-        try {
-          const cached = await ghRead(env);
-          existingContent = cached.content;
-          existingSha = cached.sha;
-        } catch(e) { console.warn('[QH] Pre-fetch cache read failed:', e.message); }
-
+        // No usable cache — fetch live
         console.log('[QH] Fetching live from HubSpot...');
-        const data = await buildData(env);
-        console.log('[QH] Live data built, reps: ' + data.reps.length + ', history weeks: ' + (data.history||[]).length);
-
-        const shaForWrite = existingSha;
-        const cacheWrite = async () => {
-          try {
-            const { sha: freshSha } = await ghRead(env).catch(() => ({ sha: shaForWrite }));
-            await ghWrite(env, data, freshSha || shaForWrite);
-            console.log('[QH] Cache updated with history len=' + (data.history||[]).length);
-          } catch(e) { console.warn('[QH] Cache write failed:', e.message); }
-        };
-
-        if (ctx && ctx.waitUntil) ctx.waitUntil(cacheWrite());
-        else cacheWrite();
-
-        return json(data, 200, { ...c, 'X-Source': 'live' });
+        try {
+          const data = await buildData(env);
+          const shaForWrite = cachedSha;
+          const cacheWrite = async () => {
+            try {
+              const { sha: freshSha } = await ghRead(env).catch(() => ({ sha: shaForWrite }));
+              await ghWrite(env, data, freshSha || shaForWrite);
+              console.log('[QH] Cache updated, reps: ' + data.reps.length);
+            } catch(e) { console.warn('[QH] Cache write failed:', e.message); }
+          };
+          if (ctx && ctx.waitUntil) ctx.waitUntil(cacheWrite());
+          else cacheWrite();
+          return json(data, 200, { ...c, 'X-Source': 'live' });
+        } catch(e) {
+          // HubSpot unavailable — serve stale cache if we have it rather than error
+          if (cachedContent) {
+            console.warn('[QH] Live fetch failed, serving stale cache:', e.message);
+            return json(cachedContent, 200, { ...c, 'X-Source': 'stale' });
+          }
+          throw e;
+        }
       }
 
       // PUT / — save manual overrides (PIN required)
