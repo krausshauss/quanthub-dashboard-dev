@@ -674,7 +674,9 @@ function dbg(msg, color) {
 // ═══════════════════════════════════════════════════════
 const QUOTA       = 100000;  // ← Per-rep quarterly quota ($)
 const TEAM_TARGET = 1000000; // ← Team annual revenue target ($)
-const QUARTER = 'Q1 2026';
+const _qn = new Date(); const _qNum = _qn >= new Date('2026-10-01') ? 4 : _qn >= new Date('2026-07-01') ? 3 : _qn >= new Date('2026-04-01') ? 2 : 1;
+const QUARTER = 'Q' + _qNum + ' 2026';
+const CUR_QTR = _qNum;
 const REP_FILTER = ['Joe DeRario','Jason Rupert','Nate Spargo','Michael Krause'];
 const STAGE_ORDER = ['Negotiation','Commit/Verbal','Trial (optional)','Sales Opportunity','Discovery/Demo (SQL)','Unknown'];
 const STAGE_COLORS = {
@@ -1176,7 +1178,8 @@ function grade(s){
   return        {l:'F',c:'#B82038',bg:'#FFECEF',bd:'#E8909A'};
 }
 function scoreRep(r){
-  const cw =clamp(pct(r.cw_amount,QUOTA));
+  const _qtrCw = r['q' + CUR_QTR + '_cw'] || 0;
+  const cw =clamp(pct(_qtrCw,QUOTA));
   const cov=clamp(pct(r.pipeline_value,QUOTA*10));
   const stl=clamp(100-r.stale_7d*8);
   const adv=clamp(r.deals_advanced_week*25);
@@ -1258,14 +1261,17 @@ function renderDetail(id){
   const s=scoreRep(r),g=grade(s.overall);
   const expAmt=r.expansion_deals.filter(d=>d.cw).reduce((sum,d)=>sum+d.amount,0);
   const totHT=r.ip_meetings_week+r.vr_calls_week+r.phone_calls_week+r.text_touches_week;
+  const qtrCw    = r['q' + CUR_QTR + '_cw']    || 0;
+  const qtrDeals = r['q' + CUR_QTR + '_deals']  || 0;
+  const qLabel   = QUARTER;
 
   document.getElementById('dNm').innerHTML=`<span style="color:${g.c}">${r.name}</span>`;
-  document.getElementById('dSb').textContent=`$${(r.cw_amount/1000).toFixed(1)}K CW · ${r.active_deals} active · $${(r.pipeline_value/1000).toFixed(0)}K pipeline · Score ${s.overall} — Grade ${g.l}`;
+  document.getElementById('dSb').textContent=`$${(qtrCw/1000).toFixed(1)}K CW ${qLabel} · ${r.active_deals} active · $${(r.pipeline_value/1000).toFixed(0)}K pipeline · Score ${s.overall} — Grade ${g.l}`;
 
   const cG=grade(s.cw),vG=grade(s.vel),aG=grade(s.act),qG=grade(s.qal);
 
   // ── INSIGHT COPY (dynamic, rep-aware) ─────────────────────────────────
-  const cwGap  = Math.max(0,(QUOTA-r.cw_amount)/1000).toFixed(0);
+  const cwGap  = Math.max(0,(QUOTA-qtrCw)/1000).toFixed(0);
   const stalePct = r.active_deals ? Math.round(r.stale_7d/r.active_deals*100) : 0;
   const INS = {
     cov: `Pipeline coverage measures active pipeline vs your $100K quota. <strong>10× coverage ($1M) is the target</strong> for an early-stage growth motion — close rates are still being calibrated and deal quality is variable. At ${fmt(r.pipeline_value)}, you're at ${Math.round(r.pipeline_value/QUOTA*100)}% of quota in raw value. ${r.pipeline_value < QUOTA*3 ? '<strong>Critical:</strong> Pipeline is well below growth target. You need to be adding 2–3 qualified new opportunities every week.' : r.pipeline_value < QUOTA*5 ? 'Pipeline is thin for a growth target. Prioritize top-of-funnel activity — territory calls, demos booked, new outreach.' : r.pipeline_value < QUOTA*10 ? 'Pipeline is building but not yet at 10× coverage. Keep the new deal flow going.' : 'Strong pipeline coverage at growth-stage target. Focus now on advancing late-stage deals rather than adding raw volume.'}`,
@@ -1287,16 +1293,16 @@ function renderDetail(id){
       <div class="ph2"><div class="pn">CW Revenue to Quota <span style="color:var(--muted);font-weight:400">(40%)</span></div><div class="grade-wrap"><div class="pbg" style="color:${cG.c};background:${cG.bg};border-color:${cG.bd}">${s.cw}·${cG.l}</div><div class="ins-tip">${gradeInsight('cw',s.cw,r)}</div></div></div>
       <div class="mr metric-wrap">
         <div class="mt">
-          <span class="ml">2026 YTD vs $100K Quota <i class="ins-icon">i</i></span>
-          <span class="mv" style="color:${cG.c}">$${(r.cw_amount/1000).toFixed(1)}K / $100K</span>
-          <div class="ins-tip">Your YTD closed won revenue against your $100K quarterly quota. <strong>Attainment: ${pct(r.cw_amount,QUOTA)}%.</strong> Gap remaining: $${cwGap}K. This is the primary scorecard pillar at 40% weight — everything else exists to drive this number. Expansion deals count here too and are tracked separately below.</div>
+          <span class="ml">${qLabel} vs $100K Quota <i class="ins-icon">i</i></span>
+          <span class="mv" style="color:${cG.c}">$${(qtrCw/1000).toFixed(1)}K / $100K</span>
+          <div class="ins-tip">${qLabel} closed won revenue against your $100K quarterly quota. <strong>Attainment: ${pct(qtrCw,QUOTA)}%.</strong> Gap remaining: $${cwGap}K.${r.cw_amount>qtrCw?` (2026 YTD: $${(r.cw_amount/1000).toFixed(1)}K across ${r.cw_deals} deals)`:''}  This is the primary scorecard pillar at 40% weight — everything else exists to drive this number.</div>
         </div>
-        <div class="bt" style="height:8px"><div class="bf" style="width:${clamp(pct(r.cw_amount,QUOTA))}%;height:100%;background:linear-gradient(90deg,${cG.c}80,${cG.c})"></div></div>
+        <div class="bt" style="height:8px"><div class="bf" style="width:${clamp(pct(qtrCw,QUOTA))}%;height:100%;background:linear-gradient(90deg,${cG.c}80,${cG.c})"></div></div>
       </div>
       <div class="st">
-        <div class="sb"><div class="sl">Won</div><div class="sv" style="color:${cG.c}">${r.cw_deals}</div></div>
-        <div class="sb"><div class="sl">Gap</div><div class="sv" style="color:var(--muted)">$${Math.max(0,(QUOTA-r.cw_amount)/1000).toFixed(0)}K</div></div>
-        <div class="sb"><div class="sl">Attainment</div><div class="sv" style="color:${cG.c}">${pct(r.cw_amount,QUOTA)}%</div></div>
+        <div class="sb"><div class="sl">Won ${qLabel.split(' ')[0]}</div><div class="sv" style="color:${cG.c}">${qtrDeals}</div></div>
+        <div class="sb"><div class="sl">Gap</div><div class="sv" style="color:var(--muted)">$${Math.max(0,(QUOTA-qtrCw)/1000).toFixed(0)}K</div></div>
+        <div class="sb"><div class="sl">Attainment</div><div class="sv" style="color:${cG.c}">${pct(qtrCw,QUOTA)}%</div></div>
       </div>
       ${expAmt>0?`<div style="padding:6px 9px;background:var(--gd-bg);border:1px solid var(--gd-bd);border-left:3px solid var(--qh-green);border-radius:7px;font-size:10px;color:var(--gd);font-weight:500">★ Expansion: $${(expAmt/1000).toFixed(1)}K included — full ownership retained</div>`:''}
     </div>

@@ -417,10 +417,14 @@ async function buildData(env) {
 
     const cwAmt  = cw2026.reduce((s, d) => s + (parseFloat(d.amount) || 0), 0);
     const inQ    = (d, qs, qe) => { const cd = d.closedate ? new Date(d.closedate) : null; return cd && cd >= qs && cd <= qe; };
-    const q1Amt  = cw2026.filter(d => inQ(d, y2026, q1End)).reduce((s,d) => s+(parseFloat(d.amount)||0), 0);
-    const q2Amt  = cw2026.filter(d => inQ(d, q2Start, q2End)).reduce((s,d) => s+(parseFloat(d.amount)||0), 0);
-    const q3Amt  = cw2026.filter(d => inQ(d, q3Start, q3End)).reduce((s,d) => s+(parseFloat(d.amount)||0), 0);
-    const q4Amt  = cw2026.filter(d => inQ(d, q4Start, now)).reduce((s,d) => s+(parseFloat(d.amount)||0), 0);
+    const q1Deals = cw2026.filter(d => inQ(d, y2026,   q1End  ));
+    const q2Deals = cw2026.filter(d => inQ(d, q2Start, q2End  ));
+    const q3Deals = cw2026.filter(d => inQ(d, q3Start, q3End  ));
+    const q4Deals = cw2026.filter(d => inQ(d, q4Start, now    ));
+    const q1Amt  = q1Deals.reduce((s,d) => s+(parseFloat(d.amount)||0), 0);
+    const q2Amt  = q2Deals.reduce((s,d) => s+(parseFloat(d.amount)||0), 0);
+    const q3Amt  = q3Deals.reduce((s,d) => s+(parseFloat(d.amount)||0), 0);
+    const q4Amt  = q4Deals.reduce((s,d) => s+(parseFloat(d.amount)||0), 0);
     const pipeV  = active.reduce((s, d) => s + (parseFloat(d.amount) || 0), 0);
     const total  = active.length;
 
@@ -485,6 +489,7 @@ async function buildData(env) {
       id: info.initials.toLowerCase(), name: info.name, initials: info.initials, role: info.role,
       cw_amount: cwAmt, cw_deals: cw2026.length,
       q1_cw: q1Amt, q2_cw: q2Amt, q3_cw: q3Amt, q4_cw: q4Amt,
+      q1_deals: q1Deals.length, q2_deals: q2Deals.length, q3_deals: q3Deals.length, q4_deals: q4Deals.length,
       active_deals: total, pipeline_value: pipeV, stale_7d: stale,
       deals_advanced_week: advWk, avg_days_to_close: avgAge,
       ip_meetings_week: Math.round(act.meetings * 0.5),
