@@ -174,10 +174,15 @@ function buildWeeklyHistory(allDeals, allCalls, allMeetings, allComms, allSalesN
     Object.entries(REP_MAP).forEach(([id, info]) => {
       const repDeals = allDeals.filter(d => d.properties.hubspot_owner_id === id);
 
+      const q2StartHist = new Date('2026-04-01T00:00:00Z');
       const cwWeek = repDeals.filter(d => {
         const cd = d.properties.closedate ? new Date(d.properties.closedate) : null;
         return cd && cd >= y2026start && cd <= wFri &&
                d.properties.hs_is_closed_won === 'true';
+      });
+      const cwQ2 = cwWeek.filter(d => {
+        const cd = d.properties.closedate ? new Date(d.properties.closedate) : null;
+        return cd && cd >= q2StartHist;
       });
 
       const active = repDeals.filter(d => {
@@ -229,6 +234,7 @@ function buildWeeklyHistory(allDeals, allCalls, allMeetings, allComms, allSalesN
         id:                  info.initials.toLowerCase(),
         name:                info.name,
         cw_amount:           cwWeek.reduce((s,d) => s+(parseFloat(d.properties.amount)||0), 0),
+        cw_q2:               cwQ2.reduce((s,d) => s+(parseFloat(d.properties.amount)||0), 0),
         cw_deals:            cwWeek.length,
         active_deals:        active.length,
         pipeline_value:      pipeV,

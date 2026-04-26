@@ -1304,7 +1304,7 @@ function renderDetail(id){
         <div class="sb"><div class="sl">Gap</div><div class="sv" style="color:var(--muted)">$${Math.max(0,(QUOTA-qtrCw)/1000).toFixed(0)}K</div></div>
         <div class="sb"><div class="sl">Attainment</div><div class="sv" style="color:${cG.c}">${pct(qtrCw,QUOTA)}%</div></div>
       </div>
-      ${expAmt>0?`<div style="padding:6px 9px;background:var(--gd-bg);border:1px solid var(--gd-bd);border-left:3px solid var(--qh-green);border-radius:7px;font-size:10px;color:var(--gd);font-weight:500">★ Expansion: $${(expAmt/1000).toFixed(1)}K included — full ownership retained</div>`:''}
+      ${expAmt>0?`<div style="padding:6px 9px;background:var(--gd-bg);border:1px solid var(--gd-bd);border-left:3px solid var(--qh-green);border-radius:7px;font-size:10px;color:var(--gd);font-weight:500">★ Expansion ${qLabel}: $${(qtrCw/1000).toFixed(1)}K${r.cw_amount>qtrCw?' · YTD: $'+(r.cw_amount/1000).toFixed(1)+'K':''} — full ownership retained</div>`:''}
     </div>
 
     <div class="pc" style="border-top-color:${vG.c}">
@@ -1491,9 +1491,13 @@ function renderDetail(id){
 
   // Build trend table — current week + up to 4 prior weeks
   const allWeeks = [{ week: 'This Week', savedAt: window._scorecardData.savedAt, reps: window._scorecardData.reps }].concat(weeks.slice(0,4));
-  const repHistory = allWeeks.map(w => {
+  const repHistory = allWeeks.map((w, wi) => {
     const rd = (w.reps || []).find(x => x.id === r.id);
-    return { week: w.week, savedAt: w.savedAt, cw: rd ? rd.cw_amount : null, pipe: rd ? rd.pipeline_value : null,
+    // For 'This Week', use live q2_cw; for history use snapshot's cw_q2 if present
+    const q2cw = wi === 0 ? (r['q' + CUR_QTR + '_cw'] || 0) : (rd ? (rd.cw_q2 || 0) : null);
+    return { week: w.week, savedAt: w.savedAt,
+             cwytd: rd ? rd.cw_amount : null, cwq2: q2cw,
+             pipe: rd ? rd.pipeline_value : null,
              active: rd ? rd.active_deals : null, stale: rd ? rd.stale_7d : null,
              calls: rd ? rd.raw_calls : null, meetings: rd ? rd.raw_meetings : null };
   });
@@ -1528,12 +1532,13 @@ function renderDetail(id){
   trHtml += '</tr></thead><tbody>';
 
   const metrics = [
-    { label: 'CW Revenue (YTD)', key: 'cw',      fmt: fmtK,  good: 'up' },
-    { label: 'Pipeline Value', key: 'pipe',      fmt: fmtK,  good: 'up' },
-    { label: 'Active Deals',   key: 'active',    fmt: v=>v===null?'—':v, good: 'up' },
-    { label: 'Stale >7d',      key: 'stale',     fmt: v=>v===null?'—':v, good: 'down' },
-    { label: 'Calls',          key: 'calls',     fmt: v=>v===null?'—':v, good: 'up' },
-    { label: 'Meetings',       key: 'meetings',  fmt: v=>v===null?'—':v, good: 'up' },
+    { label: 'CW Revenue ' + QUARTER, key: 'cwq2',    fmt: fmtK,  good: 'up' },
+    { label: 'CW Revenue YTD 2026',   key: 'cwytd',   fmt: fmtK,  good: 'up' },
+    { label: 'Pipeline Value',        key: 'pipe',    fmt: fmtK,  good: 'up' },
+    { label: 'Active Deals',          key: 'active',  fmt: v=>v===null?'—':v, good: 'up' },
+    { label: 'Stale >7d',             key: 'stale',   fmt: v=>v===null?'—':v, good: 'down' },
+    { label: 'Calls',                 key: 'calls',   fmt: v=>v===null?'—':v, good: 'up' },
+    { label: 'Meetings',              key: 'meetings',fmt: v=>v===null?'—':v, good: 'up' },
   ];
 
   metrics.forEach((m, mi) => {
