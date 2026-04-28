@@ -20,12 +20,12 @@
       "stale_7d": 0,
       "deals_advanced_week": 3,
       "avg_days_to_close": 136,
-      "ip_meetings_week": 5,
-      "vr_calls_week": 4,
-      "phone_calls_week": 0,
+      "ip_meetings_week": 7,
+      "vr_calls_week": 7,
+      "phone_calls_week": 1,
       "text_touches_week": 0,
-      "raw_calls": 0,
-      "raw_meetings": 9,
+      "raw_calls": 1,
+      "raw_meetings": 14,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 0,
@@ -150,12 +150,12 @@
       "stale_7d": 3,
       "deals_advanced_week": 13,
       "avg_days_to_close": 127,
-      "ip_meetings_week": 2,
-      "vr_calls_week": 2,
-      "phone_calls_week": 0,
+      "ip_meetings_week": 5,
+      "vr_calls_week": 4,
+      "phone_calls_week": 9,
       "text_touches_week": 0,
-      "raw_calls": 0,
-      "raw_meetings": 4,
+      "raw_calls": 9,
+      "raw_meetings": 9,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 0,
@@ -399,15 +399,15 @@
       "stale_7d": 1,
       "deals_advanced_week": 17,
       "avg_days_to_close": 57,
-      "ip_meetings_week": 7,
-      "vr_calls_week": 6,
-      "phone_calls_week": 0,
+      "ip_meetings_week": 8,
+      "vr_calls_week": 8,
+      "phone_calls_week": 45,
       "text_touches_week": 0,
-      "raw_calls": 0,
-      "raw_meetings": 13,
+      "raw_calls": 45,
+      "raw_meetings": 16,
       "raw_emails": 0,
       "raw_sms": 0,
-      "raw_linkedin": 15,
+      "raw_linkedin": 0,
       "meetings_target": 6,
       "calls_target": 15,
       "text_target": 5,
@@ -675,12 +675,12 @@
       "stale_7d": 2,
       "deals_advanced_week": 5,
       "avg_days_to_close": 16,
-      "ip_meetings_week": 1,
+      "ip_meetings_week": 2,
       "vr_calls_week": 1,
       "phone_calls_week": 0,
       "text_touches_week": 0,
       "raw_calls": 0,
-      "raw_meetings": 2,
+      "raw_meetings": 3,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 0,
@@ -777,7 +777,7 @@
   "source": "hubspot-api",
   "workerVersion": "w3.1",
   "exportDate": "April 28, 2026",
-  "savedAt": "2026-04-28T14:09:13.719Z",
+  "savedAt": "2026-04-28T14:11:50.587Z",
   "history": [
     {
       "week": "Apr 20 to Apr 24",
@@ -792,8 +792,8 @@
           "active_deals": 3,
           "pipeline_value": 71585,
           "stale_7d": 0,
-          "raw_calls": 0,
-          "raw_meetings": 5,
+          "raw_calls": 1,
+          "raw_meetings": 8,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
         },
@@ -806,10 +806,10 @@
           "active_deals": 14,
           "pipeline_value": 364724,
           "stale_7d": 1,
-          "raw_calls": 0,
-          "raw_meetings": 3,
+          "raw_calls": 7,
+          "raw_meetings": 4,
           "raw_linkedin": 0,
-          "deals_advanced_week": 1
+          "deals_advanced_week": 0
         },
         {
           "id": "jr",
@@ -820,9 +820,9 @@
           "active_deals": 17,
           "pipeline_value": 40741,
           "stale_7d": 0,
-          "raw_calls": 0,
-          "raw_meetings": 5,
-          "raw_linkedin": 19,
+          "raw_calls": 46,
+          "raw_meetings": 6,
+          "raw_linkedin": 0,
           "deals_advanced_week": 2
         },
         {
@@ -840,8 +840,8 @@
           "deals_advanced_week": 1
         }
       ],
-      "team_cw": 1665276,
-      "team_cw_q2": 34200
+      "team_cw": 294516,
+      "team_cw_q2": 28200
     },
     {
       "week": "Apr 13 to Apr 17",
@@ -856,7 +856,7 @@
           "active_deals": 2,
           "pipeline_value": 61585,
           "stale_7d": 0,
-          "raw_calls": 0,
+          "raw_calls": 4,
           "raw_meetings": 10,
           "raw_linkedin": 0,
           "deals_advanced_week": 0
@@ -870,7 +870,7 @@
           "active_deals": 15,
           "pipeline_value": 375368,
           "stale_7d": 0,
-          "raw_calls": 0,
+          "raw_calls": 13,
           "raw_meetings": 1,
           "raw_linkedin": 0,
           "deals_advanced_week": 1
@@ -884,9 +884,9 @@
           "active_deals": 17,
           "pipeline_value": 78681,
           "stale_7d": 0,
-          "raw_calls": 0,
+          "raw_calls": 68,
           "raw_meetings": 9,
-          "raw_linkedin": 46,
+          "raw_linkedin": 0,
           "deals_advanced_week": 0
         },
         {
@@ -904,8 +904,8 @@
           "deals_advanced_week": 0
         }
       ],
-      "team_cw": 1649476,
-      "team_cw_q2": 18400
+      "team_cw": 278716,
+      "team_cw_q2": 12400
     },
     {
       "week": "Apr 6 to Apr 10",
@@ -948,9 +948,9 @@
           "active_deals": 14,
           "pipeline_value": 72425,
           "stale_7d": 0,
-          "raw_calls": 74,
+          "raw_calls": 86,
           "raw_meetings": 9,
-          "raw_linkedin": 3,
+          "raw_linkedin": 0,
           "deals_advanced_week": 0
         },
         {
@@ -968,8 +968,8 @@
           "deals_advanced_week": 0
         }
       ],
-      "team_cw": 1642276,
-      "team_cw_q2": 11200
+      "team_cw": 271516,
+      "team_cw_q2": 5200
     },
     {
       "week": "Mar 30 to Apr 3",
@@ -1014,7 +1014,7 @@
           "stale_7d": 0,
           "raw_calls": 8,
           "raw_meetings": 8,
-          "raw_linkedin": 1,
+          "raw_linkedin": 0,
           "deals_advanced_week": 0
         },
         {
@@ -1032,7 +1032,7 @@
           "deals_advanced_week": 0
         }
       ],
-      "team_cw": 1631076,
+      "team_cw": 266316,
       "team_cw_q2": 0
     }
   ]
