@@ -1700,7 +1700,7 @@ function buildTeamTrendStrip() {
 
   // Build week columns: current + up to 4 prior
   const allWeeks = [
-    { label: 'This Week', savedAt: window._scorecardData.savedAt, reps: window._scorecardData.reps }
+    { label: 'This Week', savedAt: window._scorecardData.savedAt, reps: window._scorecardData.reps, team: window._scorecardData.team }
   ].concat(weeks.slice(0,4));
 
   // Aggregate team totals per week
@@ -1710,7 +1710,7 @@ function buildTeamTrendStrip() {
     return {
       label:    w.label || w.week || 'Week',
       savedAt:  w.savedAt,
-      cw:       reps.reduce((s,r) => s+(r.cw_amount||0), 0),
+      cw:       w.team != null ? (w.team.cw_amount || 0) : (w.team_cw != null ? w.team_cw : reps.reduce((s,r) => s+(r.cw_amount||0), 0)),
       pipe:     reps.reduce((s,r) => s+(r.pipeline_value||0), 0),
       deals:    reps.reduce((s,r) => s+(r.active_deals||0), 0),
       stale:    reps.reduce((s,r) => s+(r.stale_7d||0), 0),

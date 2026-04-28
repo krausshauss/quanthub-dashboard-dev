@@ -246,10 +246,23 @@ function buildWeeklyHistory(allDeals, allCalls, allMeetings, allComms, allSalesN
       };
     });
 
+    // Team CW totals from ALL owners (not just REPS) so team trend matches HubSpot reports
+    const q2StartHist = new Date('2026-04-01T00:00:00Z');
+    const teamCwWeek = allDeals.filter(d => {
+      const cd = d.properties.closedate ? new Date(d.properties.closedate) : null;
+      return cd && cd >= y2026start && cd <= wFri && d.properties.hs_is_closed_won === 'true';
+    });
+    const teamCwQ2 = teamCwWeek.filter(d => {
+      const cd = d.properties.closedate ? new Date(d.properties.closedate) : null;
+      return cd && cd >= q2StartHist;
+    });
+
     weeks.push({
-      week:    label,
-      savedAt: wFri.toISOString(),
-      reps:    Object.values(repSnaps),
+      week:       label,
+      savedAt:    wFri.toISOString(),
+      reps:       Object.values(repSnaps),
+      team_cw:    teamCwWeek.reduce((s,d) => s+(parseFloat(d.properties.amount)||0), 0),
+      team_cw_q2: teamCwQ2.reduce((s,d) => s+(parseFloat(d.properties.amount)||0), 0),
     });
   }
 
