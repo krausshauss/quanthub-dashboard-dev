@@ -138,7 +138,8 @@ async function fetchLeadActivities(env, objectType, props, cutoff, ownerIds) {
 }
 
 // ── BUILD 4-WEEK HISTORY FROM DEAL DATA ─────────────────────────────
-function buildWeeklyHistory(allDeals, allCalls, allMeetings, allComms, allSalesNavTasks, now, REP_MAP) {
+function buildWeeklyHistory(allDeals, allCalls, allMeetings, allComms, allSalesNavTasks, now, REP_MAP, higherEdPipelineId) {
+  const isHigherEd = d => !higherEdPipelineId || (d.properties && d.properties.pipeline === higherEdPipelineId);
   function getMondayOfWeek(d) {
     const day = d.getDay();
     const mon = new Date(d);
@@ -247,8 +248,10 @@ function buildWeeklyHistory(allDeals, allCalls, allMeetings, allComms, allSalesN
     });
 
     // Team CW totals from ALL owners (not just REPS) so team trend matches HubSpot reports
+    // Apply same Higher Ed pipeline filter as the live team.cw_amount calculation
     const q2StartHist = new Date('2026-04-01T00:00:00Z');
     const teamCwWeek = allDeals.filter(d => {
+      if (!isHigherEd(d)) return false;
       const cd = d.properties.closedate ? new Date(d.properties.closedate) : null;
       return cd && cd >= y2026start && cd <= wFri && d.properties.hs_is_closed_won === 'true';
     });
@@ -527,7 +530,7 @@ async function buildData(env) {
 
   let computedHistory = [];
   try {
-    computedHistory = buildWeeklyHistory(allDeals, allCalls, allMeetings, allComms, allSalesNavTasks, now, REPS);
+    computedHistory = buildWeeklyHistory(allDeals, allCalls, allMeetings, allComms, allSalesNavTasks, now, REPS, higherEdPipelineId);
     console.log('[QH] Computed history: ' + computedHistory.length + ' weeks');
   } catch(e) {
     console.warn('[QH] History computation failed (non-fatal):', e.message);
