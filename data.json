@@ -225,7 +225,7 @@
           "name": "University of Evansville -Marketing Strat",
           "stage": "Commit/Verbal",
           "amount": 3040,
-          "stale": 4,
+          "stale": 0,
           "next": "Reached out to Rebecca at Bookstore to get process going for Fall\n",
           "id": "42100108688",
           "deal_score": null,
@@ -399,12 +399,12 @@
       "stale_7d": 1,
       "deals_advanced_week": 17,
       "avg_days_to_close": 57,
-      "ip_meetings_week": 6,
+      "ip_meetings_week": 7,
       "vr_calls_week": 6,
       "phone_calls_week": 0,
       "text_touches_week": 0,
       "raw_calls": 0,
-      "raw_meetings": 12,
+      "raw_meetings": 13,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 15,
@@ -777,7 +777,7 @@
   "source": "hubspot-api",
   "workerVersion": "w3.1",
   "exportDate": "April 28, 2026",
-  "savedAt": "2026-04-28T12:15:56.056Z",
+  "savedAt": "2026-04-28T14:09:13.719Z",
   "history": [
     {
       "week": "Apr 20 to Apr 24",
@@ -809,7 +809,7 @@
           "raw_calls": 0,
           "raw_meetings": 3,
           "raw_linkedin": 0,
-          "deals_advanced_week": 2
+          "deals_advanced_week": 1
         },
         {
           "id": "jr",
@@ -839,7 +839,9 @@
           "raw_linkedin": 0,
           "deals_advanced_week": 1
         }
-      ]
+      ],
+      "team_cw": 1665276,
+      "team_cw_q2": 34200
     },
     {
       "week": "Apr 13 to Apr 17",
@@ -901,7 +903,9 @@
           "raw_linkedin": 0,
           "deals_advanced_week": 0
         }
-      ]
+      ],
+      "team_cw": 1649476,
+      "team_cw_q2": 18400
     },
     {
       "week": "Apr 6 to Apr 10",
@@ -963,7 +967,9 @@
           "raw_linkedin": 0,
           "deals_advanced_week": 0
         }
-      ]
+      ],
+      "team_cw": 1642276,
+      "team_cw_q2": 11200
     },
     {
       "week": "Mar 30 to Apr 3",
@@ -1007,7 +1013,7 @@
           "pipeline_value": 81225,
           "stale_7d": 0,
           "raw_calls": 8,
-          "raw_meetings": 9,
+          "raw_meetings": 8,
           "raw_linkedin": 1,
           "deals_advanced_week": 0
         },
@@ -1025,7 +1031,9 @@
           "raw_linkedin": 0,
           "deals_advanced_week": 0
         }
-      ]
+      ],
+      "team_cw": 1631076,
+      "team_cw_q2": 0
     }
   ]
 }
