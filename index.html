@@ -1721,7 +1721,7 @@ function buildTeamTrendStrip() {
     };
   });
 
-  function fmtK(v) { return v==null?'—':'$'+(v>=1000?(v/1000).toFixed(0)+'K':v); }
+  function fmtK(v) { if(v==null)return'—'; if(v>=1000000)return'$'+(v/1000000).toFixed(1).replace(/\.0$/,'')+'M'; return v>=1000?'$'+(v/1000).toFixed(0)+'K':'$'+v; }
   function fmtN(v) { return v==null?'—':v; }
 
   function arrow(curr, prev, goodDir) {
