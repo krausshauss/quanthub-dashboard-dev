@@ -641,6 +641,9 @@ const ADMIN_PIN         = null;  // PIN validated server-side by Cloudflare Work
 const WORKER_URL        = 'https://quanthub-proxy-dev.michael-20e.workers.dev/';
 let HUBSPOT_PORTAL_ID = ''; // fetched dynamically from HubSpot on load
 const APP_VERSION = 'v20o-dev';
+// When embedded in HubSpot's iframe, target="_blank" is blocked by sandbox.
+// Use _top to navigate the outer window instead.
+const HS_LINK_TARGET = (() => { try { return window.self !== window.top ? '_top' : '_blank'; } catch(e) { return '_top'; } })();
 
 let isAdminUnlocked = false;
 let pinMode  = 'load';
@@ -1413,7 +1416,7 @@ function renderDetail(id){
         ?'<span class="sp" style="background:#FFEDE4;color:#C04A10;border-color:#F0A080">'+d.stale+'d</span>'
         :'';
       const hsLink=(d.id&&HUBSPOT_PORTAL_ID)
-        ?'<a href="https://app.hubspot.com/contacts/'+HUBSPOT_PORTAL_ID+'/deal/'+d.id+'" target="_blank" style="color:var(--qh-blue);font-size:9px;text-decoration:none;opacity:.7;margin-left:5px;" title="Open in HubSpot">&#x2197;</a>'
+        ?'<a href="https://app.hubspot.com/contacts/'+HUBSPOT_PORTAL_ID+'/deal/'+d.id+'" target="'+HS_LINK_TARGET+'" style="color:var(--qh-blue);font-size:9px;text-decoration:none;opacity:.7;margin-left:5px;" title="Open in HubSpot">&#x2197;</a>'
         :'';
       const nextStep=d.next?'<div class="dns">'+d.next+'</div>':'';
       // Deal score tooltip — styled like HubSpot Key Factors panel
@@ -1439,7 +1442,7 @@ function renderDetail(id){
           ? '<div class="ds-row"><span class="ds-arrow-up">▲</span>'+d.contacts+' associated contact'+(d.contacts>1?'s':'')+'</div>' : '';
 
         const hsLink2 = (d.id && HUBSPOT_PORTAL_ID)
-          ? '<a class="ds-hs-link" href="https://app.hubspot.com/contacts/'+HUBSPOT_PORTAL_ID+'/deal/'+d.id+'" target="_blank">Open in HubSpot ↗</a>'
+          ? '<a class="ds-hs-link" href="https://app.hubspot.com/contacts/'+HUBSPOT_PORTAL_ID+'/deal/'+d.id+'" target="'+HS_LINK_TARGET+'">Open in HubSpot ↗</a>'
           : '';
 
         dsBadge = '<span class="ds-wrap">'+
