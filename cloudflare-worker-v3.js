@@ -66,7 +66,7 @@ async function fetchAllDeals(env) {
     'hs_deal_score','hs_predicted_amount','hs_likelihood_to_close',
     'hs_deal_stage_probability','hs_days_to_close','hs_time_in_stage',
     'num_associated_contacts','hs_num_associated_deals',
-    'notes_last_updated','hs_latest_meeting_activity',
+    'notes_last_updated','hs_latest_meeting_activity','hs_last_activity_date',
   ];
   const results = [];
   let after = null;
@@ -79,6 +79,20 @@ async function fetchAllDeals(env) {
     if (!after) break;
   }
   return results;
+}
+
+// Returns the most recent activity date across all HubSpot engagement fields for a deal.
+// hs_last_activity_date captures emails logged against associated contacts, which
+// notes_last_updated and hs_lastmodifieddate miss.
+function lastActivityDate(props) {
+  const now = new Date();
+  const candidates = [
+    props.hs_last_activity_date,
+    props.notes_last_updated,
+    props.hs_latest_meeting_activity,
+    props.hs_lastmodifieddate,
+  ].filter(Boolean).map(s => new Date(s)).filter(d => d <= now);
+  return candidates.length ? new Date(Math.max(...candidates)) : null;
 }
 
 async function fetchActivity(env, objectType, props, filterProp, cutoff) {
@@ -202,13 +216,13 @@ function buildWeeklyHistory(allDeals, allCalls, allMeetings, allComms, allSalesN
       const pipeV = active.reduce((s,d) => s + (parseFloat(d.properties.amount)||0), 0);
 
       const stale7 = active.filter(d => {
-        const lm = d.properties.hs_lastmodifieddate ? new Date(d.properties.hs_lastmodifieddate) : null;
-        return !lm || lm < new Date(wFri.getTime() - 7 * 86400000);
+        const la = lastActivityDate(d.properties);
+        return !la || la < new Date(wFri.getTime() - 7 * 86400000);
       }).length;
 
       const advanced = active.filter(d => {
-        const lm = d.properties.hs_lastmodifieddate ? new Date(d.properties.hs_lastmodifieddate) : null;
-        return lm && lm >= wMon && lm <= wFri;
+        const la = lastActivityDate(d.properties);
+        return la && la >= wMon && la <= wFri;
       }).length;
 
       const wkCalls    = countActivity(allCalls,    id, wMon, wFri);
@@ -451,13 +465,13 @@ async function buildData(env) {
     const total  = active.length;
 
     const stale = active.filter(d => {
-      const la = d.notes_last_updated || d.hs_lastmodifieddate;
-      return !la || new Date(la) < weekAgo;
+      const la = lastActivityDate(d);
+      return !la || la < weekAgo;
     }).length;
 
     const advWk = active.filter(d => {
-      const lm = d.hs_lastmodifieddate;
-      return lm && new Date(lm) >= weekAgo;
+      const la = lastActivityDate(d);
+      return la && la >= weekAgo;
     }).length;
 
     const hasNS  = active.filter(d => d.hs_next_step && d.hs_next_step.trim()).length;
@@ -490,8 +504,8 @@ async function buildData(env) {
       else if (sl.includes('closed won')      || sl === 'closedwon')                                                   stage = 'Closed Won';
       else if (sl.includes('closed lost')     || sl === 'closedlost')                                                  stage = 'Closed Lost';
       else if (sl.includes('prospect') || sl.includes('lead') || sl.includes('contact') || sl.includes('present'))    stage = 'Discovery/Demo (SQL)';
-      const la     = d.notes_last_updated || d.hs_lastmodifieddate;
-      const staleD = la ? Math.round((now - new Date(la)) / 86400000) : 999;
+      const la     = lastActivityDate(d);
+      const staleD = la ? Math.max(0, Math.round((now - la) / 86400000)) : 999;
       return {
         name:         d.dealname || '',
         stage,
@@ -556,8 +570,8 @@ async function buildData(env) {
     pipeline:     teamActive.reduce((s,d) => s + (parseFloat(d.properties.amount)||0), 0),
     active_deals: teamActive.length,
     stale_7d:     teamActive.filter(d => {
-      const la = d.properties.notes_last_updated || d.properties.hs_lastmodifieddate;
-      return !la || new Date(la) < weekAgo;
+      const la = lastActivityDate(d.properties);
+      return !la || la < weekAgo;
     }).length,
     cw_amount: teamCW2026.reduce((s,d) => s + (parseFloat(d.properties.amount)||0), 0),
     q1_cw: teamCW2026.filter(d => inQtr(d, y2026,   q1End  )).reduce((s,d) => s+(parseFloat(d.properties.amount)||0), 0),
@@ -697,6 +711,27 @@ export default {
           meetingSample,
           callSample,
         }, 200, c);
+      }
+
+      // GET /cw2026 — all 2026 closed-won deals with owner, amount, closedate (PIN required)
+      if (m === 'GET' && p.includes('cw2026')) {
+        if (pin !== correct) return json({ error: 'Unauthorized' }, 401, c);
+        const allDeals = await fetchAllDeals(env);
+        const y2026 = new Date('2026-01-01T00:00:00Z');
+        const cw = allDeals
+          .filter(d => d.properties.hs_is_closed_won === 'true')
+          .filter(d => { const cd = d.properties.closedate ? new Date(d.properties.closedate) : null; return cd && cd >= y2026; })
+          .map(d => ({
+            name:     d.properties.dealname,
+            owner:    d.properties.hubspot_owner_id,
+            amount:   parseFloat(d.properties.amount) || 0,
+            closedate:d.properties.closedate ? d.properties.closedate.slice(0,10) : null,
+            pipeline: d.properties.pipeline,
+          }))
+          .sort((a,b) => (b.closedate||'').localeCompare(a.closedate||''));
+        const byOwner = {};
+        cw.forEach(d => { byOwner[d.owner] = (byOwner[d.owner]||0) + d.amount; });
+        return json({ total: cw.reduce((s,d)=>s+d.amount,0), count: cw.length, byOwner, deals: cw }, 200, c);
       }
 
       // GET /version
