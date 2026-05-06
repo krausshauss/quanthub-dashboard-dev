@@ -20,12 +20,12 @@
       "stale_7d": 0,
       "deals_advanced_week": 2,
       "avg_days_to_close": 69,
-      "ip_meetings_week": 6,
-      "vr_calls_week": 6,
+      "ip_meetings_week": 7,
+      "vr_calls_week": 7,
       "phone_calls_week": 0,
       "text_touches_week": 0,
       "raw_calls": 0,
-      "raw_meetings": 12,
+      "raw_meetings": 14,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 0,
@@ -338,11 +338,11 @@
       "deals_advanced_week": 16,
       "avg_days_to_close": 60,
       "ip_meetings_week": 8,
-      "vr_calls_week": 7,
+      "vr_calls_week": 8,
       "phone_calls_week": 7,
       "text_touches_week": 0,
       "raw_calls": 7,
-      "raw_meetings": 15,
+      "raw_meetings": 16,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 0,
@@ -606,12 +606,12 @@
       "stale_7d": 0,
       "deals_advanced_week": 9,
       "avg_days_to_close": 47,
-      "ip_meetings_week": 4,
-      "vr_calls_week": 3,
+      "ip_meetings_week": 5,
+      "vr_calls_week": 4,
       "phone_calls_week": 0,
       "text_touches_week": 0,
       "raw_calls": 0,
-      "raw_meetings": 7,
+      "raw_meetings": 9,
       "raw_emails": 0,
       "raw_sms": 0,
       "raw_linkedin": 0,
@@ -760,7 +760,7 @@
   "source": "hubspot-api",
   "workerVersion": "w3.1",
   "exportDate": "May 6, 2026",
-  "savedAt": "2026-05-06T14:11:22.640Z",
+  "savedAt": "2026-05-06T14:12:10.828Z",
   "history": [
     {
       "week": "Apr 27 to May 1",
@@ -805,7 +805,7 @@
           "stale_7d": 0,
           "raw_calls": 6,
           "raw_meetings": 3,
-          "raw_linkedin": 5,
+          "raw_linkedin": 0,
           "deals_advanced_week": 4
         },
         {
@@ -869,7 +869,7 @@
           "stale_7d": 0,
           "raw_calls": 46,
           "raw_meetings": 6,
-          "raw_linkedin": 19,
+          "raw_linkedin": 0,
           "deals_advanced_week": 0
         },
         {
@@ -933,7 +933,7 @@
           "stale_7d": 0,
           "raw_calls": 68,
           "raw_meetings": 9,
-          "raw_linkedin": 46,
+          "raw_linkedin": 0,
           "deals_advanced_week": 0
         },
         {
@@ -997,7 +997,7 @@
           "stale_7d": 0,
           "raw_calls": 76,
           "raw_meetings": 3,
-          "raw_linkedin": 2,
+          "raw_linkedin": 1,
           "deals_advanced_week": 0
         },
         {
