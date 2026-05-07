@@ -14,9 +14,8 @@ const TEAM_TARGET   = 1000000;
 const STALE_DAYS    = 7;
 
 const REPS = {
-  '80811940': { name: 'Nate Spargo',  role: 'Director of CS',                        initials: 'NS' },
-  '81657454': { name: 'Joe DeRario',  role: 'Sr. Sales Account Executive',           initials: 'JD' },
-  '86826804': { name: 'Jason Rupert', role: 'Sales Account Executive',               initials: 'JR' },
+  '81657454': { name: 'Joe DeRario',  role: 'Sr. Sales Account Executive',             initials: 'JD' },
+  '86826804': { name: 'Jason Rupert', role: 'Sales Account Executive',                 initials: 'JR' },
   '90736265': { name: 'Jakob Krause', role: 'Director of Sales and Client Consulting', initials: 'JK' },
 };
 const REP_IDS = Object.keys(REPS);
