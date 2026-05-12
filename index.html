@@ -7,7 +7,6 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <style>
   /* When embedded in HubSpot iframe, fill available space */
   html, body { height: 100%; }
@@ -39,10 +38,11 @@
   --r:8px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;font-size:14px;}
+html{width:100%;}
+body{background:var(--bg);color:var(--text);font-family:var(--font);min-height:100vh;font-size:14px;width:100%;overflow-x:hidden;}
 
 /* TOP BAR */
-.topbar{background:#fff;border-bottom:3px solid #0077B5;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:76px;box-shadow:0 2px 8px rgba(0,119,181,.10);}
+.topbar{background:#fff;border-bottom:3px solid #0077B5;padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:76px;box-shadow:0 2px 8px rgba(0,119,181,.10);width:100%;}
 .qh-logo{display:flex;align-items:center;text-decoration:none;}.qh-logo-img{height:52px;width:auto;display:block;}
 
 .tb-r{font-family:var(--mono);font-size:10px;color:#7A8FA6;text-align:right;line-height:1.7;}
@@ -304,8 +304,8 @@ input[type=file]{display:none;}
 /* FOOTER */
 .footer{margin-top:18px;padding-top:13px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
 
-@media(max-width:900px){.rep-grid,.kpi-strip{grid-template-columns:repeat(2,1fr);}.pg{grid-template-columns:1fr;}.ov-grid{grid-template-columns:1fr;}}
-@media(max-width:520px){.rep-grid{grid-template-columns:1fr 1fr;}.cg{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:900px){.rep-grid,.kpi-strip,.qtr-strip{grid-template-columns:repeat(2,1fr);}.pg{grid-template-columns:1fr;}.ov-grid{grid-template-columns:1fr;}}
+@media(max-width:520px){.rep-grid,.qtr-strip{grid-template-columns:1fr 1fr;}.cg{grid-template-columns:repeat(2,1fr);}}
 
 /* ── INSIGHT TOOLTIPS ──────────────────────────── */
 .metric-wrap{position:relative;}
