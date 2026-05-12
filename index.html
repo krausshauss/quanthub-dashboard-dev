@@ -1744,38 +1744,41 @@ function buildTeamTrendStrip() {
     { label:'Active Pipeline',     key:'pipe',      fmt:fmtK, good:'up'   },
     { label:'Active Deals',        key:'deals',     fmt:fmtN, good:'up'   },
     { label:'Stale >7 Days',       key:'stale',     fmt:fmtN, good:'down' },
-    { label:'Deals Advanced (wk)', key:'advanced',  fmt:fmtN, good:'up'   },
-    { label:'Calls (wk)',          key:'calls',     fmt:fmtN, good:'up'   },
-    { label:'Meetings (wk)',       key:'meetings',  fmt:fmtN, good:'up'   },
-    { label:'LinkedIn/SalesNav (wk)', key:'linkedin', fmt:fmtN, good:'up' },
+    { label:'Deals Advanced',    key:'advanced',  fmt:fmtN, good:'up'   },
+    { label:'Calls',             key:'calls',     fmt:fmtN, good:'up'   },
+    { label:'Meetings',          key:'meetings',  fmt:fmtN, good:'up'   },
+    { label:'LinkedIn/SalesNav', key:'linkedin',  fmt:fmtN, good:'up'   },
   ];
 
   let html = `<div class="trend-strip-wrap">
     <div class="trend-strip-hdr">
       <div class="trend-strip-title">📈 Team 4-Week Trend</div>
-      <div class="trend-strip-sub">Last 4 weeks · reconstructed live from HubSpot deal data</div>
+      <div class="trend-strip-sub">Snapshots saved weekly · activity = rolling 7-day count at time of snapshot</div>
     </div>
     <div style="overflow-x:auto"><table class="trend-table"><thead><tr>
       <th style="text-align:left;min-width:140px">Metric</th>`;
 
-  // Mon-Fri range label for each week column
+  // Show actual rolling 7-day window: savedAt-7 → savedAt
   function weekRange(dateStr) {
-    const d = dateStr ? new Date(dateStr) : new Date();
-    const day = d.getDay();
-    const mon = new Date(d); mon.setDate(d.getDate() - (day===0?6:day-1));
-    const fri = new Date(mon); fri.setDate(mon.getDate()+4);
-    const fmt = dt => dt.toLocaleDateString('en-US',{month:'short',day:'numeric'});
-    return fmt(mon) + ' to ' + fmt(fri);
+    const end   = dateStr ? new Date(dateStr) : new Date();
+    const start = new Date(end); start.setDate(end.getDate() - 7);
+    const fmt   = dt => dt.toLocaleDateString('en-US', { month:'short', day:'numeric' });
+    return fmt(start) + ' – ' + fmt(end);
   }
   weekTotals.forEach((w,i) => {
-    const label = i===0?'This Week':i===1?'Last Week':i===2?'2 Weeks Ago':i===3?'3 Weeks Ago':'4 Weeks Ago';
+    const label = i===0?'Current':i===1?'–1 Week':i===2?'–2 Weeks':i===3?'–3 Weeks':'–4 Weeks';
     const range = weekRange(w.savedAt);
-    html += `<th style="min-width:110px">${label}<div style="font-size:8px;opacity:.6;font-weight:400;font-family:var(--font);margin-top:2px">${range}</div></th>`;
+    html += `<th style="min-width:120px">${label}<div style="font-size:8px;opacity:.6;font-weight:400;font-family:var(--font);margin-top:2px">${range}</div></th>`;
   });
 
   html += `</tr></thead><tbody>`;
 
+  // Group metrics with a separator between snapshots and activity counts
+  const SEPARATOR_BEFORE = 'advanced';
   metrics.forEach((m, mi) => {
+    if (m.key === SEPARATOR_BEFORE) {
+      html += `<tr><td colspan="${weekTotals.length + 1}" style="padding:3px 10px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);background:var(--bg);border-bottom:1px solid var(--border2)">Activity · rolling 7-day count</td></tr>`;
+    }
     html += `<tr>`;
     html += `<td>${m.label}</td>`;
     weekTotals.forEach((w, wi) => {
@@ -1790,7 +1793,7 @@ function buildTeamTrendStrip() {
 
   html += `</tbody></table></div>
     <div style="font-size:9px;color:var(--muted);margin-top:8px;padding-top:6px;border-top:1px solid var(--border)">
-      ▲ Green = improvement · ▼ Red = decline vs prior week · All metrics reconstructed from HubSpot deal + activity data
+      ▲ Green = improvement vs prior snapshot · ▼ Red = decline · CW Revenue and pipeline are point-in-time totals · activity rows count engagements in the 7 days before each snapshot
     </div>
   </div>`;
 
