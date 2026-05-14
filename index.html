@@ -364,8 +364,66 @@ input[type=file]{display:none;}
 .cw-deal-amt{font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ok);}
 .cw-deal-date{font-family:var(--mono);font-size:10px;color:var(--muted);}
 </style>
+<style>
+/* ── QH Shared Nav ─────────────────────────────────── */
+.qh-nav{height:38px;background:linear-gradient(90deg,#0B3D5E,#0B4971);display:flex;align-items:center;padding:0 20px;gap:0;border-bottom:2px solid rgba(0,119,181,.4);box-shadow:0 2px 10px rgba(0,0,0,.15);position:sticky;top:0;z-index:3000;}
+.qh-nav-mark{font-size:13px;font-weight:800;color:#fff;letter-spacing:.06em;font-family:'Manrope',sans-serif;}
+.qh-nav-sep{width:1px;height:18px;background:rgba(255,255,255,.2);margin:0 14px;flex-shrink:0;}
+.qh-nav-links{display:flex;gap:2px;flex:1;}
+.qh-nav-link{display:flex;align-items:center;gap:5px;color:rgba(255,255,255,.55);font-size:11px;font-weight:600;font-family:'Manrope',sans-serif;padding:4px 12px;border-radius:5px;text-decoration:none;transition:all .15s;white-space:nowrap;}
+.qh-nav-link:hover{background:rgba(255,255,255,.12);color:#fff;}
+.qh-nav-link.qh-active{background:rgba(255,255,255,.18);color:#fff;}
+.qh-nav-right{display:flex;align-items:center;gap:8px;}
+.qh-nav-theme{font-size:10px;font-weight:700;font-family:'Manrope',sans-serif;padding:4px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:rgba(255,255,255,.85);cursor:pointer;transition:all .15s;white-space:nowrap;}
+.qh-nav-theme:hover{background:rgba(255,255,255,.18);color:#fff;}
+/* ── Dark Mode ─────────────────────────────────────── */
+html.dark{--bg:#0D1B2A;--surface:#102236;--surface2:#0D1E2E;--border:#1C3347;--border2:#254860;--text:#E2E8F0;--text2:#94A3B8;--muted:#607A90;--dim:#2A4560;--ok:#4ADE80;--ok-bg:#052010;--ok-bd:#166534;--bl:#38BDF8;--bl-bg:#0A2336;--bl-bd:#1D4E6A;--wa:#FCD34D;--wa-bg:#1C1200;--wa-bd:#78450A;--or:#FB923C;--or-bg:#1C0800;--or-bd:#7C2D12;--rd:#F87171;--rd-bg:#1C0808;--rd-bd:#7F1D1D;--gd:#FDE68A;--gd-bg:#1A1000;--gd-bd:#78450A;}
+html.dark body{background:var(--bg);color:var(--text);}
+html.dark .topbar{background:#0D2238;border-bottom-color:#0077B5;}
+html.dark .exec-panel{background:linear-gradient(160deg,#0D2035 0%,#0F2840 60%,#111F30 100%);border-color:#1E3A52;}
+html.dark .exec-panel::before{opacity:.7;}
+html.dark .trend-strip-wrap{background:#0F2438 !important;border-color:#1C3347;}
+html.dark .trend-table th{background:#091929;}
+html.dark .trend-table td{border-bottom-color:#1C3347;}
+html.dark .trend-table tr:nth-child(even) td{background:#0D1E2E;}
+html.dark .kpi{background:#102236;border-color:#1C3347;}
+html.dark .qt{background:linear-gradient(160deg,#0D2035,#111F30);border-color:#1E3A52;}
+html.dark .annual-ticker{background:linear-gradient(135deg,#081929,#0B3357);}
+html.dark .fc-panel{background:linear-gradient(135deg,#0D2035,#0F2840);border-color:#1E3A52;}
+html.dark .fc-stat{background:rgba(255,255,255,.04);border-color:#1C3347;}
+html.dark .fc-runway{background:#1C3347;}
+html.dark .pin-btn{background:#102236;border-color:#1C3347;color:var(--text);}
+html.dark #scScreen,html.dark #ovScreen{background:var(--bg);}
+html.dark .det{background:#0F2438;}
+html.dark .tab{background:#0D1E2E;border-color:#1C3347;color:var(--text2);}
+html.dark .tab.on{background:#102236;color:var(--text);}
+html.dark .ins-tip{background:#0D2238;border-color:#1C3347;color:#E2E8F0;}
+</style>
+<script>
+(function(){
+  if(localStorage.getItem('qh-theme')==='dark') document.documentElement.classList.add('dark');
+  window._qhToggleDark=function(){
+    const d=document.documentElement.classList.toggle('dark');
+    localStorage.setItem('qh-theme',d?'dark':'light');
+    const l=document.getElementById('qh-theme-lbl');
+    if(l) l.textContent=d?'☀ Light':'🌙 Dark';
+  };
+})();
+</script>
 </head>
 <body>
+<nav class="qh-nav">
+  <span class="qh-nav-mark">QH</span>
+  <span class="qh-nav-sep"></span>
+  <div class="qh-nav-links">
+    <a href="https://krausshauss.github.io/quanthub-dashboard/" class="qh-nav-link qh-active">📊 Sales Scorecard</a>
+    <a href="https://krausshauss.github.io/quanthub-sales-agent-dev/" class="qh-nav-link">⚡ Sales Agent</a>
+    <a href="https://krausshauss.github.io/quanthub-product-analytics/" class="qh-nav-link">📦 Product Analytics</a>
+  </div>
+  <div class="qh-nav-right">
+    <button class="qh-nav-theme" onclick="window._qhToggleDark()"><span id="qh-theme-lbl">🌙 Dark</span></button>
+  </div>
+</nav>
 <div id="debugPanel" style="display:none;position:fixed;bottom:0;left:0;right:0;background:#0B4971;color:#fff;font-family:monospace;font-size:11px;padding:8px 12px;z-index:9999;max-height:180px;overflow-y:auto;border-top:2px solid #69A62A;">
   <div style="display:flex;justify-content:space-between;margin-bottom:4px">
     <strong>🔍 Debug Log</strong>
