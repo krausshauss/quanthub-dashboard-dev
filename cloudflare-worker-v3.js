@@ -7,11 +7,20 @@
 //  Worker:   quanthub-proxy-dev.michael-20e.workers.dev
 // ═══════════════════════════════════════════════════════════════════
 
+import INDEX_HTML from "./index.html";  // bundled, served only after auth
+
 const WORKER_VERSION = 'w3.1';  // ← bump this on every deploy
 const DATA_FILE      = 'data.json';
 const QUOTA         = 100000;
 const TEAM_TARGET   = 1000000;
 const STALE_DAYS    = 7;
+
+// ── Auth (login gate) ──
+const SESSION_COOKIE     = 'qh_session';
+const SESSION_DURATION_S = 30 * 24 * 60 * 60;   // 30 days
+const MAX_FAILS          = 5;
+const FAIL_WINDOW_MS     = 15 * 60 * 1000;      // 15 min
+const failedAttempts     = new Map();
 
 const REPS = {
   '81657454': { name: 'Joe DeRario',  role: 'Sr. Sales Account Executive',             initials: 'JD' },
@@ -631,6 +640,29 @@ export default {
 
     if (m === 'OPTIONS') return new Response(null, { status: 204, headers: c });
 
+    // ── Auth gate (login required for everything) ──
+    if (p === '/login' && m === 'GET')  return loginPage();
+    if (p === '/auth'  && m === 'POST') return handleAuth(request, env);
+    if (p === '/logout')                return logout();
+    if (!(await isAuthed(request, env))) {
+      const wantsHtml = (request.headers.get('Accept') || '').includes('text/html');
+      if (m === 'GET' && wantsHtml) return Response.redirect(new URL('/login', url), 302);
+      return json({ error: 'Unauthorized' }, 401, c);
+    }
+    // Authed browser navigation to / → serve the bundled app.
+    // Data fetches (Accept: */*) fall through to the data routes below.
+    if (m === 'GET' && (p === '/' || p === '') && (request.headers.get('Accept') || '').includes('text/html')) {
+      return new Response(INDEX_HTML, {
+        headers: {
+          'Content-Type':           'text/html; charset=utf-8',
+          'Cache-Control':          'no-store',
+          'X-Frame-Options':        'DENY',
+          'X-Content-Type-Options': 'nosniff',
+          'Referrer-Policy':        'no-referrer',
+        },
+      });
+    }
+
     const pin     = request.headers.get('X-Admin-Pin') || url.searchParams.get('pin');
     const correct = env.ADMIN_PIN || '7777';
 
@@ -861,3 +893,138 @@ export default {
     }
   }
 };
+
+// ═══════════════════════════════════════════════════════════════════
+//   AUTH HELPERS (login gate)
+// ═══════════════════════════════════════════════════════════════════
+
+async function isAuthed(request, env) {
+  const token = readCookie(request, SESSION_COOKIE);
+  if (!token || !env.SESSION_SECRET) return false;
+  return verifySession(token, env.SESSION_SECRET);
+}
+
+async function handleAuth(request, env) {
+  const ip = request.headers.get('CF-Connecting-IP') || 'unknown';
+  if (!checkRateLimit(ip)) return loginPage('Too many failed attempts. Wait 15 minutes and try again.', 429);
+  if (!env.PORTAL_PASSWORD || !env.SESSION_SECRET) return loginPage('Server misconfigured: missing secret(s).', 500);
+
+  const form     = await request.formData();
+  const password = (form.get('password') || '').toString();
+  if (!timingSafeEqualStr(password, env.PORTAL_PASSWORD)) {
+    recordFailure(ip);
+    return loginPage('Incorrect password.', 401);
+  }
+  clearFailures(ip);
+  const token = await makeSession(env.SESSION_SECRET);
+  return new Response(null, { status: 302, headers: { 'Location': '/', 'Set-Cookie': cookieHeader(token, SESSION_DURATION_S) } });
+}
+
+function logout() {
+  return new Response(null, { status: 302, headers: { 'Location': '/login', 'Set-Cookie': cookieHeader('', 0) } });
+}
+
+function cookieHeader(value, maxAgeS) {
+  return SESSION_COOKIE + '=' + encodeURIComponent(value) + '; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=' + maxAgeS;
+}
+
+function readCookie(request, name) {
+  const raw = request.headers.get('Cookie') || '';
+  const m   = raw.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+  return m ? decodeURIComponent(m[1]) : null;
+}
+
+const _enc = new TextEncoder();
+const _dec = new TextDecoder();
+
+function b64uEncode(buf) {
+  const bytes = new Uint8Array(buf);
+  let s = '';
+  for (let i = 0; i < bytes.length; i++) s += String.fromCharCode(bytes[i]);
+  return btoa(s).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+}
+
+function b64uDecode(s) {
+  const pad  = '='.repeat((4 - (s.length % 4)) % 4);
+  const bin  = atob(s.replace(/-/g, '+').replace(/_/g, '/') + pad);
+  const out  = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+  return out;
+}
+
+async function hmacSign(secret, data) {
+  const key = await crypto.subtle.importKey('raw', _enc.encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  return b64uEncode(await crypto.subtle.sign('HMAC', key, _enc.encode(data)));
+}
+
+async function makeSession(secret) {
+  const now     = Math.floor(Date.now() / 1000);
+  const pb64    = b64uEncode(_enc.encode(JSON.stringify({ iat: now, exp: now + SESSION_DURATION_S })));
+  return pb64 + '.' + (await hmacSign(secret, pb64));
+}
+
+async function verifySession(token, secret) {
+  if (!token || !token.includes('.')) return false;
+  const [pb64, sig] = token.split('.');
+  if (!pb64 || !sig) return false;
+  if (!timingSafeEqualStr(sig, await hmacSign(secret, pb64))) return false;
+  try {
+    const payload = JSON.parse(_dec.decode(b64uDecode(pb64)));
+    return payload.exp > Math.floor(Date.now() / 1000);
+  } catch { return false; }
+}
+
+function timingSafeEqualStr(a, b) {
+  if (typeof a !== 'string' || typeof b !== 'string' || a.length !== b.length) return false;
+  let res = 0;
+  for (let i = 0; i < a.length; i++) res |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  return res === 0;
+}
+
+function checkRateLimit(ip) {
+  const now = Date.now();
+  const e   = failedAttempts.get(ip);
+  if (!e) return true;
+  if (now - e.firstAt > FAIL_WINDOW_MS) { failedAttempts.delete(ip); return true; }
+  return e.count < MAX_FAILS;
+}
+
+function recordFailure(ip) {
+  const now = Date.now();
+  const e   = failedAttempts.get(ip);
+  if (!e || now - e.firstAt > FAIL_WINDOW_MS) failedAttempts.set(ip, { count: 1, firstAt: now });
+  else e.count++;
+}
+
+function clearFailures(ip) { failedAttempts.delete(ip); }
+
+function loginPage(errMsg, status) {
+  const safe = (errMsg || '').replace(/[<>&"]/g, ch => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[ch]));
+  const body = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8" />' +
+    '<meta name="viewport" content="width=device-width, initial-scale=1" /><title>QuantHub · Sign in</title>' +
+    '<link rel="preconnect" href="https://fonts.googleapis.com" />' +
+    '<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet" />' +
+    '<style>*,*::before,*::after{box-sizing:border-box}html,body{height:100%;margin:0}' +
+    "body{font-family:'Manrope',-apple-system,sans-serif;background:#0a0e1a;color:#e6edf3;display:flex;align-items:center;justify-content:center;padding:1rem}" +
+    '.card{background:#161b22;padding:2.5rem 2rem;border-radius:14px;width:100%;max-width:360px;box-shadow:0 12px 40px rgba(0,0,0,.6);border:1px solid #30363d}' +
+    '.brand{color:#0077B5;font-weight:800;letter-spacing:.05em;font-size:.85rem;text-transform:uppercase}' +
+    'h1{margin:.25rem 0 1.5rem;font-size:1.4rem;font-weight:700}label{display:block;font-size:.8rem;color:#8b949e;margin-bottom:.4rem}' +
+    'input{width:100%;padding:.75rem .9rem;background:#0d1117;border:1px solid #30363d;border-radius:8px;color:#e6edf3;font-family:inherit;font-size:.95rem}' +
+    'input:focus{outline:none;border-color:#0077B5;box-shadow:0 0 0 3px rgba(0,119,181,.2)}' +
+    'button{width:100%;margin-top:1.1rem;padding:.8rem;background:#0077B5;color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer}' +
+    'button:hover{background:#005c8a}.err{color:#f85149;font-size:.85rem;margin-top:.9rem;min-height:1.2em;text-align:center}</style></head>' +
+    '<body><main class="card"><div class="brand">QuantHub</div><h1>Sign in</h1>' +
+    '<form method="POST" action="/auth"><label for="pw">Password</label>' +
+    '<input id="pw" type="password" name="password" autocomplete="current-password" autofocus required />' +
+    '<button type="submit">Continue</button><div class="err">' + safe + '</div></form></main></body></html>';
+  return new Response(body, {
+    status: status || 200,
+    headers: {
+      'Content-Type':           'text/html; charset=utf-8',
+      'Cache-Control':          'no-store',
+      'X-Frame-Options':        'DENY',
+      'X-Content-Type-Options': 'nosniff',
+      'Referrer-Policy':        'no-referrer',
+    },
+  });
+}
