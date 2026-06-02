@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════
-//  QuantHub Scorecard — Cloudflare Worker Proxy
+//  Dark Yeti Scorecard — Cloudflare Worker Proxy
 //  Deploys to: workers.cloudflare.com (free tier)
 //
 //  SETUP:
@@ -42,7 +42,7 @@ export default {
     const ghHeaders = {
       'Authorization': `token ${token}`,
       'Accept': 'application/vnd.github.v3+json',
-      'User-Agent': 'QuantHub-Scorecard-Proxy/1.0',
+      'User-Agent': 'Dark Yeti-Scorecard-Proxy/1.0',
     };
 
     try {

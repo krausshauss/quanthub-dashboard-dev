@@ -1,7 +1,7 @@
-# QuantHub Sales Rep Scorecard
+# Dark Yeti Sales Rep Scorecard
 
-Standalone HTML scorecard for QuantHub Higher Education sales team.  
-Built by QuantHub · Internal use only.
+Standalone HTML scorecard for Dark Yeti Higher Education sales team.  
+Built by Dark Yeti · Internal use only.
 
 ## Setup (GitHub Pages)
 

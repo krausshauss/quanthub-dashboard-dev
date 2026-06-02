@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════
-//  QuantHub Sales Scorecard — Cloudflare Worker
+//  Dark Yeti Sales Scorecard — Cloudflare Worker
 //  Version:  v20b
 //  Updated:  2026-04-06
 //  Secrets:  HUBSPOT_TOKEN, GITHUB_TOKEN, ADMIN_PIN, ALLOWED_ORIGIN
@@ -342,14 +342,14 @@ async function buildData(env) {
         if (label) stageMap[label] = mapped;
       });
     });
-    console.log('[QH] Stage map:', Object.keys(stageMap).join(', '));
-    console.log('[QH] Higher Ed pipeline ID:', higherEdPipelineId);
+    console.log('[DY] Stage map:', Object.keys(stageMap).join(', '));
+    console.log('[DY] Higher Ed pipeline ID:', higherEdPipelineId);
   } catch(e) {
-    console.warn('[QH] Stage map skipped:', e.message);
+    console.warn('[DY] Stage map skipped:', e.message);
   }
 
   const allDeals = await fetchAllDeals(env);
-  console.log('[QH] Total deals: ' + allDeals.length);
+  console.log('[DY] Total deals: ' + allDeals.length);
 
   const actMap = {};
   REP_IDS.forEach(id => { actMap[id] = { calls: 0, meetings: 0, emails: 0, sms: 0, linkedin: 0 }; });
@@ -374,7 +374,7 @@ async function buildData(env) {
   const allMeetings = (meetings.status === 'fulfilled' ? meetings.value : []);
   const allComms    = (comms.status    === 'fulfilled' ? comms.value    : []);
   const allTasks    = (tasks.status    === 'fulfilled' && Array.isArray(tasks.value)) ? tasks.value : [];
-  console.log('[QH] Tasks fetched:', allTasks.length);
+  console.log('[DY] Tasks fetched:', allTasks.length);
 
   const isThisWeek  = ts => { const d = ts ? new Date(ts) : null; return d && d >= weekAgo; };
   const repOwnerSet = new Set(REP_IDS);
@@ -389,7 +389,7 @@ async function buildData(env) {
     return isRep && isLI && isDone;
   };
   const allSalesNavTasks = allTasks.filter(isSalesNavTask);
-  console.log('[QH] Sales Nav tasks:', allSalesNavTasks.length);
+  console.log('[DY] Sales Nav tasks:', allSalesNavTasks.length);
 
   if (calls.status === 'fulfilled') calls.value.forEach(c => {
     if (!isThisWeek(c.properties?.hs_timestamp)) return;
@@ -438,7 +438,7 @@ async function buildData(env) {
     const oid = d.properties && d.properties.hubspot_owner_id;
     if (oid && grouped[oid]) grouped[oid].push(d.properties);
   });
-  REP_IDS.forEach(id => console.log('[QH] ' + REPS[id].name + ': ' + grouped[id].length + ' deals'));
+  REP_IDS.forEach(id => console.log('[DY] ' + REPS[id].name + ': ' + grouped[id].length + ' deals'));
 
   const reps = REP_IDS.map(ownerId => {
     const info  = REPS[ownerId];
@@ -553,9 +553,9 @@ async function buildData(env) {
   let computedHistory = [];
   try {
     computedHistory = buildWeeklyHistory(allDeals, allCalls, allMeetings, allComms, allSalesNavTasks, now, REPS, higherEdPipelineId);
-    console.log('[QH] Computed history: ' + computedHistory.length + ' weeks');
+    console.log('[DY] Computed history: ' + computedHistory.length + ' weeks');
   } catch(e) {
-    console.warn('[QH] History computation failed (non-fatal):', e.message);
+    console.warn('[DY] History computation failed (non-fatal):', e.message);
   }
 
   // Team aggregates — Higher Ed pipeline only, active deals only
@@ -587,7 +587,7 @@ async function buildData(env) {
     q3_cw: teamCW2026.filter(d => inQtr(d, q3Start, q3End  )).reduce((s,d) => s+(parseFloat(d.properties.amount)||0), 0),
     q4_cw: teamCW2026.filter(d => inQtr(d, q4Start, now    )).reduce((s,d) => s+(parseFloat(d.properties.amount)||0), 0),
   };
-  console.log('[QH] Team pipeline: $' + Math.round(team.pipeline/1000) + 'K across ' + team.active_deals + ' deals');
+  console.log('[DY] Team pipeline: $' + Math.round(team.pipeline/1000) + 'K across ' + team.active_deals + ' deals');
 
   return {
     reps, team, version: 10, source: 'hubspot-api',
@@ -604,7 +604,7 @@ async function ghRead(env) {
   const GITHUB_REPO   = env.GITHUB_REPO   || 'quanthub-dashboard-dev';
   const GITHUB_BRANCH = env.GITHUB_BRANCH || 'dev';
   const url = 'https://api.github.com/repos/' + GITHUB_OWNER + '/' + GITHUB_REPO + '/contents/' + DATA_FILE + '?ref=' + GITHUB_BRANCH;
-  const r   = await fetch(url, { headers: { 'Authorization': 'token ' + env.GITHUB_TOKEN, 'Accept': 'application/vnd.github.v3+json', 'User-Agent': 'QH-Worker/3' } });
+  const r   = await fetch(url, { headers: { 'Authorization': 'token ' + env.GITHUB_TOKEN, 'Accept': 'application/vnd.github.v3+json', 'User-Agent': 'DY-Worker/3' } });
   if (r.status === 404) return { content: null, sha: null };
   if (!r.ok) throw new Error('GitHub read: ' + r.status);
   const f   = await r.json();
@@ -624,7 +624,7 @@ async function ghWrite(env, data, sha) {
   if (sha) body.sha = sha;
   const r = await fetch(url, {
     method: 'PUT',
-    headers: { 'Authorization': 'token ' + env.GITHUB_TOKEN, 'Accept': 'application/vnd.github.v3+json', 'User-Agent': 'QH-Worker/3', 'Content-Type': 'application/json' },
+    headers: { 'Authorization': 'token ' + env.GITHUB_TOKEN, 'Accept': 'application/vnd.github.v3+json', 'User-Agent': 'DY-Worker/3', 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
   });
   if (!r.ok) { const e = await r.json(); throw new Error(e.message || 'GitHub write: ' + r.status); }
@@ -832,11 +832,11 @@ export default {
               cacheAge = (Date.now() - new Date(content.savedAt).getTime()) / 3600000;
             }
           }
-        } catch(e) { console.warn('[QH] Cache read failed:', e.message); }
+        } catch(e) { console.warn('[DY] Cache read failed:', e.message); }
 
         // Serve stale cache immediately if not forcing refresh and cache is under 24h
         if (!forceRefresh && cachedContent && cacheAge < 24) {
-          console.log('[QH] Serving from cache, age: ' + cacheAge.toFixed(1) + 'h');
+          console.log('[DY] Serving from cache, age: ' + cacheAge.toFixed(1) + 'h');
           // Refresh in background if older than 4h
           if (cacheAge >= 4 && ctx && ctx.waitUntil) {
             ctx.waitUntil((async () => {
@@ -844,15 +844,15 @@ export default {
                 const data = await buildData(env);
                 const { sha: freshSha } = await ghRead(env).catch(() => ({ sha: cachedSha }));
                 await ghWrite(env, data, freshSha || cachedSha);
-                console.log('[QH] Background refresh done');
-              } catch(e) { console.warn('[QH] Background refresh failed:', e.message); }
+                console.log('[DY] Background refresh done');
+              } catch(e) { console.warn('[DY] Background refresh failed:', e.message); }
             })());
           }
           return json(cachedContent, 200, { ...c, 'X-Source': 'cache' });
         }
 
         // No usable cache — fetch live
-        console.log('[QH] Fetching live from HubSpot...');
+        console.log('[DY] Fetching live from HubSpot...');
         try {
           const data = await buildData(env);
           const shaForWrite = cachedSha;
@@ -860,8 +860,8 @@ export default {
             try {
               const { sha: freshSha } = await ghRead(env).catch(() => ({ sha: shaForWrite }));
               await ghWrite(env, data, freshSha || shaForWrite);
-              console.log('[QH] Cache updated, reps: ' + data.reps.length);
-            } catch(e) { console.warn('[QH] Cache write failed:', e.message); }
+              console.log('[DY] Cache updated, reps: ' + data.reps.length);
+            } catch(e) { console.warn('[DY] Cache write failed:', e.message); }
           };
           if (ctx && ctx.waitUntil) ctx.waitUntil(cacheWrite());
           else cacheWrite();
@@ -869,7 +869,7 @@ export default {
         } catch(e) {
           // HubSpot unavailable — serve stale cache if we have it rather than error
           if (cachedContent) {
-            console.warn('[QH] Live fetch failed, serving stale cache:', e.message);
+            console.warn('[DY] Live fetch failed, serving stale cache:', e.message);
             return json(cachedContent, 200, { ...c, 'X-Source': 'stale' });
           }
           throw e;
@@ -888,7 +888,7 @@ export default {
       return new Response('Not found', { status: 404, headers: c });
 
     } catch(e) {
-      console.error('[QH] Worker error: ' + e.message);
+      console.error('[DY] Worker error: ' + e.message);
       return json({ error: e.message }, 500, c);
     }
   }
@@ -1001,19 +1001,19 @@ function clearFailures(ip) { failedAttempts.delete(ip); }
 function loginPage(errMsg, status) {
   const safe = (errMsg || '').replace(/[<>&"]/g, ch => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[ch]));
   const body = '<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8" />' +
-    '<meta name="viewport" content="width=device-width, initial-scale=1" /><title>QuantHub · Sign in</title>' +
+    '<meta name="viewport" content="width=device-width, initial-scale=1" /><title>Dark Yeti · Sign in</title>' +
     '<link rel="preconnect" href="https://fonts.googleapis.com" />' +
     '<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&display=swap" rel="stylesheet" />' +
     '<style>*,*::before,*::after{box-sizing:border-box}html,body{height:100%;margin:0}' +
     "body{font-family:'Manrope',-apple-system,sans-serif;background:#0a0e1a;color:#e6edf3;display:flex;align-items:center;justify-content:center;padding:1rem}" +
     '.card{background:#161b22;padding:2.5rem 2rem;border-radius:14px;width:100%;max-width:360px;box-shadow:0 12px 40px rgba(0,0,0,.6);border:1px solid #30363d}' +
-    '.brand{color:#0077B5;font-weight:800;letter-spacing:.05em;font-size:.85rem;text-transform:uppercase}' +
+    '.brand{color:#2563EB;font-weight:800;letter-spacing:.05em;font-size:.85rem;text-transform:uppercase}' +
     'h1{margin:.25rem 0 1.5rem;font-size:1.4rem;font-weight:700}label{display:block;font-size:.8rem;color:#8b949e;margin-bottom:.4rem}' +
     'input{width:100%;padding:.75rem .9rem;background:#0d1117;border:1px solid #30363d;border-radius:8px;color:#e6edf3;font-family:inherit;font-size:.95rem}' +
-    'input:focus{outline:none;border-color:#0077B5;box-shadow:0 0 0 3px rgba(0,119,181,.2)}' +
-    'button{width:100%;margin-top:1.1rem;padding:.8rem;background:#0077B5;color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer}' +
+    'input:focus{outline:none;border-color:#2563EB;box-shadow:0 0 0 3px rgba(37,99,235,.2)}' +
+    'button{width:100%;margin-top:1.1rem;padding:.8rem;background:#2563EB;color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:.95rem;font-weight:700;cursor:pointer}' +
     'button:hover{background:#005c8a}.err{color:#f85149;font-size:.85rem;margin-top:.9rem;min-height:1.2em;text-align:center}</style></head>' +
-    '<body><main class="card"><div class="brand">QuantHub</div><h1>Sign in</h1>' +
+    '<body><main class="card"><div class="brand">Dark Yeti</div><h1>Sign in</h1>' +
     '<form method="POST" action="/auth"><label for="pw">Password</label>' +
     '<input id="pw" type="password" name="password" autocomplete="current-password" autofocus required />' +
     '<button type="submit">Continue</button><div class="err">' + safe + '</div></form></main></body></html>';
