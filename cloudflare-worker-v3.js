@@ -767,7 +767,7 @@ export default {
 
       // GET /version
       if (m === 'GET' && p.includes('version')) {
-        return json({ version: WORKER_VERSION, updated: '2026-04-06', worker: 'quanthub-proxy-dev', status: 'ok' }, 200, c);
+        return json({ version: WORKER_VERSION, updated: '2026-04-06', worker: 'dark-yeti-proxy-dev', status: 'ok' }, 200, c);
       }
 
       // GET /test — step-by-step buildData diagnosis (PIN required)

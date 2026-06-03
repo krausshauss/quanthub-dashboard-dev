@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script>if(location.hostname.endsWith('github.io'))location.replace('https://quanthub-proxy-dev.michael-20e.workers.dev/');</script>
+<script>if(location.hostname.endsWith('github.io'))location.replace('https://dark-yeti-proxy-dev.michael-20e.workers.dev/');</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex">
@@ -697,7 +697,7 @@ html.dark .ins-tip{background:#0D2238;border-color:#1C3347;color:#E2E8F0;}
 //  All secrets (GitHub token, HubSpot token) live in Cloudflare
 // ═══════════════════════════════════════════════════════
 const ADMIN_PIN         = null;  // PIN validated server-side by Cloudflare Worker — not stored here
-const WORKER_URL        = 'https://quanthub-proxy-dev.michael-20e.workers.dev/';
+const WORKER_URL        = 'https://dark-yeti-proxy-dev.michael-20e.workers.dev/';
 let HUBSPOT_PORTAL_ID = ''; // fetched dynamically from HubSpot on load
 const APP_VERSION = 'v20o-dev';
 const HS_LINK_TARGET = (() => { try { return window.self !== window.top ? '_top' : '_blank'; } catch(e) { return '_top'; } })();
@@ -1650,14 +1650,14 @@ function show(id){
 const SALES_AGENT_URL = 'https://krausshauss.github.io/quanthub-sales-agent-dev/';
 
 // Prefetch HubSpot portal ID for deal deep-links
-fetch('https://quanthub-sales-agent-dev.michael-20e.workers.dev/hubspot/portal')
+fetch('https://dark-yeti-sales-agent-dev.michael-20e.workers.dev/hubspot/portal')
   .then(r => r.json())
   .then(d => { if (d.portalId) HUBSPOT_PORTAL_ID = String(d.portalId); })
   .catch(() => {});
 
 // Prefetch owner→email map so openSalesAgent() has it synchronously
 let _ownerEmailCache = {}; // { "Rep Name lowercase": "email@..." }
-fetch('https://quanthub-sales-agent-dev.michael-20e.workers.dev/hubspot/owners')
+fetch('https://dark-yeti-sales-agent-dev.michael-20e.workers.dev/hubspot/owners')
   .then(r => r.json())
   .then(data => {
     (data.results || []).forEach(o => {
