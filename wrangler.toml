@@ -5,7 +5,7 @@ account_id = "20e7b178f91a4ca92328922dd22abdf2"
 
 [vars]
 GITHUB_OWNER  = "krausshauss"
-GITHUB_REPO   = "quanthub-dashboard"
+GITHUB_REPO   = "dark-yeti-dashboard"
 GITHUB_BRANCH = "main"
 
 [env.dev]
@@ -13,5 +13,5 @@ name = "dark-yeti-proxy-dev"
 
 [env.dev.vars]
 GITHUB_OWNER  = "krausshauss"
-GITHUB_REPO   = "quanthub-dashboard-dev"
+GITHUB_REPO   = "dark-yeti-dashboard-dev"
 GITHUB_BRANCH = "dev"
